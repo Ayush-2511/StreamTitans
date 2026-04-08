@@ -1,10 +1,14 @@
 import React, { useState, useEffect } from 'react';
+import { Routes, Route, useNavigate } from 'react-router-dom';
 import Home from './pages/Home';
 import LandingFlow from './pages/LandingFlow';
+import Login from './pages/Login';
+import Signup from './pages/Signup';
+import ExploreLive from './pages/ExploreLive';
 
 export default function App() {
-  const [currentView, setCurrentView] = useState('landing'); // 'landing' | 'app'
   const [isDark, setIsDark] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (isDark) {
@@ -16,10 +20,13 @@ export default function App() {
 
   const toggleDark = () => setIsDark(!isDark);
 
-  if (currentView === 'landing') {
-    return <LandingFlow onComplete={() => setCurrentView('app')} />;
-  }
-
-  // Once unlocked, render main platform framework
-  return <Home isDark={isDark} toggleDark={toggleDark} />;
+  return (
+    <Routes>
+      <Route path="/" element={<Home isDark={isDark} toggleDark={toggleDark} />} />
+      <Route path="/welcome" element={<LandingFlow onComplete={() => navigate('/')} />} />
+      <Route path="/login" element={<Login />} />
+      <Route path="/signup" element={<Signup />} />
+      <Route path="/live" element={<ExploreLive />} />
+    </Routes>
+  );
 }

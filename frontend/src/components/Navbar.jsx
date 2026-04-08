@@ -1,8 +1,11 @@
 import React from 'react';
 import { Sparkles, Moon, Sun } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import './Navbar.css';
 
 export default function Navbar({ isDark, toggleDark }) {
+  const navigate = useNavigate();
+  
   return (
     <header className="navbar animate-fade-in-up" style={{ animationDelay: '100ms' }}>
       <div className="nav-brand-container">
@@ -27,8 +30,8 @@ export default function Navbar({ isDark, toggleDark }) {
         >
           {isDark ? <Sun className="nav-btn-svg" /> : <Moon className="nav-btn-svg" />}
         </button>
-        <button className="nav-btn-secondary brutal-border">Log In</button>
-        <button className="nav-btn-primary brutal-border">Sign Up</button>
+        <button onClick={() => navigate('/login')} className="nav-btn-secondary brutal-border">Log In</button>
+        <button onClick={() => navigate('/signup')} className="nav-btn-primary brutal-border">Sign Up</button>
       </div>
     </header>
   );

@@ -1,8 +1,11 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { HERO_MOSAIC } from '../data/mockData';
 import './Hero.css';
 
 export default function Hero() {
+  const navigate = useNavigate();
+  
   return (
     <section className="hero-section animate-fade-in-up" style={{ animationDelay: '200ms' }}>
       {/* HERO LEFT */}
@@ -27,7 +30,7 @@ export default function Hero() {
           </p>
           
           <div className="hero-buttons">
-            <button className="btn-primary-large">
+            <button className="btn-primary-large" onClick={() => navigate('/live')}>
               Explore Live
             </button>
             <button className="btn-secondary-large brutal-border">
