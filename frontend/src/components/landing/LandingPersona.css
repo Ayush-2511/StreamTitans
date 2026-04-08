@@ -22,6 +22,7 @@
   opacity: 1;
   transform: translateY(0);
   z-index: 30;
+  pointer-events: auto;
 }
 
 .persona-block {

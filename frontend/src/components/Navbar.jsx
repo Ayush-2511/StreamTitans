@@ -2,7 +2,7 @@ import React from 'react';
 import { Sparkles, Moon, Sun } from 'lucide-react';
 import './Navbar.css';
 
-export default function Navbar({ isDark, toggleDark }) {
+export default function Navbar({ isDark, toggleDark, isAuthenticated, onOpenAuth }) {
   return (
     <header className="navbar animate-fade-in-up" style={{ animationDelay: '100ms' }}>
       <div className="nav-brand-container">
@@ -27,8 +27,23 @@ export default function Navbar({ isDark, toggleDark }) {
         >
           {isDark ? <Sun className="nav-btn-svg" /> : <Moon className="nav-btn-svg" />}
         </button>
-        <button className="nav-btn-secondary brutal-border">Log In</button>
-        <button className="nav-btn-primary brutal-border">Sign Up</button>
+        
+        {!isAuthenticated && (
+          <>
+            <button 
+              className="nav-btn-secondary brutal-border"
+              onClick={() => onOpenAuth('login')}
+            >
+              Log In
+            </button>
+            <button 
+              className="nav-btn-primary brutal-border"
+              onClick={() => onOpenAuth('signup')}
+            >
+              Sign Up
+            </button>
+          </>
+        )}
       </div>
     </header>
   );

@@ -19,7 +19,7 @@ export default function LandingPersona({ onShopperClick, isHidden }) {
           <p className="persona-desc">
             Access archives, participate in live drops.
           </p>
-          <button className="persona-btn brutal-border">
+          <button className="persona-btn brutal-border" onClick={(e) => { e.stopPropagation(); onShopperClick(); }}>
             Enter Gallery
           </button>
         </div>
@@ -38,7 +38,7 @@ export default function LandingPersona({ onShopperClick, isHidden }) {
           <p className="persona-desc">
             Launch studio, manage archives, go live.
           </p>
-          <button className="persona-btn brutal-border">
+          <button className="persona-btn brutal-border" onClick={(e) => { e.stopPropagation(); alert("Creator flow not mapped yet."); }}>
             Open Studio
           </button>
         </div>
