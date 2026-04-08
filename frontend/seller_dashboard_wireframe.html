@@ -1,0 +1,390 @@
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#f5f4f0;font-family:system-ui,sans-serif;color:#1a1a1a}
+.wf{width:100%;border:1.5px solid #1a1a1a;border-radius:4px;overflow:hidden;display:grid;grid-template-columns:200px 1fr;min-height:900px}
+
+/* SIDEBAR */
+.sidebar{border-right:1.5px solid #1a1a1a;display:flex;flex-direction:column;background:#1a1a1a}
+.sb-logo{padding:20px 18px;border-bottom:1px solid #333;display:flex;align-items:center;gap:10px}
+.sb-logo-mark{width:28px;height:28px;border-radius:6px;background:#e8572a}
+.sb-logo-txt{width:70px;height:12px;background:#f5f4f0;border-radius:2px;opacity:0.8}
+.sb-section{padding:20px 0}
+.sb-label{font-size:9px;letter-spacing:1.5px;color:#555;text-transform:uppercase;padding:0 18px;margin-bottom:10px;font-weight:500}
+.sb-item{display:flex;align-items:center;gap:10px;padding:9px 18px;cursor:pointer}
+.sb-item.active{background:#2a2a2a}
+.sb-icon{width:16px;height:16px;border-radius:3px;background:#444;flex:0 0 16px}
+.sb-icon.accent{background:#e8572a}
+.sb-txt{height:9px;background:#555;border-radius:2px;flex:1}
+.sb-txt.active{background:#f5f4f0;opacity:0.85}
+.sb-badge{width:18px;height:14px;background:#e8572a;border-radius:8px;flex:0 0 18px}
+.sb-divider{height:1px;background:#2a2a2a;margin:4px 0}
+.sb-bottom{margin-top:auto;border-top:1px solid #2a2a2a;padding:16px 18px;display:flex;align-items:center;gap:10px}
+.sb-avatar{width:30px;height:30px;border-radius:50%;background:#333;flex:0 0 30px}
+.sb-user-lines{flex:1}
+.sb-u1{height:8px;background:#f5f4f0;border-radius:2px;width:80%;margin-bottom:4px;opacity:0.7}
+.sb-u2{height:7px;background:#444;border-radius:2px;width:55%}
+
+/* MAIN */
+.main{display:flex;flex-direction:column;background:#f5f4f0}
+
+/* TOP BAR */
+.topbar{display:flex;align-items:center;justify-content:space-between;padding:16px 28px;border-bottom:1.5px solid #1a1a1a;background:#f5f4f0}
+.tb-left{display:flex;flex-direction:column;gap:4px}
+.tb-title{height:16px;width:160px;background:#1a1a1a;border-radius:3px}
+.tb-sub{height:9px;width:120px;background:#ccc;border-radius:2px}
+.tb-right{display:flex;gap:10px;align-items:center}
+.tb-btn{height:34px;padding:0 18px;border-radius:17px;border:1.5px solid #1a1a1a;background:transparent;display:flex;align-items:center;gap:6px;cursor:pointer}
+.tb-btn.primary{background:#1a1a1a}
+.tb-btn-txt{height:9px;background:#1a1a1a;border-radius:2px;width:60px}
+.tb-btn.primary .tb-btn-txt{background:#f5f4f0}
+.tb-dot{width:8px;height:8px;border-radius:50%;background:#e8572a}
+
+/* STAT ROW */
+.stat-row{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border-bottom:1.5px solid #1a1a1a}
+.stat-card{padding:22px 28px;border-right:1.5px solid #1a1a1a}
+.stat-card:last-child{border-right:none}
+.sc-label{height:8px;background:#bbb;border-radius:2px;width:70%;margin-bottom:12px}
+.sc-num{height:22px;background:#1a1a1a;border-radius:3px;width:55%;margin-bottom:8px}
+.sc-delta{height:8px;background:#c8d8c0;border-radius:2px;width:40%}
+.sc-delta.neg{background:#d8c0c0}
+
+/* CONTENT AREA */
+.content{display:grid;grid-template-columns:1fr 320px;flex:1}
+.content-main{border-right:1.5px solid #1a1a1a;padding:24px 28px;display:flex;flex-direction:column;gap:24px}
+.content-side{padding:24px 20px;display:flex;flex-direction:column;gap:24px}
+
+/* SECTION HEADER */
+.sec-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+.sec-title{height:13px;background:#1a1a1a;border-radius:2px;width:120px}
+.sec-link{height:9px;background:#ccc;border-radius:2px;width:60px}
+
+/* STREAM BANNER */
+.stream-banner{border:1.5px solid #1a1a1a;border-radius:12px;overflow:hidden}
+.stream-top{background:#1a1a1a;padding:18px 20px;display:flex;align-items:center;justify-content:space-between}
+.st-left{display:flex;align-items:center;gap:12px}
+.st-pulse{width:10px;height:10px;border-radius:50%;background:#e8572a;flex:0 0 10px}
+.st-lines{display:flex;flex-direction:column;gap:5px}
+.st-l1{height:10px;background:#f5f4f0;border-radius:2px;width:140px;opacity:0.9}
+.st-l2{height:8px;background:#555;border-radius:2px;width:90px}
+.st-right{display:flex;gap:8px}
+.st-btn{height:28px;padding:0 14px;border-radius:14px;border:1px solid #444;background:transparent}
+.st-btn.danger{background:#e8572a;border-color:#e8572a}
+.stream-body{padding:16px 20px;display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.st-metric{background:#f0efe9;border-radius:8px;padding:12px 14px}
+.stm-num{height:16px;background:#1a1a1a;border-radius:2px;width:50%;margin-bottom:5px}
+.stm-lbl{height:8px;background:#ccc;border-radius:2px;width:70%}
+.stream-bottom{border-top:1.5px solid #e8e8e0;padding:14px 20px;display:flex;gap:10px}
+.prod-chip{height:28px;padding:0 12px;border:1.5px solid #1a1a1a;border-radius:14px;background:#f5f4f0;display:flex;align-items:center;gap:6px}
+.pc-dot{width:6px;height:6px;border-radius:50%;background:#1a1a1a}
+.pc-txt{height:8px;background:#1a1a1a;border-radius:2px;width:50px}
+.prod-chip.add{border-style:dashed;background:transparent}
+
+/* LISTINGS TABLE */
+.listings{border:1.5px solid #1a1a1a;border-radius:12px;overflow:hidden}
+.tbl-head{display:grid;grid-template-columns:2fr 1fr 1fr 1fr 80px;background:#f0efe9;border-bottom:1.5px solid #1a1a1a;padding:10px 16px;gap:8px}
+.th-cell{height:8px;background:#bbb;border-radius:2px}
+.tbl-row{display:grid;grid-template-columns:2fr 1fr 1fr 1fr 80px;padding:12px 16px;gap:8px;border-bottom:1px solid #e8e8e0;align-items:center}
+.tbl-row:last-child{border-bottom:none}
+.tr-name{display:flex;align-items:center;gap:10px}
+.tr-img{width:32px;height:32px;border-radius:6px;background:#ddd;flex:0 0 32px}
+.tr-img.c1{background:#d8d0c8}
+.tr-img.c2{background:#c8d0d8}
+.tr-img.c3{background:#d0d8c8}
+.tr-lines{display:flex;flex-direction:column;gap:4px}
+.tr-l1{height:9px;background:#1a1a1a;border-radius:2px;width:90px}
+.tr-l2{height:7px;background:#ccc;border-radius:2px;width:55px}
+.tr-cell{height:9px;background:#ccc;border-radius:2px}
+.tr-badge{height:20px;padding:0 10px;border-radius:10px;display:inline-flex;align-items:center}
+.tr-badge.live{background:#fde8e0;border:1px solid #e8572a}
+.tr-badge-dot{width:5px;height:5px;border-radius:50%;background:#e8572a;margin-right:4px}
+.tr-badge-txt{height:7px;background:#e8572a;border-radius:1px;width:20px;opacity:0.6}
+.tr-badge.listed{background:#f0efe9;border:1px solid #ccc}
+.tr-badge.listed .tr-badge-dot{background:#888}
+.tr-badge.listed .tr-badge-txt{background:#888}
+.tr-action{width:28px;height:28px;border-radius:6px;border:1.5px solid #e8e8e0;background:transparent}
+
+/* SIDE: QUICK ADD */
+.side-card{border:1.5px solid #1a1a1a;border-radius:12px;overflow:hidden}
+.side-card-head{padding:14px 16px;border-bottom:1.5px solid #1a1a1a;background:#f0efe9}
+.sch-title{height:11px;background:#1a1a1a;border-radius:2px;width:100px;margin-bottom:4px}
+.sch-sub{height:8px;background:#bbb;border-radius:2px;width:140px}
+.side-card-body{padding:16px}
+.field{margin-bottom:12px}
+.field-lbl{height:8px;background:#bbb;border-radius:2px;width:50px;margin-bottom:6px}
+.field-input{height:32px;border:1.5px solid #e0e0d8;border-radius:8px;background:#faf9f5;width:100%}
+.field-row{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.submit-btn{width:100%;height:36px;background:#1a1a1a;border-radius:18px;margin-top:4px}
+
+/* SIDE: UPCOMING */
+.upcoming-item{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid #e8e8e0}
+.upcoming-item:last-child{border-bottom:none}
+.up-time{width:36px;height:36px;border-radius:8px;background:#f0efe9;flex:0 0 36px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px}
+.up-t1{height:8px;background:#1a1a1a;border-radius:1px;width:24px}
+.up-t2{height:6px;background:#ccc;border-radius:1px;width:18px}
+.up-lines{flex:1;display:flex;flex-direction:column;gap:4px}
+.up-l1{height:9px;background:#1a1a1a;border-radius:2px;width:80%}
+.up-l2{height:7px;background:#ccc;border-radius:2px;width:55%}
+.up-arrow{width:20px;height:20px;border-radius:50%;border:1.5px solid #e0e0d8;flex:0 0 20px}
+
+.ann-tag{display:inline-block;font-size:9px;background:#1a1a1a;color:#f5f4f0;padding:2px 7px;border-radius:2px;letter-spacing:0.5px}
+.ann-tag.ghost{background:transparent;border:1px solid #1a1a1a;color:#1a1a1a}
+</style>
+
+<div class="wf">
+
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+    <div class="sb-logo">
+      <div class="sb-logo-mark"></div>
+      <div class="sb-logo-txt"></div>
+    </div>
+
+    <div class="sb-section">
+      <div class="sb-label">main</div>
+      <div class="sb-item active">
+        <div class="sb-icon accent"></div>
+        <div class="sb-txt active"></div>
+      </div>
+      <div class="sb-item">
+        <div class="sb-icon"></div>
+        <div class="sb-txt"></div>
+      </div>
+      <div class="sb-item">
+        <div class="sb-icon"></div>
+        <div class="sb-txt"></div>
+        <div class="sb-badge"></div>
+      </div>
+    </div>
+
+    <div class="sb-divider"></div>
+
+    <div class="sb-section">
+      <div class="sb-label">manage</div>
+      <div class="sb-item">
+        <div class="sb-icon"></div>
+        <div class="sb-txt"></div>
+      </div>
+      <div class="sb-item">
+        <div class="sb-icon"></div>
+        <div class="sb-txt"></div>
+      </div>
+      <div class="sb-item">
+        <div class="sb-icon"></div>
+        <div class="sb-txt"></div>
+      </div>
+    </div>
+
+    <div class="sb-divider"></div>
+
+    <div class="sb-section">
+      <div class="sb-label">analytics</div>
+      <div class="sb-item">
+        <div class="sb-icon"></div>
+        <div class="sb-txt"></div>
+      </div>
+      <div class="sb-item">
+        <div class="sb-icon"></div>
+        <div class="sb-txt"></div>
+      </div>
+    </div>
+
+    <div class="sb-bottom">
+      <div class="sb-avatar"></div>
+      <div class="sb-user-lines">
+        <div class="sb-u1"></div>
+        <div class="sb-u2"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MAIN CONTENT -->
+  <div class="main">
+
+    <!-- TOPBAR -->
+    <div class="topbar">
+      <div class="tb-left">
+        <div class="tb-title"></div>
+        <div class="tb-sub"></div>
+      </div>
+      <div class="tb-right">
+        <div class="tb-btn">
+          <div class="tb-btn-txt"></div>
+        </div>
+        <div class="tb-btn primary">
+          <div class="tb-dot"></div>
+          <div class="tb-btn-txt"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STATS ROW -->
+    <div class="stat-row">
+      <div class="stat-card">
+        <div class="sc-label"></div>
+        <div class="sc-num"></div>
+        <div class="sc-delta"></div>
+      </div>
+      <div class="stat-card">
+        <div class="sc-label"></div>
+        <div class="sc-num"></div>
+        <div class="sc-delta"></div>
+      </div>
+      <div class="stat-card">
+        <div class="sc-label"></div>
+        <div class="sc-num"></div>
+        <div class="sc-delta neg"></div>
+      </div>
+      <div class="stat-card">
+        <div class="sc-label"></div>
+        <div class="sc-num"></div>
+        <div class="sc-delta"></div>
+      </div>
+    </div>
+
+    <!-- CONTENT GRID -->
+    <div class="content">
+
+      <div class="content-main">
+
+        <!-- ACTIVE STREAM -->
+        <div>
+          <div class="sec-header">
+            <div style="display:flex;gap:8px;align-items:center">
+              <span class="ann-tag">active stream</span>
+              <span style="font-size:9px;color:#aaa">shows when live, collapsed otherwise</span>
+            </div>
+            <div class="sec-link"></div>
+          </div>
+          <div class="stream-banner">
+            <div class="stream-top">
+              <div class="st-left">
+                <div class="st-pulse"></div>
+                <div class="st-lines">
+                  <div class="st-l1"></div>
+                  <div class="st-l2"></div>
+                </div>
+              </div>
+              <div class="st-right">
+                <div class="st-btn"></div>
+                <div class="st-btn danger"></div>
+              </div>
+            </div>
+            <div class="stream-body">
+              <div class="st-metric"><div class="stm-num"></div><div class="stm-lbl"></div></div>
+              <div class="st-metric"><div class="stm-num"></div><div class="stm-lbl"></div></div>
+              <div class="st-metric"><div class="stm-num"></div><div class="stm-lbl"></div></div>
+            </div>
+            <div class="stream-bottom">
+              <div style="font-size:9px;color:#888;margin-right:4px;white-space:nowrap;align-self:center">pinned products</div>
+              <div class="prod-chip"><div class="pc-dot"></div><div class="pc-txt"></div></div>
+              <div class="prod-chip"><div class="pc-dot"></div><div class="pc-txt"></div></div>
+              <div class="prod-chip add"><div class="pc-txt" style="background:#bbb"></div></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- LISTINGS TABLE -->
+        <div>
+          <div class="sec-header">
+            <div style="display:flex;gap:8px;align-items:center">
+              <span class="ann-tag ghost">your listings</span>
+              <span style="font-size:9px;color:#aaa">product · price · stock · status · actions</span>
+            </div>
+            <div class="sec-link"></div>
+          </div>
+          <div class="listings">
+            <div class="tbl-head">
+              <div class="th-cell"></div>
+              <div class="th-cell"></div>
+              <div class="th-cell"></div>
+              <div class="th-cell"></div>
+              <div class="th-cell"></div>
+            </div>
+            <div class="tbl-row">
+              <div class="tr-name"><div class="tr-img c1"></div><div class="tr-lines"><div class="tr-l1"></div><div class="tr-l2"></div></div></div>
+              <div class="tr-cell" style="width:50px;align-self:center"></div>
+              <div class="tr-cell" style="width:30px;align-self:center"></div>
+              <div class="tr-badge live"><div class="tr-badge-dot"></div><div class="tr-badge-txt"></div></div>
+              <div class="tr-action"></div>
+            </div>
+            <div class="tbl-row">
+              <div class="tr-name"><div class="tr-img c2"></div><div class="tr-lines"><div class="tr-l1"></div><div class="tr-l2"></div></div></div>
+              <div class="tr-cell" style="width:50px;align-self:center"></div>
+              <div class="tr-cell" style="width:30px;align-self:center"></div>
+              <div class="tr-badge listed"><div class="tr-badge-dot"></div><div class="tr-badge-txt"></div></div>
+              <div class="tr-action"></div>
+            </div>
+            <div class="tbl-row">
+              <div class="tr-name"><div class="tr-img c3"></div><div class="tr-lines"><div class="tr-l1"></div><div class="tr-l2"></div></div></div>
+              <div class="tr-cell" style="width:50px;align-self:center"></div>
+              <div class="tr-cell" style="width:30px;align-self:center"></div>
+              <div class="tr-badge listed"><div class="tr-badge-dot"></div><div class="tr-badge-txt"></div></div>
+              <div class="tr-action"></div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- RIGHT SIDEBAR -->
+      <div class="content-side">
+
+        <!-- QUICK ADD PRODUCT -->
+        <div>
+          <div class="sec-header">
+            <span class="ann-tag">quick add product</span>
+          </div>
+          <div class="side-card">
+            <div class="side-card-head">
+              <div class="sch-title"></div>
+              <div class="sch-sub"></div>
+            </div>
+            <div class="side-card-body">
+              <div class="field">
+                <div class="field-lbl"></div>
+                <div class="field-input"></div>
+              </div>
+              <div class="field-row">
+                <div class="field"><div class="field-lbl"></div><div class="field-input"></div></div>
+                <div class="field"><div class="field-lbl"></div><div class="field-input"></div></div>
+              </div>
+              <div class="field">
+                <div class="field-lbl"></div>
+                <div class="field-input"></div>
+              </div>
+              <div class="submit-btn"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- UPCOMING STREAMS -->
+        <div>
+          <div class="sec-header">
+            <span class="ann-tag ghost">scheduled streams</span>
+          </div>
+          <div class="side-card">
+            <div class="side-card-body" style="padding:12px 16px">
+              <div class="upcoming-item">
+                <div class="up-time"><div class="up-t1"></div><div class="up-t2"></div></div>
+                <div class="up-lines"><div class="up-l1"></div><div class="up-l2"></div></div>
+                <div class="up-arrow"></div>
+              </div>
+              <div class="upcoming-item">
+                <div class="up-time"><div class="up-t1"></div><div class="up-t2"></div></div>
+                <div class="up-lines"><div class="up-l1"></div><div class="up-l2"></div></div>
+                <div class="up-arrow"></div>
+              </div>
+              <div class="upcoming-item">
+                <div class="up-time"><div class="up-t1"></div><div class="up-t2"></div></div>
+                <div class="up-lines"><div class="up-l1"></div><div class="up-l2"></div></div>
+                <div class="up-arrow"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

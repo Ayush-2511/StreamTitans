@@ -1,0 +1,109 @@
+.auth-step-1 {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.7s ease-in-out;
+}
+.auth-step-1.hidden-step {
+  opacity: 0;
+  transform: scale(0.95);
+  pointer-events: none;
+}
+.auth-step-1.visible-step {
+  opacity: 1;
+  transform: scale(1);
+  z-index: 20;
+}
+
+.auth-form-box {
+  width: 100%;
+  max-width: 480px;
+  background-color: var(--color-cream);
+  border-radius: 2rem;
+  padding: 2rem; /* p-8 */
+  display: flex;
+  flex-direction: column;
+  gap: 2rem; /* gap-8 */
+  margin: 0 1rem; /* mx-4 */
+  box-shadow: none;
+  transform: translateY(0);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+@media (min-width: 768px) {
+  .auth-form-box {
+    padding: 3rem; /* md:p-12 */
+  }
+}
+.auth-form-box:hover {
+  transform: translateY(-0.25rem); /* hover:-translate-y-1 */
+  box-shadow: 12px 12px 0 0 var(--color-ink);
+}
+
+.auth-heading {
+  color: var(--color-ink);
+  font-weight: 800; /* font-extrabold */
+  font-size: 1.875rem; /* text-3xl */
+  margin-bottom: 0.5rem; /* mb-2 */
+  letter-spacing: -0.025em; /* tracking-tight */
+}
+
+.auth-subheading {
+  color: rgba(26, 26, 26, 0.6); /* text-ink/60 */
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em; /* tracking-widest */
+}
+:global(.dark) .auth-subheading {
+  color: rgba(245, 244, 240, 0.6);
+}
+
+.auth-form {
+  position: relative;
+}
+
+.auth-input {
+  width: 100%;
+  background-color: var(--color-surface-light);
+  color: var(--color-ink);
+  border-radius: 9999px;
+  padding: 1rem 1.5rem; /* py-4 px-6 */
+  padding-right: 4rem; /* pr-16 */
+  outline: none;
+  transition: border-color 0.15s;
+  font-weight: 500;
+}
+.auth-input::placeholder {
+  color: var(--color-gray-dark);
+}
+.auth-input:focus {
+  border-color: var(--color-orange);
+}
+
+.auth-submit-btn {
+  position: absolute;
+  right: 0.5rem; /* right-2 */
+  top: 50%;
+  transform: translateY(-50%);
+  width: 2.5rem; /* w-10 */
+  height: 2.5rem; /* h-10 */
+  background-color: var(--color-orange);
+  color: var(--color-cream);
+  border-radius: 9999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s;
+  cursor: pointer;
+}
+.auth-submit-btn:hover {
+  background-color: var(--color-ink);
+  transform: translateY(-50%) rotate(-45deg);
+}
+
+.auth-submit-icon {
+  width: 1.25rem; /* w-5 */
+  height: 1.25rem; /* h-5 */
+}

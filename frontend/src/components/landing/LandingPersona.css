@@ -1,0 +1,186 @@
+.auth-step-2 {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 5rem; /* p-4 */
+  gap: 5rem; /* gap-4 */
+  transition: all 1s cubic-bezier(0, 0, 0.2, 1);
+  transition-delay: 300ms;
+}
+@media (min-width: 768px) {
+  .auth-step-2 {
+    flex-direction: row;
+  }
+}
+.auth-step-2.hidden-step {
+  opacity: 0;
+  transform: translateY(3rem); /* translate-y-12 */
+  pointer-events: none;
+}
+.auth-step-2.visible-step {
+  opacity: 1;
+  transform: translateY(0);
+  z-index: 30;
+}
+
+.persona-block {
+  flex: 1;
+  border-radius: 2rem;
+  background-color: var(--color-cream);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem; /* p-8 */
+  box-shadow: none;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+}
+.persona-block:hover {
+  transform: translateY(-0.5rem); /* hover:-translate-y-2 */
+  box-shadow: 12px 12px 0 0 var(--color-ink);
+}
+
+.persona-bg-img {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  opacity: 0.4;
+  mix-blend-mode: multiply;
+  filter: grayscale(100%);
+  transition: all 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.persona-block:hover .persona-bg-img {
+  filter: grayscale(0%); /* hover:grayscale-0 */
+  opacity: 1;
+  mix-blend-mode: normal;
+}
+
+.persona-overlay {
+  position: absolute;
+  inset: 0;
+  background-image: linear-gradient(to top, rgba(245, 244, 240, 0.9), rgba(245, 244, 240, 0.4), transparent);
+  z-index: 10;
+  transition: background-color 0.7s, background-image 0.7s;
+}
+
+.persona-block.shopper:hover .persona-overlay {
+  background-image: linear-gradient(to top, rgba(26, 26, 26, 0.9), rgba(26, 26, 26, 0.4), transparent);
+}
+
+.persona-block.creator:hover .persona-overlay {
+  background-image: linear-gradient(to top, rgba(26, 26, 26, 0.9), rgba(26, 26, 26, 0.4), transparent);
+}
+
+.persona-content {
+  position: relative;
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  color: var(--color-ink);
+  transition: color 0.7s;
+}
+.persona-block.shopper:hover .persona-content {
+  color: var(--color-cream);
+}
+
+
+.persona-icon-container {
+  width: 5rem; /* w-20 */
+  height: 5rem; /* h-20 */
+  background-color: rgba(26, 26, 26, 0.05); /* bg-ink/5 */
+  border-radius: 9999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.5rem; /* mb-6 */
+  backdrop-filter: blur(4px);
+  transition: all 0.7s;
+}
+.persona-block.shopper:hover .persona-icon-container {
+  background-color: rgba(245, 244, 240, 0.1);
+  border-color: rgba(245, 244, 240, 0.2);
+  transform: scale(1.1);
+}
+.persona-block.creator:hover .persona-icon-container {
+  background-color: rgba(245, 244, 240, 0.5);
+  transform: scale(1.1);
+}
+
+.persona-icon {
+  width: 2.5rem; /* w-10 */
+  height: 2.5rem; /* h-10 */
+  color: var(--color-ink);
+  transition: color 0.7s;
+}
+.persona-block.shopper:hover .persona-icon {
+  color: var(--color-cream);
+}
+
+.persona-title {
+  font-weight: 800; /* font-extrabold */
+  font-size: 2.25rem; /* text-4xl */
+  letter-spacing: -0.05em; /* tracking-tighter */
+  margin-bottom: 1rem; /* mb-4 */
+  transition: color 0.3s;
+}
+@media (min-width: 768px) {
+  .persona-title {
+    font-size: 3rem; /* md:text-5xl */
+  }
+}
+.persona-block.shopper:hover .persona-title {
+  color: var(--color-orange);
+}
+
+.persona-desc {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em; /* tracking-widest */
+  color: rgba(26, 26, 26, 0.7); /* text-ink/70 */
+  max-width: 20rem; /* max-w-xs */
+  margin-bottom: 2.5rem; /* mb-10 */
+  line-height: 1.625;
+  transition: color 0.7s;
+}
+@media (min-width: 768px) {
+  .persona-desc {
+    font-size: 0.75rem; /* text-xs */
+  }
+}
+
+.persona-btn {
+  background-color: var(--color-ink);
+  color: var(--color-cream);
+  font-weight: 800;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  padding: 1rem 2.5rem; /* py-4 px-10 */
+  border-radius: 9999px;
+  transition: background-color 0.3s, border-color 0.3s, color 0.3s;
+  cursor: pointer;
+}
+.persona-block.shopper:hover .persona-btn {
+  background-color: var(--color-orange);
+  border-color: var(--color-orange);
+}
+.persona-block.creator:hover .persona-btn {
+  background-color: var(--color-cream);
+  color: var(--color-ink);
+}
+
+.persona-block.creator:hover .persona-content {
+  color: var(--color-cream);
+}
+
+.persona-block.creator:hover .persona-desc {
+  color: var(--color-cream);
+}
