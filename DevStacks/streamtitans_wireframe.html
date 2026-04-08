@@ -1,0 +1,348 @@
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#f5f4f0;font-family:system-ui,sans-serif;color:#1a1a1a}
+.wf{width:100%;border:1.5px solid #1a1a1a;border-radius:4px;overflow:hidden}
+.block{border-bottom:1.5px solid #1a1a1a;padding:0;position:relative}
+.label{position:absolute;top:8px;left:10px;font-size:10px;letter-spacing:1px;text-transform:uppercase;color:#888;font-weight:500;z-index:2}
+.comp-tag{display:inline-block;font-size:9px;background:#1a1a1a;color:#f5f4f0;padding:2px 7px;border-radius:2px;letter-spacing:0.5px;margin:2px 2px 0 0}
+
+/* NAVBAR */
+.navbar{display:flex;align-items:center;justify-content:space-between;padding:14px 20px;border-bottom:1.5px solid #1a1a1a}
+.nav-logo{width:90px;height:18px;background:#1a1a1a;border-radius:2px}
+.nav-links{display:flex;gap:12px}
+.nav-link{width:52px;height:10px;background:#ccc;border-radius:2px}
+.nav-right{display:flex;gap:8px}
+.nav-btn{width:60px;height:24px;border:1.5px solid #1a1a1a;border-radius:12px}
+.nav-btn.filled{background:#1a1a1a}
+
+/* HERO */
+.hero-block{display:grid;grid-template-columns:1fr 1fr;min-height:320px}
+.hero-left{padding:32px 24px;border-right:1.5px solid #1a1a1a;display:flex;flex-direction:column;justify-content:space-between}
+.hero-eyebrow{display:flex;align-items:center;gap:8px;margin-bottom:16px}
+.live-dot{width:8px;height:8px;background:#e8572a;border-radius:50%}
+.eyebrow-text{width:80px;height:9px;background:#e8572a;border-radius:2px;opacity:0.7}
+.hero-h1-line{height:28px;background:#1a1a1a;border-radius:3px;margin-bottom:8px}
+.hero-h1-line.short{width:70%}
+.hero-sub-line{height:10px;background:#ccc;border-radius:2px;margin-bottom:6px}
+.hero-sub-line.mid{width:60%}
+.hero-ctas{display:flex;gap:10px;margin-top:20px}
+.cta-primary{flex:1;height:36px;background:#1a1a1a;border-radius:18px}
+.cta-ghost{width:80px;height:36px;border:1.5px solid #1a1a1a;border-radius:18px}
+.stat-row{display:flex;gap:20px;margin-top:16px}
+.stat-box{flex:1;border:1px solid #ccc;border-radius:6px;padding:10px 12px}
+.stat-num{height:18px;background:#1a1a1a;border-radius:2px;width:50%;margin-bottom:5px}
+.stat-lbl{height:8px;background:#ddd;border-radius:2px;width:80%}
+
+.hero-right{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr}
+.hero-card{border-left:none;border-right:1.5px solid #1a1a1a;border-bottom:1.5px solid #1a1a1a;display:flex;flex-direction:column;justify-content:flex-end;padding:12px;position:relative;min-height:140px;background:#eee}
+.hero-card:nth-child(2){border-right:none}
+.hero-card:nth-child(3){border-bottom:none;border-right:1.5px solid #1a1a1a}
+.hero-card:nth-child(4){border-bottom:none;border-right:none}
+.hero-card-img{position:absolute;inset:0;background:#ddd;z-index:0}
+.hero-card-img.c1{background:#d8d0c8}
+.hero-card-img.c2{background:#c8d0d8}
+.hero-card-img.c3{background:#d0d8c8}
+.hero-card-img.c4{background:#d8c8d0}
+.hero-card-overlay{position:absolute;bottom:0;left:0;right:0;height:60%;background:linear-gradient(to top,rgba(0,0,0,0.55),transparent);z-index:1}
+.hero-card-info{position:relative;z-index:2}
+.hc-line1{height:9px;background:rgba(255,255,255,0.85);border-radius:2px;width:70%;margin-bottom:5px}
+.hc-line2{height:8px;background:rgba(255,255,255,0.5);border-radius:2px;width:50%}
+.hc-badge{position:absolute;top:8px;left:8px;z-index:2;background:rgba(0,0,0,0.6);border:1px solid rgba(255,255,255,0.2);border-radius:10px;padding:3px 8px}
+.hc-badge-dot{display:inline-block;width:5px;height:5px;background:#e8572a;border-radius:50%;margin-right:4px;vertical-align:middle}
+.hc-badge-txt{height:7px;width:24px;background:rgba(255,255,255,0.7);border-radius:1px;display:inline-block;vertical-align:middle}
+
+/* FILTER BAR */
+.filterbar{padding:14px 20px;display:flex;align-items:center;gap:10px;border-bottom:1.5px solid #1a1a1a;background:#f0efe9}
+.filter-label-txt{font-size:10px;color:#888;letter-spacing:1px;text-transform:uppercase;margin-right:4px;white-space:nowrap}
+.pill{height:28px;border:1.5px solid #1a1a1a;border-radius:14px;padding:0 14px;font-size:10px;display:flex;align-items:center;white-space:nowrap;color:#1a1a1a;font-weight:500;background:#f5f4f0}
+.pill.active{background:#1a1a1a;color:#f5f4f0}
+.pill-group{display:flex;gap:6px}
+
+/* LIVE DECK */
+.deck-section{padding:20px 20px 0;border-bottom:1.5px solid #1a1a1a}
+.deck-row{display:flex;gap:0;position:relative;height:180px;margin-top:12px}
+.deck-card{
+  width:120px;height:160px;border:1.5px solid #1a1a1a;border-radius:10px;
+  background:#e8e4de;position:absolute;display:flex;flex-direction:column;justify-content:flex-end;padding:10px;
+  overflow:hidden;
+}
+.dc1{background:#ddd8d0;left:0;transform:rotate(-9deg);z-index:1}
+.dc2{background:#d8dde0;left:40px;transform:rotate(-4deg);z-index:2}
+.dc3{background:#dde0d8;left:80px;transform:rotate(0deg);z-index:3;border-color:#e8572a}
+.dc4{background:#e0d8dd;left:120px;transform:rotate(4deg);z-index:2}
+.dc5{background:#d8e0de;left:160px;transform:rotate(8deg);z-index:1}
+.dc-line1{height:8px;background:rgba(0,0,0,0.35);border-radius:2px;width:80%;margin-bottom:4px}
+.dc-line2{height:7px;background:rgba(0,0,0,0.2);border-radius:2px;width:55%}
+.dc-live{height:14px;width:36px;background:#e8572a;border-radius:6px;margin-bottom:6px}
+.deck-hint{position:absolute;right:0;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:20px;color:#aaa;font-size:18px}
+.deck-see-all{font-size:10px;color:#888;text-align:right;padding:8px 0 16px;letter-spacing:0.5px}
+
+/* MASONRY GRID */
+.grid-section{padding:20px;border-bottom:1.5px solid #1a1a1a}
+.masonry{display:grid;grid-template-columns:1fr 1fr 1fr;grid-template-rows:auto;gap:10px}
+.m-card{border:1.5px solid #1a1a1a;border-radius:10px;overflow:hidden;background:#eee}
+.m-img{background:#ddd;width:100%}
+.m-img.t1{height:180px;background:#d8d0c8}
+.m-img.t2{height:120px;background:#c8d0d8}
+.m-img.t3{height:200px;background:#d0d8c8}
+.m-img.t4{height:130px;background:#d8c8d0}
+.m-img.t5{height:160px;background:#d0c8d8}
+.m-img.t6{height:110px;background:#c8d8d0}
+.m-body{padding:10px}
+.m-line1{height:9px;background:#bbb;border-radius:2px;width:80%;margin-bottom:5px}
+.m-line2{height:8px;background:#d0d0d0;border-radius:2px;width:50%;margin-bottom:8px}
+.m-price-bar{display:flex;justify-content:space-between;align-items:center}
+.m-price{height:13px;width:40px;background:#1a1a1a;border-radius:2px}
+.m-btn{height:22px;width:64px;border:1.5px solid #1a1a1a;border-radius:10px;background:transparent}
+.m-btn.solid{background:#1a1a1a}
+.m-badge{display:inline-block;height:14px;width:30px;background:#e8572a;border-radius:6px;margin-bottom:6px}
+.span2{grid-column:span 2}
+
+/* THRIFT */
+.thrift-block{background:#1a1a1a;padding:24px 20px;border-bottom:1.5px solid #333}
+.thrift-head{display:flex;align-items:baseline;gap:12px;margin-bottom:16px}
+.t-h-line{height:20px;background:#f5f4f0;border-radius:2px;width:160px}
+.t-sub{height:9px;background:#555;border-radius:2px;width:100px;margin-top:6px}
+.thrift-row{display:flex;gap:10px}
+.polaroid{width:120px;flex:0 0 120px;border-radius:6px;overflow:hidden;background:#222;border:1px solid #333}
+.p-img{height:110px;background:#2a2520}
+.p-img.p2{background:#1a2025}
+.p-img.p3{background:#201a25}
+.p-img.p4{background:#1a2520}
+.p-img.p5{background:#25201a}
+.p-foot{padding:8px}
+.p-l1{height:8px;background:#555;border-radius:2px;width:80%;margin-bottom:4px}
+.p-l2{height:7px;background:#333;border-radius:2px;width:50%}
+
+/* ANNOTATIONS */
+.ann{position:absolute;right:10px;bottom:8px;display:flex;flex-direction:column;align-items:flex-end;gap:3px}
+.ann-tag{display:inline-block;font-size:9px;background:#f5f4f0;color:#1a1a1a;border:1px solid #1a1a1a;padding:1px 6px;border-radius:2px;letter-spacing:0.3px}
+</style>
+
+<div class="wf">
+
+  <!-- NAVBAR -->
+  <div class="navbar">
+    <div class="nav-logo"></div>
+    <div class="nav-links">
+      <div class="nav-link"></div>
+      <div class="nav-link"></div>
+      <div class="nav-link"></div>
+      <div class="nav-link"></div>
+    </div>
+    <div class="nav-right">
+      <div class="nav-btn"></div>
+      <div class="nav-btn filled"></div>
+    </div>
+  </div>
+
+  <!-- HERO — split layout -->
+  <div class="block" style="padding:0">
+    <div class="label">hero section</div>
+    <div style="position:absolute;top:8px;right:10px;display:flex;gap:4px;z-index:2">
+      <span class="ann-tag">&lt;HeroLeft /&gt;</span>
+      <span class="ann-tag">&lt;HeroGrid /&gt;</span>
+    </div>
+    <div class="hero-block">
+      <div class="hero-left">
+        <div>
+          <div class="hero-eyebrow">
+            <div class="live-dot"></div>
+            <div class="eyebrow-text"></div>
+            <div style="font-size:9px;color:#aaa;letter-spacing:0.5px">N sellers live</div>
+          </div>
+          <div class="hero-h1-line"></div>
+          <div class="hero-h1-line short"></div>
+          <div style="height:10px"></div>
+          <div class="hero-sub-line"></div>
+          <div class="hero-sub-line mid"></div>
+          <div class="hero-ctas">
+            <div class="cta-primary"></div>
+            <div class="cta-ghost"></div>
+          </div>
+        </div>
+        <div class="stat-row">
+          <div class="stat-box">
+            <div class="stat-num"></div>
+            <div class="stat-lbl"></div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-num"></div>
+            <div class="stat-lbl"></div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-num"></div>
+            <div class="stat-lbl"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2x2 mosaic of product images -->
+      <div class="hero-right">
+        <div class="hero-card">
+          <div class="hero-card-img c1"></div>
+          <div class="hero-card-overlay"></div>
+          <div class="hc-badge"><span class="hc-badge-dot"></span><span class="hc-badge-txt"></span></div>
+          <div class="hero-card-info">
+            <div class="hc-line1"></div>
+            <div class="hc-line2"></div>
+          </div>
+        </div>
+        <div class="hero-card">
+          <div class="hero-card-img c2"></div>
+          <div class="hero-card-overlay"></div>
+          <div class="hc-badge"><span class="hc-badge-dot"></span><span class="hc-badge-txt"></span></div>
+          <div class="hero-card-info">
+            <div class="hc-line1"></div>
+            <div class="hc-line2"></div>
+          </div>
+        </div>
+        <div class="hero-card">
+          <div class="hero-card-img c3"></div>
+          <div class="hero-card-overlay"></div>
+          <div class="hero-card-info">
+            <div class="hc-line1"></div>
+            <div class="hc-line2"></div>
+          </div>
+        </div>
+        <div class="hero-card">
+          <div class="hero-card-img c4"></div>
+          <div class="hero-card-overlay"></div>
+          <div class="hero-card-info">
+            <div class="hc-line1"></div>
+            <div class="hc-line2"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FILTER BAR -->
+  <div class="filterbar">
+    <span class="filter-label-txt">vibe</span>
+    <div class="pill-group">
+      <div class="pill active">all</div>
+      <div class="pill">casual</div>
+      <div class="pill">ethnic</div>
+      <div class="pill">streetwear</div>
+      <div class="pill">home</div>
+      <div class="pill">accessories</div>
+    </div>
+    <div style="flex:1"></div>
+    <div class="pill" style="gap:6px">
+      <span style="width:10px;height:10px;border-radius:50%;background:#e8572a;display:inline-block"></span>
+      live only
+    </div>
+    <div class="pill">price ↕</div>
+  </div>
+
+  <!-- LIVE DECK -->
+  <div class="deck-section">
+    <div style="display:flex;justify-content:space-between;align-items:center">
+      <div style="display:flex;gap:6px;align-items:center">
+        <span class="ann-tag" style="background:transparent">&lt;LiveDeck /&gt;</span>
+        <span style="font-size:10px;color:#aaa">fanned cards · hover to straighten</span>
+      </div>
+      <span style="font-size:10px;color:#aaa">→ scroll</span>
+    </div>
+    <div class="deck-row">
+      <div class="deck-card dc1"><div class="dc-live"></div><div class="dc-line1"></div><div class="dc-line2"></div></div>
+      <div class="deck-card dc2"><div class="dc-live"></div><div class="dc-line1"></div><div class="dc-line2"></div></div>
+      <div class="deck-card dc3" style="border-color:#e8572a"><div class="dc-live"></div><div class="dc-line1"></div><div class="dc-line2"></div></div>
+      <div class="deck-card dc4"><div class="dc-live"></div><div class="dc-line1"></div><div class="dc-line2"></div></div>
+      <div class="deck-card dc5"><div class="dc-live"></div><div class="dc-line1"></div><div class="dc-line2"></div></div>
+      <div style="position:absolute;left:320px;top:50%;transform:translateY(-50%);color:#ccc;font-size:22px;letter-spacing:2px">···</div>
+    </div>
+    <div class="deck-see-all">see all 14 live streams →</div>
+  </div>
+
+  <!-- MASONRY PRODUCT GRID -->
+  <div class="grid-section">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
+      <span class="ann-tag" style="background:transparent">&lt;MasonryGrid /&gt;</span>
+      <span style="font-size:10px;color:#aaa">asymmetric · mixed heights</span>
+    </div>
+    <div class="masonry">
+      <div class="m-card">
+        <div class="m-img t1"></div>
+        <div class="m-body">
+          <div class="m-badge"></div>
+          <div class="m-line1"></div>
+          <div class="m-line2"></div>
+          <div class="m-price-bar"><div class="m-price"></div><div class="m-btn solid"></div></div>
+        </div>
+      </div>
+      <div class="m-card">
+        <div class="m-img t2"></div>
+        <div class="m-body">
+          <div class="m-line1"></div>
+          <div class="m-line2"></div>
+          <div class="m-price-bar"><div class="m-price"></div><div class="m-btn"></div></div>
+        </div>
+      </div>
+      <div class="m-card">
+        <div class="m-img t3"></div>
+        <div class="m-body">
+          <div class="m-badge"></div>
+          <div class="m-line1"></div>
+          <div class="m-line2"></div>
+          <div class="m-price-bar"><div class="m-price"></div><div class="m-btn solid"></div></div>
+        </div>
+      </div>
+      <div class="m-card span2">
+        <div style="display:grid;grid-template-columns:1fr 1fr">
+          <div class="m-img t4" style="height:130px"></div>
+          <div style="padding:14px;display:flex;flex-direction:column;justify-content:center">
+            <div class="m-line1" style="width:90%;margin-bottom:6px"></div>
+            <div class="m-line1" style="width:60%;margin-bottom:10px"></div>
+            <div class="m-line2" style="margin-bottom:14px"></div>
+            <div class="m-price" style="margin-bottom:8px"></div>
+            <div class="m-btn" style="width:80px;height:26px;border-radius:12px"></div>
+          </div>
+        </div>
+      </div>
+      <div class="m-card">
+        <div class="m-img t5"></div>
+        <div class="m-body">
+          <div class="m-line1"></div>
+          <div class="m-line2"></div>
+          <div class="m-price-bar"><div class="m-price"></div><div class="m-btn"></div></div>
+        </div>
+      </div>
+      <div class="m-card span2">
+        <div class="m-img t6" style="height:90px"></div>
+        <div class="m-body">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start">
+            <div style="flex:1"><div class="m-line1"></div><div class="m-line2"></div></div>
+            <div style="margin-left:12px;display:flex;gap:6px">
+              <div class="m-btn" style="width:54px;height:26px;border-radius:12px"></div>
+              <div class="m-btn solid" style="width:54px;height:26px;border-radius:12px"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- THRIFT DARK BAND -->
+  <div class="thrift-block">
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px">
+      <div>
+        <div style="font-size:9px;letter-spacing:1.5px;color:#666;text-transform:uppercase;margin-bottom:8px">thrift drop</div>
+        <div class="t-h-line"></div>
+        <div class="t-sub" style="margin-top:8px"></div>
+      </div>
+      <span class="ann-tag" style="background:#333;border-color:#555;color:#ccc">&lt;ThriftBand /&gt;</span>
+    </div>
+    <div class="thrift-row">
+      <div class="polaroid"><div class="p-img"></div><div class="p-foot"><div class="p-l1"></div><div class="p-l2"></div></div></div>
+      <div class="polaroid"><div class="p-img p2"></div><div class="p-foot"><div class="p-l1"></div><div class="p-l2"></div></div></div>
+      <div class="polaroid"><div class="p-img p3"></div><div class="p-foot"><div class="p-l1"></div><div class="p-l2"></div></div></div>
+      <div class="polaroid"><div class="p-img p4"></div><div class="p-foot"><div class="p-l1"></div><div class="p-l2"></div></div></div>
+      <div class="polaroid"><div class="p-img p5"></div><div class="p-foot"><div class="p-l1"></div><div class="p-l2"></div></div></div>
+      <div style="flex:0 0 auto;display:flex;align-items:center;padding:0 12px;color:#444;font-size:20px">→</div>
+    </div>
+  </div>
+
+</div>
