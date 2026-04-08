@@ -4,15 +4,10 @@ import LandingPersona from './LandingPersona';
 import LandingAuthForm from './LandingAuthForm';
 import './AuthSection.css';
 
-export default function AuthSection({ onComplete, startAtAuth, authMode }) {
-  // Step 1: Email entered
+export default function AuthSection({ onBuyerSelect, onCreatorSelect, onComplete, startAtAuth, authMode }) {
   const [emailEntered, setEmailEntered] = useState(false);
-  const [email, setEmail] = useState("");
-
-  // Step 2: Persona selected
+  const [email, setEmail] = useState('');
   const [personaSelected, setPersonaSelected] = useState(false);
-
-  // Exiting animation state
   const [isTransitioningHome, setIsTransitioningHome] = useState(false);
 
   useEffect(() => {
@@ -34,46 +29,74 @@ export default function AuthSection({ onComplete, startAtAuth, authMode }) {
       e.stopPropagation();
       e.preventDefault();
     }
-    // Reveal step 3 (auth form)
-    setPersonaSelected(true);
+    if (onBuyerSelect) {
+      setIsTransitioningHome(true);
+      setTimeout(() => {
+        onBuyerSelect();
+      }, 800);
+    } else {
+      setPersonaSelected(true);
+    }
+  };
+
+  const handleCreatorClick = (e) => {
+    if (e) {
+      e.stopPropagation();
+      e.preventDefault();
+    }
+    if (onCreatorSelect) {
+      setIsTransitioningHome(true);
+      setTimeout(() => {
+        onCreatorSelect();
+      }, 800);
+    } else {
+      setPersonaSelected(true);
+    }
   };
 
   const handleAuthComplete = (authenticated) => {
     setIsTransitioningHome(true);
-    // Wait for the exit animation to finish
     setTimeout(() => {
       onComplete(authenticated);
     }, 800);
   };
 
-  return (
-    <div className={`auth-container ${isTransitioningHome ? 'transitioning-out' : 'transitioning-in'}`}>
-      
-      {/* step 1 */}
-      {!startAtAuth && (
+  if (startAtAuth) {
+    return (
+      <div className={`auth-container ${isTransitioningHome ? 'transitioning-out' : 'transitioning-in'}`}>
         <LandingEmail 
           email={email}
           setEmail={setEmail}
           onSubmit={handleEmailSubmit}
           isHidden={emailEntered}
         />
-      )}
-      
-      {/* step 2 */}
-      {!startAtAuth && (
         <LandingPersona 
           onShopperClick={handleShopperClick}
+          onCreatorClick={handleCreatorClick}
           isHidden={!emailEntered || personaSelected}
         />
-      )}
+        <LandingAuthForm
+          onComplete={handleAuthComplete}
+          isHidden={!personaSelected}
+          initialMode={authMode || 'signup'}
+        />
+      </div>
+    );
+  }
 
-      {/* step 3 */}
-      <LandingAuthForm
-        onComplete={handleAuthComplete}
-        isHidden={!personaSelected}
-        initialMode={authMode || 'signup'}
+  return (
+    <div className={`auth-container ${isTransitioningHome ? 'transitioning-out' : 'transitioning-in'}`}>
+      <LandingEmail 
+        email={email}
+        setEmail={setEmail}
+        onSubmit={handleEmailSubmit}
+        isHidden={emailEntered}
       />
-
+      <LandingPersona 
+        onShopperClick={handleShopperClick}
+        onCreatorClick={handleCreatorClick}
+        isHidden={!emailEntered}
+      />
     </div>
   );
 }

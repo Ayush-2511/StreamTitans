@@ -27,7 +27,6 @@ export default function Navbar({ isDark, toggleDark, isAuthenticated, onOpenAuth
         >
           {isDark ? <Sun className="nav-btn-svg" /> : <Moon className="nav-btn-svg" />}
         </button>
-        
         {!isAuthenticated && (
           <>
             <button 

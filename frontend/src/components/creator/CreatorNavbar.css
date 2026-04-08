@@ -1,0 +1,130 @@
+.creator-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1.5rem;
+  border-radius: 4px;
+  position: sticky;
+  top: 1rem;
+  z-index: 50;
+}
+
+.creator-nav-left {
+  display: flex;
+  align-items: center;
+  gap: 3rem;
+}
+
+.creator-logo-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  line-height: 1;
+}
+
+.creator-logo-text {
+  font-family: var(--font-sans);
+  font-weight: 900;
+  font-size: 1.5rem;
+  letter-spacing: -0.05em;
+  font-style: italic;
+}
+
+.creator-badge {
+  font-size: 0.65rem;
+  font-weight: 800;
+  padding: 0.15rem 0.4rem;
+  border-radius: 12px;
+  margin-top: 0.2rem;
+  letter-spacing: 0.05em;
+}
+
+.creator-nav-links {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.nav-link {
+  font-weight: 600;
+  font-size: 0.95rem;
+  position: relative;
+  transition: opacity 0.2s;
+}
+
+.nav-link:not(.active) {
+  opacity: 0.6;
+}
+
+.nav-link:not(.active):hover {
+  opacity: 1;
+}
+
+.creator-nav-right {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.icon-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color-surface);
+  transition: all 0.2s;
+}
+
+.icon-btn:hover {
+  background-color: var(--color-ink);
+  color: var(--color-cream);
+  transform: translateY(-2px);
+  box-shadow: 2px 2px 0px var(--color-ink);
+}
+
+.notification-dot {
+  position: absolute;
+  top: 6px;
+  right: 8px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.go-live-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background-color: var(--color-ink);
+  color: var(--color-cream);
+  font-weight: 700;
+  font-size: 0.95rem;
+  padding: 0.6rem 1.25rem;
+  border-radius: 8px;
+  transition: all 0.2s;
+}
+
+.go-live-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 4px 4px 0px var(--color-orange);
+}
+
+.live-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(1.2); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+@media (max-width: 1024px) {
+  .creator-nav-links {
+    display: none;
+  }
+}

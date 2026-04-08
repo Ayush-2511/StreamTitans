@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import Home from './pages/Home';
 import LandingFlow from './pages/LandingFlow';
+import CreatorDashboard from './pages/CreatorDashboard';
 
 export default function App() {
-  const [currentView, setCurrentView] = useState('landing'); // 'landing' | 'app'
+  const [currentView, setCurrentView] = useState('landing'); // 'landing' | 'buyer' | 'creator' | 'auth-login' | 'auth-signup'
   const [isDark, setIsDark] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
@@ -17,38 +18,44 @@ export default function App() {
 
   const toggleDark = () => setIsDark(!isDark);
 
-  const handleLandingComplete = (authenticated) => {
-    if (authenticated) {
-      setIsAuthenticated(true);
-    }
-    setCurrentView('app');
-  };
-
   const handleOpenAuth = (mode) => {
-    // To go strictly back to the auth component, we can use a simpler view. 
-    // Since we need the full background, it's easier to implement a full screen overlay 
-    // or set the view back to 'landing' but starting at the auth step directly.
-    // For now, we will add a new view state 'auth'.
-    setCurrentView(`auth-${mode}`); // 'auth-login' or 'auth-signup'
+    setCurrentView(mode === 'login' ? 'auth-login' : 'auth-signup');
   };
 
-  if (currentView === 'landing' || currentView.startsWith('auth-')) {
+  const handleAuthComplete = (authenticated) => {
+    setIsAuthenticated(authenticated);
+    setCurrentView('buyer');
+  };
+
+  if (currentView === 'landing') {
     return (
       <LandingFlow 
-        onComplete={handleLandingComplete} 
-        startAtAuth={currentView.startsWith('auth-')}
-        authMode={currentView.replace('auth-', '')}
+        onBuyerSelect={() => setCurrentView('buyer')}
+        onCreatorSelect={() => setCurrentView('creator')}
       />
     );
   }
 
-  // Once unlocked, render main platform framework
+  if (currentView.startsWith('auth-')) {
+    return (
+      <LandingFlow
+        startAtAuth
+        authMode={currentView.replace('auth-', '')}
+        onComplete={handleAuthComplete}
+      />
+    );
+  }
+
+  if (currentView === 'creator') {
+    return <CreatorDashboard isDark={isDark} toggleDark={toggleDark} />;
+  }
+
   return (
-    <Home 
-      isDark={isDark} 
-      toggleDark={toggleDark} 
+    <Home
+      isDark={isDark}
+      toggleDark={toggleDark}
       isAuthenticated={isAuthenticated}
-      onOpenAuth={handleOpenAuth} 
+      onOpenAuth={handleOpenAuth}
     />
   );
 }

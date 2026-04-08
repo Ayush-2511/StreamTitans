@@ -12,9 +12,9 @@ export default function Home({ isDark, toggleDark, isAuthenticated, onOpenAuth }
   return (
     <div className="home-container">
       <div className="home-wrapper">
-        <Navbar 
-          isDark={isDark} 
-          toggleDark={toggleDark} 
+        <Navbar
+          isDark={isDark}
+          toggleDark={toggleDark}
           isAuthenticated={isAuthenticated}
           onOpenAuth={onOpenAuth}
         />

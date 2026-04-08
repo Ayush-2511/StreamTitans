@@ -93,6 +93,9 @@ body {
 .brutal-border {
   border: 1.5px solid var(--color-ink);
 }
+.brutal-border:hover {
+  border: 1.5px solid var(--color-cream);
+}
 
 .bg-cream {
   background-color: var(--color-cream);
