@@ -1,13 +1,21 @@
-import React from 'react';
-import { ECOMMERCE_V2_LIVE_STREAMS } from '../../data/mockData';
+import React, { useEffect, useState } from 'react';
 import { ArrowRight } from 'lucide-react';
 import { useStream } from '../../context/StreamContext';
 import { useProduct } from '../../context/ProductContext';
+import { subscribeToLiveStreams } from '../../firebase/firestore';
 import './LiveStreamsGrid.css';
 
 export default function LiveStreamsGrid() {
   const { openStream } = useStream();
   const { openProduct } = useProduct();
+  const [liveStreams, setLiveStreams] = useState([]);
+
+  useEffect(() => {
+    const unsub = subscribeToLiveStreams((streams) => {
+      setLiveStreams(streams);
+    });
+    return () => unsub();
+  }, []);
 
   return (
     <section className="ecom-section ecom-streams">
@@ -20,15 +28,16 @@ export default function LiveStreamsGrid() {
       </div>
 
       <div className="streams-grid">
-        {ECOMMERCE_V2_LIVE_STREAMS.map((stream, idx) => (
+        {liveStreams.length === 0 && <p style={{opacity: 0.5}}>No livestreams currently available</p>}
+        {liveStreams.map((stream, idx) => (
           <div 
             key={stream.id} 
-            className={`stream-grid-card bg-pattern-${idx}`}
+            className={`stream-grid-card bg-pattern-${(idx % 4) + 1}`}
             onClick={() => openStream({
               title: stream.title,
-              seller: stream.seller,
-              sellerName: stream.seller.replace('@', ''),
-              viewers: stream.viewers,
+              seller: stream.sellerName || 'lumina_seller',
+              sellerName: (stream.sellerName || 'lumina').replace('@', ''),
+              viewers: stream.viewers || 0,
               category: stream.category || 'Ecommerce'
             })}
             style={{ cursor: 'pointer' }}
@@ -40,27 +49,25 @@ export default function LiveStreamsGrid() {
             </div>
             
             <div className="card-center">
-              <div className="big-icon">{stream.icon}</div>
-              <span className="viewers-count">{stream.viewers}</span>
+              <div className="big-icon">🎬</div>
+              <span className="viewers-count">{stream.viewers || 0}</span>
             </div>
 
             <div className="lsg-card-bottom">
               <div className="card-category">{stream.category}</div>
               <h3 className="card-title">{stream.title}</h3>
-              <p className="card-seller">{stream.seller}</p>
+              <p className="card-seller">{stream.sellerName && !stream.sellerName.startsWith('@') ? '@'+stream.sellerName : stream.sellerName || '@lumina_seller'}</p>
               
               <div className="card-action">
-                <span className="card-price">{stream.price}</span>
+                <span className="card-price">Live</span>
                 <button className="claim-btn" onClick={(e) => {
                   e.stopPropagation(); // prevent clicking button from opening stream
-                  openProduct({
+                  openStream({
                     title: stream.title,
-                    seller: stream.seller,
-                    sellerName: stream.seller.replace('@', ''),
-                    price: stream.price,
-                    category: stream.category || 'Ecommerce',
-                    viewers: stream.viewers,
-                    image: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=800&q=80'
+                    seller: stream.sellerName,
+                    sellerName: stream.sellerName || 'lumina_seller',
+                    viewers: stream.viewers || 0,
+                    category: stream.category || 'Ecommerce'
                   });
                 }}>Claim</button>
               </div>

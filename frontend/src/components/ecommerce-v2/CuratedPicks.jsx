@@ -1,11 +1,19 @@
-import React from 'react';
-import { ECOMMERCE_V2_CURATED_PICKS } from '../../data/mockData';
+import React, { useState, useEffect } from 'react';
 import { ArrowRight } from 'lucide-react';
 import { useStream } from '../../context/StreamContext';
+import { subscribeToProducts } from '../../firebase/firestore';
 import './HotRightNow.css';
 
 export default function CuratedPicks() {
   const { openStream } = useStream();
+  const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    const unsub = subscribeToProducts((data) => setProducts(data));
+    return () => unsub();
+  }, []);
+
+  const displayProducts = products.slice(0, 4);
 
   return (
     <section className="ecom-section ecom-hot">
@@ -18,37 +26,42 @@ export default function CuratedPicks() {
       </div>
 
       <div className="hot-grid-v2">
-        {ECOMMERCE_V2_CURATED_PICKS.map(item => (
+        {displayProducts.length === 0 && <p style={{opacity: 0.5}}>No products matching this criteria.</p>}
+        {displayProducts.map((item, idx) => {
+          const bgColors = ['#e8f0f4', '#f4e8e8', '#f4efe8', '#e8f4ec'];
+          const badgeColors = ['#1a1a1a', '#FF5B22', '#3b82f6', '#10b981'];
+          const isLive = idx % 2 === 1;
+          return (
           <div 
             key={item.id} 
             className="hot-card-v2"
             onClick={() => openStream({
               title: item.title,
-              seller: item.seller,
-              sellerName: item.seller.replace('@', '').replace(' is streaming', ''),
+              seller: item.sellerName || 'creator',
+              sellerName: item.sellerName || 'creator',
               viewers: '1.8K',
-              category: item.category
+              category: item.category || 'Retail'
             })}
             style={{ cursor: 'pointer' }}
           >
-            <div className="hot-img-area" style={{ backgroundColor: item.bg }}>
-               <div className="hot-badge" style={{ backgroundColor: item.badgeColor }}>
-                 {item.badge === 'LIVE' && <span className="live-dot inline-white"></span>}
-                 {item.badge}
+            <div className="hot-img-area" style={{ backgroundColor: bgColors[idx % 4] }}>
+               <div className="hot-badge" style={{ backgroundColor: badgeColors[idx % 4] }}>
+                 {isLive && <span className="live-dot inline-white"></span>}
+                 {isLive ? 'LIVE' : 'CHOICE'}
                </div>
                <img src={item.img} alt={item.title} className="hot-product-img"/>
             </div>
             <div className="hot-info-area">
               <div className="hot-seller-status">
-                <span className="live-dot" style={{ backgroundColor: item.badgeColor }}></span> 
-                {item.seller}
+                <span className="live-dot" style={{ backgroundColor: badgeColors[idx % 4] }}></span> 
+                {'@' + (item.sellerName || 'creator') + (isLive ? ' is streaming' : ' dropped this')}
               </div>
-              <div className="hot-category-text">{item.category}</div>
+              <div className="hot-category-text">{item.category || 'Apparel'}</div>
               <h4 className="hot-title-text">{item.title}</h4>
-              <p className="hot-details-text">{item.details}</p>
+              <p className="hot-details-text">{item.price} • {item.stock} left in stock</p>
             </div>
           </div>
-        ))}
+        )})}
 
       </div>
     </section>

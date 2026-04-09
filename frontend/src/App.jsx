@@ -8,10 +8,13 @@ import { ProductProvider } from './context/ProductContext';
 import ProductOverlay from './components/ProductOverlay';
 import { ArrowLeft } from 'lucide-react';
 
+import { useAuth } from './context/AuthContext';
+
 export default function App() {
   const [currentView, setCurrentView] = useState('landing'); // 'landing' | 'buyer' | 'creator' | 'auth-login' | 'auth-signup'
   const [isDark, setIsDark] = useState(false);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const { currentUser, userRole, loading } = useAuth();
+
 
   useEffect(() => {
     if (isDark) {
@@ -27,25 +30,44 @@ export default function App() {
     setCurrentView(mode === 'login' ? 'auth-login' : 'auth-signup');
   };
 
-  const handleAuthComplete = (authenticated) => {
-    setIsAuthenticated(authenticated);
-    setCurrentView('buyer');
+  const handleAuthComplete = () => {
+    setCurrentView(userRole === 'seller' ? 'creator' : 'buyer');
   };
+
+  // If Firebase is checking login state, show nothing or spinner.
+  if (loading) return null;
 
   let content;
 
-  if (currentView === 'landing') {
+  // Protect creator route
+  if (currentView === 'creator' && (!currentUser || userRole !== 'seller')) {
+    content = (
+      <LandingFlow 
+        startAtAuth
+        authMode="login"
+        onComplete={handleAuthComplete}
+      />
+    );
+  } else if ((currentView === 'landing' || currentView === 'auth-login' || currentView === 'auth-signup') && currentUser) {
+     // Auto-redirect if logged in and on landing OR auth views
+     // Wait for userRole to be populated from Firestore
+     if (userRole !== null) {
+       setTimeout(() => setCurrentView(userRole === 'seller' ? 'creator' : 'buyer'), 0);
+     }
+     content = null;
+  } else if (currentView === 'landing') {
     content = (
       <LandingFlow 
         onBuyerSelect={() => setCurrentView('auth-login')}
         onCreatorSelect={() => setCurrentView('creator')}
+        onComplete={handleAuthComplete}
       />
     );
-  } else if (currentView.startsWith('auth-')) {
+  } else if (currentView === 'auth-login' || currentView === 'auth-signup') {
     content = (
-      <LandingFlow
+      <LandingFlow 
         startAtAuth
-        authMode={currentView.replace('auth-', '')}
+        authMode={currentView === 'auth-login' ? 'login' : 'signup'}
         onComplete={handleAuthComplete}
       />
     );
@@ -56,7 +78,7 @@ export default function App() {
       <Home
         isDark={isDark}
         toggleDark={toggleDark}
-        isAuthenticated={isAuthenticated}
+        isAuthenticated={!!currentUser}
         onOpenAuth={handleOpenAuth}
       />
     );

@@ -1,25 +1,58 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Search, Filter, ArrowDownUp, Plus, MoreHorizontal } from 'lucide-react';
+import { useAuth } from '../../../context/AuthContext';
+import { subscribeToProducts, addProduct } from '../../../firebase/firestore';
+import { uploadMediaToCloudinary } from '../../../firebase/cloudinary';
+import toast from 'react-hot-toast';
 import './CreatorListingsTab.css';
 
 export default function CreatorListingsTab() {
   const [storeMode, setStoreMode] = useState('Thrifting');
+  const { currentUser } = useAuth();
+  const [products, setProducts] = useState([]);
+  const [isAddingProduct, setIsAddingProduct] = useState(false);
+  const [newProduct, setNewProduct] = useState({ title: '', price: '', stock: '', category: '' });
+  const [file, setFile] = useState(null);
+  const [uploading, setUploading] = useState(false);
 
-  const thriftProducts = [
-    { title: 'Floral Midi Dress', type: "Women's fashion", price: '₹299', stock: '14 in stock', stockClass: 'ok', views: '42', sold: '8', rating: '4.8', img: 'https://images.unsplash.com/photo-1515347619362-67bd86fa2e72?w=500&q=80' },
-    { title: 'Linen Shirt (M)', type: "Men's casual", price: '₹449', stock: '3 left', stockClass: 'low', views: '29', sold: '5', rating: '4.5', img: 'https://images.unsplash.com/photo-1596755094514-f87e32f85ce9?w=500&q=80' },
-    { title: 'Sneakers (Maroon)', type: "Footwear", price: '₹899', stock: '2 left', stockClass: 'low', views: '61', sold: '3', rating: '4.9', img: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=500&q=80' },
-    { title: 'Silk Scarf (Blue)', type: "Accessories", price: '₹199', stock: '22 in stock', stockClass: 'ok', views: '18', sold: '2', rating: '4.6', img: 'https://images.unsplash.com/photo-1584916201218-f4242ceb4809?w=500&q=80' }
-  ];
+  useEffect(() => {
+    if (!currentUser) return;
+    const unsubscribe = subscribeToProducts((data) => setProducts(data), 'seller', currentUser.userId);
+    return () => unsubscribe();
+  }, [currentUser]);
 
-  const retailProducts = [
-    { title: 'Oversized Cotton Tee', type: "Brand New Apparels", price: '₹599', stock: '150 in stock', stockClass: 'ok', views: '12', sold: '2', rating: '5.0', img: 'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=500&q=80' },
-    { title: 'Premium Denim Jeans', type: "Retail Clothing", price: '₹1,499', stock: '85 in stock', stockClass: 'ok', views: '8', sold: '0', rating: 'N/A', img: 'https://images.unsplash.com/photo-1542272604-787c3835535d?w=500&q=80' },
-    { title: 'Classic Leather Watch', type: "Accessories", price: '₹2,999', stock: '12 left', stockClass: 'low', views: '45', sold: '1', rating: '4.9', img: 'https://images.unsplash.com/photo-1524805444758-089113d48a6d?w=500&q=80' },
-    { title: 'Summer Sunglasses', type: "Eyewear", price: '₹899', stock: '200 in stock', stockClass: 'ok', views: '33', sold: '15', rating: '4.7', img: 'https://images.unsplash.com/photo-1511499767150-a48a237f0083?w=500&q=80' }
-  ];
+  const currentProducts = products.filter(p => storeMode === 'Thrifting' ? p.type === 'thrift' : p.type === 'regular');
 
-  const currentProducts = storeMode === 'Thrifting' ? thriftProducts : retailProducts;
+  const handleAddProduct = async (e) => {
+    e.preventDefault();
+    if (!file) return toast.error("Please upload an image!");
+    if (!newProduct.title || !newProduct.price || !newProduct.stock) return toast.error("Fill in all details!");
+
+    try {
+      setUploading(true);
+      const imageUrl = await uploadMediaToCloudinary(file);
+      if (!imageUrl) throw new Error("Upload failed");
+
+      await addProduct({
+        ...newProduct,
+        type: storeMode === 'Thrifting' ? 'thrift' : 'regular',
+        sellerId: currentUser.userId,
+        img: imageUrl,
+        views: 0,
+        sold: 0,
+        rating: 'N/A'
+      });
+      
+      toast.success("Product added!");
+      setIsAddingProduct(false);
+      setNewProduct({ title: '', price: '', stock: '', category: '' });
+      setFile(null);
+    } catch(err) {
+      toast.error(err.message);
+    } finally {
+      setUploading(false);
+    }
+  };
 
   return (
     <div className="listings-tab animate-slide-up">
@@ -57,7 +90,7 @@ export default function CreatorListingsTab() {
             <button className="export-btn">
               <ArrowDownUp size={14} /> Sort
             </button>
-            <button className="export-btn text-cream" style={{ backgroundColor: 'var(--color-ink)' }}>
+            <button className="export-btn text-cream" style={{ backgroundColor: 'var(--color-ink)' }} onClick={() => setIsAddingProduct(!isAddingProduct)}>
               <Plus size={14} /> Add product
             </button>
           </div>
@@ -138,6 +171,23 @@ export default function CreatorListingsTab() {
       </div>
 
       <div className="products-grid mt-4">
+        {isAddingProduct && (
+          <form onSubmit={handleAddProduct} className="brutal-border" style={{ padding: '1rem', background: '#222', gridColumn: '1 / -1', marginBottom: '1rem', borderRadius: '12px' }}>
+            <h4 style={{ margin: '0 0 1rem 0' }}>Add New {storeMode === 'Thrifting' ? 'Thrift' : 'Retail'} Product</h4>
+            <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+              <input type="text" placeholder="Title" value={newProduct.title} onChange={e=>setNewProduct({...newProduct, title: e.target.value})} style={{ padding: '8px', flex: 1, minWidth: '200px', backgroundColor: '#111', color: '#fff', border: '1px solid #555', borderRadius: '4px' }} />
+              <input type="text" placeholder="Category" value={newProduct.category} onChange={e=>setNewProduct({...newProduct, category: e.target.value})} style={{ padding: '8px', flex: 1, minWidth: '150px', backgroundColor: '#111', color: '#fff', border: '1px solid #555', borderRadius: '4px' }} />
+              <input type="text" placeholder="Price (e.g. ₹299)" value={newProduct.price} onChange={e=>setNewProduct({...newProduct, price: e.target.value})} style={{ padding: '8px', width: '120px', backgroundColor: '#111', color: '#fff', border: '1px solid #555', borderRadius: '4px' }} />
+              <input type="number" placeholder="Stock" value={newProduct.stock} onChange={e=>setNewProduct({...newProduct, stock: e.target.value})} style={{ padding: '8px', width: '100px', backgroundColor: '#111', color: '#fff', border: '1px solid #555', borderRadius: '4px' }} />
+              <input type="file" onChange={e => setFile(e.target.files[0])} accept="image/*" style={{ padding: '8px', width: '100%', fontSize: '0.9rem' }} />
+            </div>
+            <div style={{ display: 'flex', gap: '1rem', marginTop: '1rem', justifyContent: 'flex-end' }}>
+              <button type="button" onClick={() => setIsAddingProduct(false)} style={{ padding: '8px 16px', background: 'transparent', color: '#fff', border: '1px solid #555', cursor: 'pointer', borderRadius: '4px' }}>Cancel</button>
+              <button type="submit" disabled={uploading} style={{ padding: '8px 16px', background: 'var(--color-ink)', color: '#fff', border: 'none', cursor: 'pointer', borderRadius: '4px' }}>{uploading ? 'Adding...' : 'Submit Workflow'}</button>
+            </div>
+          </form>
+        )}
+
         {currentProducts.map((item, i) => (
           <div key={i} className="product-card brutal-shadow">
             <div className="product-cover" style={{ backgroundImage: `url(${item.img})`, backgroundSize: 'cover', backgroundPosition: 'center' }}>
@@ -148,10 +198,10 @@ export default function CreatorListingsTab() {
             </div>
             <div className="product-details">
               <h4 className="prod-title">{item.title}</h4>
-              <p className="prod-cat">{item.type}</p>
+              <p className="prod-cat">{item.category}</p>
               <div className="prod-price-row">
                 <span className="prod-price">{item.price}</span>
-                <span className={`stock-badge ${item.stockClass}`}>{item.stock}</span>
+                <span className="stock-badge ok">{item.stock} left</span>
               </div>
               <div className="prod-stats">
                 <div className="stat-col">
