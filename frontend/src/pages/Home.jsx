@@ -34,10 +34,10 @@ export default function Home({ isDark, toggleDark, isAuthenticated, onOpenAuth }
           activeTab={activeTab}
           setActiveTab={setActiveTab}
         />
-        
+
         <div key={activeTab} className="animate-fade-in-up tab-transition-wrapper">
           {activeTab === 'Discover' && <Hero isAuthenticated={isAuthenticated} />}
-          
+
           {activeTab === 'Discover' && (
             <>
               <FilterBar />

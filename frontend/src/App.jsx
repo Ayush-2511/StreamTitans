@@ -37,7 +37,7 @@ export default function App() {
   if (currentView === 'landing') {
     content = (
       <LandingFlow 
-        onBuyerSelect={() => setCurrentView('buyer')}
+        onBuyerSelect={() => setCurrentView('auth-login')}
         onCreatorSelect={() => setCurrentView('creator')}
       />
     );
