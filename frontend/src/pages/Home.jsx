@@ -3,7 +3,6 @@ import Navbar from '../components/Navbar';
 import Hero from '../components/Hero';
 import EcommerceHero from '../components/EcommerceHero';
 import ThriftLiveDrops from '../components/thrift-v2/ThriftLiveDrops';
-import ThriftTrending from '../components/thrift-v2/ThriftTrending';
 import ThriftTopSellers from '../components/thrift-v2/ThriftTopSellers';
 import BrandTicker from '../components/BrandTicker';
 import CategoryBrowser from '../components/CategoryBrowser';
@@ -56,7 +55,6 @@ export default function Home({ isDark, toggleDark, isAuthenticated, onOpenAuth }
             <BrandTicker />
             <ThriftLiveDrops />
             <CategoryBrowser />
-            <ThriftTrending />
             <FeaturedDrops />
             <WatermarkBanner />
             <ThriftTopSellers />
