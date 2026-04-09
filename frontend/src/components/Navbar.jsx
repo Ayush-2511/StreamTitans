@@ -5,7 +5,7 @@ import { logOut } from '../firebase/auth';
 import toast from 'react-hot-toast';
 import './Navbar.css';
 
-export default function Navbar({ isDark, toggleDark, isAuthenticated, onOpenAuth, activeTab, setActiveTab }) {
+export default function Navbar({ isDark, toggleDark, isAuthenticated, userRole, onOpenAuth, onSwitchDash, activeTab, setActiveTab }) {
   const [showProfileMenu, setShowProfileMenu] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const profileRef = useRef(null);
@@ -129,6 +129,9 @@ export default function Navbar({ isDark, toggleDark, isAuthenticated, onOpenAuth
               >
                 <a href="#" className="nav-link" onClick={(e) => { e.preventDefault(); setActiveTab('Profile'); setShowProfileMenu(false); }} style={{ padding: '5px 15px', color: 'var(--text-main)' }}>Profile</a>
                 <a href="#" className="nav-link" onClick={(e) => { e.preventDefault(); setActiveTab('Settings'); setShowProfileMenu(false); }} style={{ padding: '5px 15px', color: 'var(--text-main)' }}>Settings</a>
+                {userRole === 'seller' && onSwitchDash && (
+                  <a href="#" className="nav-link" onClick={(e) => { e.preventDefault(); onSwitchDash(); setShowProfileMenu(false); }} style={{ padding: '5px 15px', color: 'var(--color-orange)', borderTop: '1px solid rgba(0,0,0,0.05)', fontWeight: 'bold' }}>Seller Dashboard</a>
+                )}
                 <a href="#" className="nav-link" onClick={handleLogout} style={{ padding: '5px 15px', color: 'var(--color-orange)', borderTop: '1px solid rgba(0,0,0,0.1)', marginTop: '4px' }}>Log Out</a>
               </div>
             )}

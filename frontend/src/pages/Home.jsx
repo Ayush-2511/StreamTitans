@@ -23,7 +23,7 @@ import { useUserActivity } from '../context/UserActivityContext';
 import { ArrowLeft, Sparkles } from 'lucide-react';
 import './Home.css';
 
-export default function Home({ isDark, toggleDark, isAuthenticated, onOpenAuth, onBackParent, initialTab }) {
+export default function Home({ isDark, toggleDark, isAuthenticated, userRole, onOpenAuth, onBackParent, onSwitchDash, initialTab }) {
   const [activeTab, setActiveTab] = useState(initialTab || 'Discover');
   const [tabHistory, setTabHistory] = useState([initialTab || 'Discover']);
   const [activeCategory, setActiveCategory] = useState('ALL');
@@ -60,9 +60,8 @@ export default function Home({ isDark, toggleDark, isAuthenticated, onOpenAuth, 
       'Settings': '#/settings',
     };
     const hash = tabToHash[activeTab];
-    // Only push if the target hash is NOT already in the address bar
     if (hash && window.location.hash !== hash) {
-      window.history.pushState(null, '', hash);
+      window.history.pushState({ tab: activeTab }, '', hash);
     }
   }, [activeTab]);
 
@@ -98,10 +97,8 @@ export default function Home({ isDark, toggleDark, isAuthenticated, onOpenAuth, 
 
   const handleBack = () => {
     if (tabHistory.length > 1) {
-      const newHistory = [...tabHistory];
-      newHistory.pop();
-      setTabHistory(newHistory);
-      setActiveTab(newHistory[newHistory.length - 1]);
+      // Use native history back to maintain stack integrity
+      window.history.back();
     } else if (onBackParent) {
       onBackParent();
     }
@@ -114,7 +111,9 @@ export default function Home({ isDark, toggleDark, isAuthenticated, onOpenAuth, 
           isDark={isDark}
           toggleDark={toggleDark}
           isAuthenticated={isAuthenticated}
+          userRole={userRole}
           onOpenAuth={onOpenAuth}
+          onSwitchDash={onSwitchDash}
           activeTab={activeTab}
           setActiveTab={navigateToTab}
         />

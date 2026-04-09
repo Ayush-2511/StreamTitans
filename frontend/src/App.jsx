@@ -20,11 +20,18 @@ const TAB_HASHES = {
   '#/wallet': 'Wallet',
   '#/profile': 'Profile',
   '#/settings': 'Settings',
+  // Creator Workspace Tabs
+  '#/dashboard': 'Dashboard',
+  '#/dashboard/streams': 'My Streams',
+  '#/dashboard/listings': 'Listings',
+  '#/dashboard/orders': 'Orders',
+  '#/dashboard/analytics': 'Analytics',
+  '#/dashboard/profile': 'Profile',
 };
 
 const getInitialViewFromHash = () => {
   const hash = window.location.hash;
-  if (hash === '#/dashboard') return 'creator';
+  if (hash.startsWith('#/dashboard')) return 'creator';
   if (hash === '#/login') return 'auth-login';
   if (hash === '#/signup') return 'auth-signup';
   if (hash === '#/creator-auth') return 'creator-auth';
@@ -36,6 +43,7 @@ const getInitialTabFromHash = () => TAB_HASHES[window.location.hash] || 'Discove
 
 export default function App() {
   const [currentView, setCurrentView] = useState(getInitialViewFromHash);
+  const [personaIntent, setPersonaIntent] = useState(null); // 'buyer' or 'seller'
   const [isDark, setIsDark] = useState(() => localStorage.getItem('lumina-theme') === 'dark');
   const { currentUser, userRole, loading } = useAuth();
 
@@ -54,6 +62,7 @@ export default function App() {
     const viewToHash = {
       landing: '', 
       creator: '#/dashboard',
+      buyer: '#/discover',
       'creator-auth': '#/creator-auth',
       'auth-login': '#/login',
       'auth-signup': '#/signup',
@@ -65,8 +74,12 @@ export default function App() {
       if (currentHash !== '' && currentHash !== '#/') {
         window.history.pushState(null, '', '/');
       }
-    } else if (targetHash && currentHash !== targetHash) {
-      window.history.pushState(null, '', targetHash);
+    } else if (targetHash) {
+      // For buyer/creator, we only push if the current hash doesn't already start with the base
+      const isCorrectBase = currentHash.startsWith(targetHash.split('/')[0] + '/' + targetHash.split('/')[1]);
+      if (!isCorrectBase && currentHash !== targetHash) {
+        window.history.pushState(null, '', targetHash);
+      }
     }
   }, [currentView]);
 
@@ -86,11 +99,14 @@ export default function App() {
   const toggleDark = () => setIsDark(!isDark);
 
   const handleOpenAuth = (mode) => {
+    setPersonaIntent(null); // Clear intent for direct login/signup clicks
     setCurrentView(mode === 'login' ? 'auth-login' : 'auth-signup');
   };
 
-  const handleAuthComplete = () => {
-    setCurrentView(userRole === 'seller' ? 'creator' : 'buyer');
+  const handleAuthComplete = (persona) => {
+    const finalPersona = persona || personaIntent || (userRole === 'seller' ? 'seller' : 'buyer');
+    setCurrentView(finalPersona === 'seller' ? 'creator' : 'buyer');
+    setPersonaIntent(null);
   };
 
   // If Firebase is checking login state, show nothing or spinner.
@@ -128,18 +144,26 @@ export default function App() {
         onBack={() => setCurrentView('landing')} 
       />
     );
-  } else if ((currentView === 'landing' || currentView === 'auth-login' || currentView === 'auth-signup') && currentUser) {
-     // Auto-redirect if logged in and on landing OR auth views
-     // Wait for userRole to be populated from Firestore
+  } else if ((currentView === 'auth-login' || currentView === 'auth-signup') && currentUser) {
      if (userRole !== null) {
-       setTimeout(() => setCurrentView(userRole === 'seller' ? 'creator' : 'buyer'), 0);
+       const finalView = personaIntent === 'buyer' ? 'buyer' : (userRole === 'seller' ? 'creator' : 'buyer');
+       setTimeout(() => {
+         setCurrentView(finalView);
+         setPersonaIntent(null);
+       }, 0);
      }
      content = null;
   } else if (currentView === 'landing') {
     content = (
       <LandingFlow 
-        onBuyerSelect={() => setCurrentView('auth-login')}
-        onCreatorSelect={() => setCurrentView('creator-auth')}
+        onBuyerSelect={() => {
+          setPersonaIntent('buyer');
+          currentUser ? setCurrentView('buyer') : setCurrentView('auth-login');
+        }}
+        onCreatorSelect={() => {
+          setPersonaIntent('seller');
+          (currentUser && userRole === 'seller') ? setCurrentView('creator') : setCurrentView('creator-auth');
+        }}
         onComplete={handleAuthComplete}
       />
     );
@@ -148,8 +172,8 @@ export default function App() {
       <LandingFlow 
         startAtAuth
         authMode={currentView === 'auth-login' ? 'login' : 'signup'}
-        onComplete={handleAuthComplete}
-        onCreatorSelect={() => setCurrentView('creator-auth')}
+        onComplete={() => handleAuthComplete(currentView === 'auth-login' || currentView === 'auth-signup' ? 'buyer' : null)}
+        onCreatorSelect={() => (currentUser && userRole === 'seller') ? setCurrentView('creator') : setCurrentView('creator-auth')}
         onBack={() => setCurrentView('landing')}
       />
     );
@@ -163,8 +187,10 @@ export default function App() {
         isDark={isDark}
         toggleDark={toggleDark}
         isAuthenticated={!!currentUser}
+        userRole={userRole}
         onOpenAuth={handleOpenAuth}
         onBackParent={() => setCurrentView('landing')}
+        onSwitchDash={() => setCurrentView('creator')}
         initialTab={getInitialTabFromHash()}
       />
     );

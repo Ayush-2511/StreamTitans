@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Camera, Shield, FileText, CheckCircle, ChevronRight, ArrowLeft } from 'lucide-react';
+import { FileText, ArrowLeft, ArrowRight, Upload, Check } from 'lucide-react';
 import { logIn, logInWithGoogle } from '../firebase/auth';
 import toast from 'react-hot-toast';
 import './CreatorAuthFlow.css';
