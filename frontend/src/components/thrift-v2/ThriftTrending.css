@@ -1,0 +1,169 @@
+.thrift-light-section {
+  background-color: #f4efeb;
+  padding: 4rem 5%;
+}
+
+.light-theme-subtitle {
+  color: #FF5B22;
+}
+
+.light-theme-title {
+  color: #1a1a1a;
+}
+
+.thrift-trending-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+}
+
+@media (max-width: 1024px) {
+  .thrift-trending-grid { grid-template-columns: repeat(3, 1fr); }
+}
+@media (max-width: 768px) {
+  .thrift-trending-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 480px) {
+  .thrift-trending-grid { grid-template-columns: repeat(1, 1fr); }
+}
+
+.thrift-trending-card {
+  background: white;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+  display: flex;
+  flex-direction: column;
+}
+
+.trending-img-area {
+  height: 240px;
+  background: #242424; /* Base dark card color */
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  overflow: hidden;
+}
+
+/* Matching the exact colors from image 3 approx */
+.thrift-trending-card:nth-child(1) .trending-img-area { background: #fdf5ea; }
+.thrift-trending-card:nth-child(2) .trending-img-area { background: #222; }
+.thrift-trending-card:nth-child(3) .trending-img-area { background: #352b2b; }
+.thrift-trending-card:nth-child(4) .trending-img-area { background: #faecc9; }
+.thrift-trending-card:nth-child(5) .trending-img-area { background: #1a1a1c; }
+.thrift-trending-card:nth-child(6) .trending-img-area { background: #261614; }
+.thrift-trending-card:nth-child(7) .trending-img-area { background: #eef3eb; }
+.thrift-trending-card:nth-child(8) .trending-img-area { background: #fbfbfd; }
+
+.trending-badge {
+  color: white;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.65rem;
+  font-weight: bold;
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+}
+
+.trending-product-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 10px 15px rgba(0,0,0,0.1));
+}
+
+.trending-rating {
+  position: absolute;
+  bottom: 1rem;
+  right: 1rem;
+  background: white;
+  color: black;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  z-index: 2;
+}
+
+.trending-info-area {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.trending-seller {
+  font-size: 0.75rem;
+  color: #888;
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  margin-bottom: 1rem;
+  line-height: 1.3;
+}
+
+.trending-brand {
+  color: #FF5B22;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  margin-bottom: 0.4rem;
+}
+
+.trending-title {
+  font-size: 1.15rem;
+  color: #1a1a1a;
+  margin: 0 0 0.3rem 0;
+  font-weight: 500;
+}
+
+.trending-details {
+  color: #888;
+  font-size: 0.8rem;
+  margin: 0 0 1.5rem 0;
+}
+
+.trending-pricing-row {
+  margin-top: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.prices {
+  display: flex;
+  flex-direction: column;
+}
+
+.trending-price {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #1a1a1a;
+}
+
+.trending-original-price {
+  font-size: 0.8rem;
+  color: #aaa;
+  text-decoration: line-through;
+}
+
+.trending-claim-btn {
+  background: transparent;
+  border: 1px solid #ddd;
+  padding: 6px 16px;
+  border-radius: 6px;
+  color: #1a1a1a;
+  font-size: 0.85rem;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+
+.trending-claim-btn:hover {
+  background: #f4efeb;
+  border-color: #bbb;
+}

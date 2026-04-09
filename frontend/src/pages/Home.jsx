@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import Navbar from '../components/Navbar';
 import Hero from '../components/Hero';
 import EcommerceHero from '../components/EcommerceHero';
+import ThriftLiveDrops from '../components/thrift-v2/ThriftLiveDrops';
+import ThriftTrending from '../components/thrift-v2/ThriftTrending';
+import ThriftTopSellers from '../components/thrift-v2/ThriftTopSellers';
 import BrandTicker from '../components/BrandTicker';
 import CategoryBrowser from '../components/CategoryBrowser';
 import FeaturedDrops from '../components/FeaturedDrops';
@@ -12,6 +15,7 @@ import MasonryGrid from '../components/MasonryGrid';
 import ThriftBand from '../components/ThriftBand';
 import PastStreams from '../components/PastStreams';
 import Footer from '../components/Footer';
+import EcommerceView from '../components/ecommerce-v2/EcommerceView';
 import { THRIFT_POLAROIDS } from '../data/mockData';
 import './Home.css';
 
@@ -30,7 +34,7 @@ export default function Home({ isDark, toggleDark, isAuthenticated, onOpenAuth }
           setActiveTab={setActiveTab}
         />
         
-        {activeTab !== 'Thrift' && <Hero isAuthenticated={isAuthenticated} />}
+        {activeTab === 'Discover' && <Hero isAuthenticated={isAuthenticated} />}
         
         {activeTab === 'Discover' && (
           <>
@@ -48,19 +52,23 @@ export default function Home({ isDark, toggleDark, isAuthenticated, onOpenAuth }
           <div className="ecommerce-page-vibe" style={{ display: 'flex', flexDirection: 'column' }}>
             <EcommerceHero />
             <BrandTicker />
+            <ThriftLiveDrops />
             <CategoryBrowser />
+            <ThriftTrending />
             <FeaturedDrops />
             <WatermarkBanner />
+            <ThriftTopSellers />
           </div>
         )}
 
         {activeTab === 'E-commerce' && (
-          <>
-            <FilterBar />
-            <LiveDeck />
-            <PastStreams />
-            <MasonryGrid />
-          </>
+          <EcommerceView />
+        )}
+
+        {activeTab === 'Wallet' && (
+          <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '50vh', padding: '4rem' }}>
+            <h2 className="serif-heading" style={{ fontSize: '2rem', color: 'var(--text-main)' }}>Wallet Coming Soon</h2>
+          </div>
         )}
 
         <Footer />

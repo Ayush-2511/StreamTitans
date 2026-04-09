@@ -1,0 +1,172 @@
+.deal-card {
+  display: flex;
+  background-color: #1c1c1c; /* Very dark grayish black */
+  border-radius: 16px;
+  overflow: hidden;
+  color: white;
+}
+
+.deal-left {
+  flex: 1;
+  padding: 3rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.deal-tags {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 1.5rem;
+}
+
+.flash-deal-text {
+  color: #FF5B22;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+}
+
+.deal-timer {
+  background: rgba(255,255,255,0.1);
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.deal-title {
+  font-size: 3.5rem;
+  font-weight: 600;
+  line-height: 1.1;
+  margin: 0 0 1rem 0;
+}
+
+.deal-desc {
+  color: #999;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  margin-bottom: 2.5rem;
+  max-width: 80%;
+}
+
+.deal-pricing {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 3rem;
+}
+
+.current-price {
+  font-size: 2.5rem;
+  font-weight: 500;
+}
+
+.original-price {
+  color: #555;
+  text-decoration: line-through;
+  font-size: 1.1rem;
+}
+
+.discount-badge {
+  background: #FF5B22;
+  color: white;
+  padding: 6px 12px;
+  border-radius: 50%; /* Making it a circle as per screen */
+  width: 48px;
+  height: 48px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.7rem;
+  font-weight: bold;
+  line-height: 1.1;
+  text-align: center;
+}
+
+.claim-deal-btn {
+  align-self: flex-start;
+  color: #555;
+  background: transparent;
+  padding: 0;
+  font-weight: 500;
+  transition: color 0.3s;
+}
+
+.claim-deal-btn:hover {
+  color: white;
+}
+
+.deal-right {
+  flex: 1;
+  background-color: #242424; /* Slightly lighter dark */
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.deal-visual {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.glow-ring {
+  position: absolute;
+  border-radius: 50%;
+  border: 1px solid rgba(255,255,255,0.05);
+}
+
+.glow-ring-1 {
+  width: 300px; height: 300px;
+}
+
+.glow-ring-2 {
+  width: 500px; height: 500px;
+}
+
+.deal-product-icon {
+  font-size: 8rem;
+  z-index: 10;
+  filter: drop-shadow(0 0 40px rgba(255, 230, 150, 0.4));
+}
+
+.deal-progress-bar {
+  position: absolute;
+  bottom: 30px;
+  background: rgba(0,0,0,0.3);
+  padding: 8px 16px;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.progress-bg {
+  width: 120px;
+  height: 4px;
+  background: rgba(255,255,255,0.2);
+  border-radius: 2px;
+}
+
+.progress-fill {
+  height: 100%;
+  background: #FF5B22;
+  border-radius: 2px;
+}
+
+.progress-text {
+  font-size: 0.75rem;
+  color: #aaa;
+}

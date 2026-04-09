@@ -1,0 +1,98 @@
+.ecom-hot {
+  padding-bottom: 4rem;
+}
+
+.hot-grid-v2 {
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+  gap: 1rem;
+}
+
+.hot-card-v2 {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.hot-img-area {
+  position: relative;
+  height: 300px;
+  border-radius: 12px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  margin-bottom: 1rem;
+}
+
+.hot-badge {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  color: white;
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 4px;
+  letter-spacing: 0.05em;
+  display: flex;
+  align-items: center;
+}
+
+.hot-product-img {
+  max-height: 100%;
+  max-width: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 15px 25px rgba(0,0,0,0.1));
+}
+
+.hot-info-area {
+  padding: 0 0.5rem;
+}
+
+.hot-seller-status {
+  font-size: 0.75rem;
+  color: #888;
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.8rem;
+}
+
+.hot-category-text {
+  color: #FF5B22;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  margin-bottom: 0.3rem;
+}
+
+.hot-title-text {
+  font-size: 1.1rem;
+  font-weight: 500;
+  margin: 0 0 0.4rem 0;
+  color: #1a1a1a;
+}
+
+.hot-details-text {
+  font-size: 0.8rem;
+  color: #aaa;
+  margin: 0;
+}
+
+.scroll-more-btn {
+  position: absolute;
+  bottom: -20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 48px;
+  height: 48px;
+  background: white;
+  border: 1px solid #e0dfd6;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}

@@ -1,0 +1,126 @@
+.thrift-darker-section {
+  background-color: #121212;
+  color: white;
+  padding: 4rem 5%;
+}
+
+.top-sellers-grid {
+  display: flex;
+  gap: 1.5rem;
+  overflow-x: auto;
+  padding-bottom: 2rem;
+}
+
+.top-sellers-grid::-webkit-scrollbar {
+  display: none;
+}
+
+.thrift-seller-card {
+  min-width: 260px;
+  flex: 1;
+  background-color: #1c1c1c;
+  border: 1px solid #333;
+  border-radius: 16px;
+  padding: 2rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  transition: transform 0.2s, border-color 0.2s;
+}
+
+.thrift-seller-card:hover {
+  transform: translateY(-5px);
+  border-color: #555;
+}
+
+.seller-avatar-wrapper {
+  margin-bottom: 1rem;
+}
+
+.seller-avatar {
+  width: 80px;
+  height: 80px;
+  background-color: #2a2a2a; /* Generic dark fallback */
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+}
+
+.thrift-seller-card:nth-child(1) .seller-avatar { background-color: #27221d; }
+.thrift-seller-card:nth-child(2) .seller-avatar { background-color: #1d2531; }
+.thrift-seller-card:nth-child(3) .seller-avatar { background-color: #24162e; }
+.thrift-seller-card:nth-child(4) .seller-avatar { background-color: #122822; }
+
+.seller-live-indicator {
+  border: 1px solid rgba(255, 91, 34, 0.4);
+  color: #FF5B22;
+  font-size: 0.75rem;
+  padding: 4px 12px;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 1.5rem;
+}
+
+.seller-name {
+  font-size: 1.25rem;
+  font-weight: 500;
+  margin: 0 0 0.3rem 0;
+}
+
+.seller-handle {
+  color: #888;
+  font-size: 0.9rem;
+  margin: 0 0 1.5rem 0;
+}
+
+.seller-tags-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+}
+
+.seller-tag {
+  background-color: #2a2a2a;
+  color: #aaa;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+}
+
+.seller-divider {
+  width: 100%;
+  height: 1px;
+  background-color: #333;
+  margin-bottom: 1.5rem;
+}
+
+.seller-stats-row {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.seller-stat-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.stat-val {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: white;
+  margin-bottom: 0.2rem;
+}
+
+.stat-label {
+  font-size: 0.7rem;
+  color: #666;
+}

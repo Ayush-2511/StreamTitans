@@ -46,3 +46,71 @@ export const FEATURED_DROPS = [
 export const BRANDS_LIST = [
   "Zara Archive", "H&M Studio", "Levi's Vintage", "Ralph Lauren", "Diesel", "Mango", "Prada", "Gucci"
 ];
+
+export const ECOMMERCE_V2_LIVE_STREAMS = [
+  { id: 1, title: "Smart Air Fryer XL", seller: "@chef_gadgets", category: "ELECTRONICS · KITCHEN", viewers: "2.4K", price: "₹3,499", img: "https://images.unsplash.com/photo-1584269600464-37b1b58a9fe7?w=600&q=80", icon: "🍳" },
+  { id: 2, title: "Wireless Earbuds Pro", seller: "@tech_drops", category: "ELECTRONICS", viewers: "1.1K", price: "₹1,999", img: "https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=600&q=80", icon: "🎧" },
+  { id: 3, title: "Homemade Preserve Set", seller: "@kitchen_studio", category: "FOOD · ARTISAN", viewers: "640", price: "₹649", img: "https://images.unsplash.com/photo-1589255653818-47c34b6b15ef?w=600&q=80", icon: "🕯️" },
+];
+
+export const ECOMMERCE_V2_TRENDING = [
+  { id: 1, label: "Artisan Chocolate", icon: "🍫" },
+  { id: 2, label: "Refurbished Phones", icon: "📱" },
+  { id: 3, label: "Indoor Plants", icon: "🪴" },
+  { id: 4, label: "Ceramics", icon: "🏺" },
+];
+
+export const ECOMMERCE_V2_CATEGORIES = [
+  { id: 'food', title: 'Food & Gourmet', items: '340 items live', icon: '🍽️', bg: '#f4ede4' },
+  { id: 'electronics', title: 'Electronics', items: '210 items live', icon: '📱', bg: '#e5eff5' },
+  { id: 'home', title: 'Home & Living', items: '185 items live', icon: '🏠', bg: '#f2e8f1' },
+  { id: 'wellness', title: 'Wellness', items: '160 items live', icon: '🌿', bg: '#e8f4eb' },
+  { id: 'fashion', title: 'Fashion', items: '420 items live', icon: '👗', bg: '#f5ebe6' },
+  { id: 'crafts', title: 'Art & Crafts', items: '120 items live', icon: '🎨', bg: '#f2f1e6' },
+];
+
+export const ECOMMERCE_V2_HOT_RIGHT_NOW = [
+  { id: 1, title: "Mango Chilli Preserve", seller: "@kitchen_studio is streaming", category: "FOOD · ARTISAN", details: "200g · Homemade · Limited Batch", badge: "LIVE", badgeColor: "#FF5B22", bg: "#faf6f2", img: "https://images.unsplash.com/photo-1589255653818-47c34b6b15ef?w=400&q=80" },
+  { id: 2, title: "Portable Bluetooth Speaker", seller: "@tech_drops is streaming", category: "ELECTRONICS", details: "Waterproof · 12hr Battery", badge: "40% OFF", badgeColor: "#1A1A1A", bg: "#eff4f8", img: "https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=400&q=80" },
+  { id: 3, title: "Rosehip Face Serum", seller: "@pure_roots is streaming", category: "WELLNESS · SKINCARE", details: "30ml · Cold-pressed", badge: "NEW", badgeColor: "#2A8139", bg: "#f8f2f6", img: "https://images.unsplash.com/photo-1620916566398-39f1143ab7be?w=400&q=80" },
+  { id: 4, title: "Monstera Deliciosa", seller: "@home_vibes is streaming", category: "HOME · PLANTS", details: "6\" pot · Healthy rooted cutting", badge: "LIVE", badgeColor: "#FF5B22", bg: "#f2f7ef", img: "https://images.unsplash.com/photo-1614594975525-e45190c55d0b?w=400&q=80" }
+];
+
+export const ECOMMERCE_V2_CURATED_PICKS = [
+  { id: 1, title: "Artisan Ceramic Mug", seller: "@clay_studio is streaming", category: "HOME · KITCHEN", details: "Handmade · Off-white", badge: "LIVE", badgeColor: "#FF5B22", bg: "#fdf5ea", img: "https://images.unsplash.com/photo-1610701596007-11502861dcfa?w=400&q=80" },
+  { id: 2, title: "Linen Lounge Shirt", seller: "@minimalist_threads", category: "FASHION", details: "Size M · Beige", badge: "20% OFF", badgeColor: "#1A1A1A", bg: "#f0efe9", img: "https://images.unsplash.com/photo-1596755094514-f87e32f85e2c?w=400&q=80" },
+  { id: 3, title: "Silver Loop Earrings", seller: "@silversmith is streaming", category: "ACCESSORIES", details: "Handcrafted 925 Silver", badge: "NEW", badgeColor: "#2A8139", bg: "#f2f7f9", img: "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=400&q=80" },
+  { id: 4, title: "Matcha Whisk Set", seller: "@zen_tea is streaming", category: "WELLNESS", details: "Bamboo · Authentic", badge: "LIVE", badgeColor: "#FF5B22", bg: "#eef3eb", img: "https://images.unsplash.com/photo-1582782715783-a0e2ee343dd3?w=400&q=80" }
+];
+
+export const THRIFT_LIVE_DROPS_DATA = [
+  { id: 1, badge: "LIVE", tag: "1990s", title: "Sherpa Trucker Jacket", brand: "LEVI'S VINTAGE", details: "Size L · 9/10 · Authenticated", price: "₹3,200", viewers: "640 watching", img: "https://images.unsplash.com/photo-1601333144130-8c1f12356227?w=600&q=80" },
+  { id: 2, badge: "LIVE", tag: "2000s", title: "Air Max '97 OG", brand: "NIKE ARCHIVE", details: "UK 9 · 8/10 · Original box", price: "₹5,499", viewers: "890 watching", img: "https://images.unsplash.com/photo-1605348532760-6753d2c43329?w=600&q=80" },
+  { id: 3, badge: "LIVE", tag: "Rare", title: "Nylon Mini Bag", brand: "PRADA ARCHIVE", details: "Black · Like New · 1 left", price: "₹12,999", viewers: "1.2K watching", img: "https://images.unsplash.com/photo-1584916201218-f4242ceb4809?w=600&q=80" }
+];
+
+export const THRIFT_TRENDING_WEEK_DATA = [
+  { id: 1, badge: "LIVE", badgeColor: "#FF5B22", rating: "9/10", brand: "LEVI'S · 1990S", title: "Sherpa Trucker Jacket", details: "Size L · Authenticated", price: "₹3,200", originalPrice: "₹5,000", seller: "@vintage_vault", img: "https://images.unsplash.com/photo-1601333144130-8c1f12356227?w=400&q=80" },
+  { id: 2, badge: "RARE", badgeColor: "#000", rating: "8/10", brand: "NIKE · 2000S", title: "Air Max '97 OG", details: "UK 9 · Original Box", price: "₹5,499", originalPrice: "₹8,000", seller: "@hype_kicks", img: "https://images.unsplash.com/photo-1605348532760-6753d2c43329?w=400&q=80" },
+  { id: 3, badge: "RARE", badgeColor: "#000", rating: "9.5/10", brand: "PRADA · ARCHIVE", title: "Nylon Mini Bag", details: "Black · 1 left", price: "₹12,999", originalPrice: "", seller: "@luxe_loop", img: "https://images.unsplash.com/photo-1584916201218-f4242ceb4809?w=400&q=80" },
+  { id: 4, badge: "NEW IN", badgeColor: "#2A8139", rating: "10/10", brand: "RALPH LAUREN · 90S", title: "Leather Driving Gloves", details: "Size M · Brand New", price: "₹1,450", originalPrice: "", seller: "@chic_picks", img: "https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=400&q=80" },
+  { id: 5, badge: "LIVE", badgeColor: "#FF5B22", rating: "9/10", brand: "RAY-BAN · VINTAGE", title: "Wayfarer OG", details: "One Size · With case", price: "₹2,100", originalPrice: "₹3,200", seller: "@sole_collector", img: "https://images.unsplash.com/photo-1511499767150-a48a237f0083?w=400&q=80" },
+  { id: 6, badge: "20% OFF", badgeColor: "#551a1a", rating: "10/10", brand: "BURBERRY · CLASSIC", title: "Check Wool Scarf", details: "Beige · Like new", price: "₹4,800", originalPrice: "₹6,000", seller: "@luxe_loop", img: "https://images.unsplash.com/photo-1520638025219-45e0d47d4dc9?w=400&q=80" },
+  { id: 7, badge: "NEW IN", badgeColor: "#2A8139", rating: "8/10", brand: "ZARA · EARLY 2000S", title: "Structured Crop Top", details: "Size S · Gently used", price: "₹799", originalPrice: "", seller: "@y2k_babe", img: "https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?w=400&q=80" },
+  { id: 8, badge: "RARE", badgeColor: "#000", rating: "9/10", brand: "GUCCI · ARCHIVE", title: "Loafer Mules", details: "EU 38 · Horsebit detail", price: "₹9,500", originalPrice: "", seller: "@vintage_vault", img: "https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?w=400&q=80" }
+];
+
+export const THRIFT_TOP_SELLERS_DATA = [
+  { id: 1, name: "Vintage Vault", handle: "@vintage_vault", img: "👟", followers: "5.2K", rating: "99%", sold: "412", tags: ["Sneakers", "Denim"] },
+  { id: 2, name: "Luxe Loop", handle: "@luxe_loop", img: "👜", followers: "3.8K", rating: "98%", sold: "290", tags: ["Luxury", "Bags"] },
+  { id: 3, name: "Y2K Babe", handle: "@y2k_babe", img: "👗", followers: "4.1K", rating: "97%", sold: "358", tags: ["Y2K", "Womenswear"] },
+  { id: 4, name: "Hype Kicks", handle: "@hype_kicks", img: "🕶️", followers: "6.4K", rating: "99%", sold: "520", tags: ["Sneakers", "Accessories"] }
+];
+
+export const THRIFT_SHOP_EDIT_DATA = [
+  { id: 'menswear', title: 'Menswear', items: '450 items', badge: 'HOT', badgeColor: '#FF5B22', bg: '#2b2118', img: 'https://images.unsplash.com/photo-1601333144130-8c1f12356227?w=400&q=80' },
+  { id: 'ladies_wear', title: 'Ladies Wear', items: '620 items', badge: null, bg: '#112217', img: 'https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?w=400&q=80' },
+  { id: 'sneakers', title: 'Sneakers', items: '210 items', badge: 'NEW', badgeColor: '#FF5B22', bg: '#101223', img: 'https://images.unsplash.com/photo-1605348532760-6753d2c43329?w=400&q=80' },
+  { id: 'bags', title: 'Bags & Luxury', items: '185 items', badge: null, bg: '#2a1111', img: 'https://images.unsplash.com/photo-1584916201218-f4242ceb4809?w=400&q=80' },
+  { id: 'accessories', title: 'Accessories', items: '340 items', badge: null, bg: '#131e13', img: 'https://images.unsplash.com/photo-1520638025219-45e0d47d4dc9?w=400&q=80' }
+];

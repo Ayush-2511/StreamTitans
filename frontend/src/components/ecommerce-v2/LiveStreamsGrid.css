@@ -1,0 +1,127 @@
+.ecom-streams {
+  padding-bottom: 2rem;
+  border-bottom: 2px solid #e0dfd6;
+}
+
+.streams-grid {
+  display: flex;
+  gap: 1rem;
+  overflow-x: auto;
+  padding-bottom: 1rem;
+}
+.streams-grid::-webkit-scrollbar {
+  display: none;
+}
+
+.stream-grid-card {
+  min-width: 300px;
+  max-width: 320px;
+  height: 440px;
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 1.5rem;
+  color: white;
+  position: relative;
+  overflow: hidden;
+  flex: 1;
+}
+
+.bg-pattern-0 { background: #2A2522; } /* Dark brownish */
+.bg-pattern-1 { background: #1A2530; } /* Dark navy */
+.bg-pattern-2 { background: #1C3326; } /* Dark forest */
+
+.card-top {
+  display: flex;
+}
+
+.live-status-badge {
+  background: #FF5B22;
+  color: white;
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: bold;
+  letter-spacing: 0.1em;
+  display: flex;
+  align-items: center;
+}
+.inline-white {
+  background-color: white;
+  width: 6px; height: 6px; margin-right: 6px;
+}
+
+.card-center {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.big-icon {
+  font-size: 4rem;
+  filter: drop-shadow(0 10px 15px rgba(0,0,0,0.5));
+}
+
+.viewers-count {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  background: rgba(0,0,0,0.4);
+  padding: 4px 8px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.card-bottom {
+  border-top: 1px solid rgba(255,255,255,0.1);
+  padding-top: 1rem;
+}
+
+.card-category {
+  color: #FF5B22;
+  font-size: 0.65rem;
+  letter-spacing: 0.1em;
+  font-weight: 600;
+  margin-bottom: 0.4rem;
+}
+
+.card-title {
+  font-size: 1.25rem;
+  font-weight: 500;
+  margin: 0 0 0.2rem 0;
+}
+
+.card-seller {
+  color: #aaa;
+  font-size: 0.85rem;
+  margin: 0 0 1rem 0;
+}
+
+.card-action {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.card-price {
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.claim-btn {
+  background: rgba(255,255,255,0.1);
+  color: transparent; /* Or maybe text is faint? the screenshot shows "Claim" very faint */
+  color: rgba(255,255,255,0.3);
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-weight: 500;
+  font-size: 0.9rem;
+}
+.stream-grid-card:hover .claim-btn {
+  background: white;
+  color: black;
+}

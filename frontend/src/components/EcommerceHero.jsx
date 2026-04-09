@@ -5,20 +5,20 @@ import './EcommerceHero.css';
 export default function EcommerceHero() {
   return (
     <section className="ecommerce-hero">
-      <div className="ecommerce-hero-left brutal-border">
-        <p className="ecommerce-hero-subtitle">SPRING / SUMMER 2026 EDIT</p>
-        <h1 className="ecommerce-hero-title">
-          Wear <br/>
-          <span className="text-orange">Stories,</span><br/>
-          Not Just Clothes.
-        </h1>
-        <p className="ecommerce-hero-desc">
-          Every piece on Lumina has lived a life. Authenticated, curated, and ready for its next chapter — with you.
-        </p>
-        <div className="ecommerce-hero-actions">
-          <button className="brutal-btn-primary">Enter Live</button>
-          <a href="#" className="ecommerce-hero-link">View Lookbook &rarr;</a>
+      <div className="ecommerce-hero-left new-thrift-hero brutal-border">
+        <div className="thrift-hero-watermark">01</div>
+        <div className="thrift-hero-badge">
+          <span className="live-dot" style={{backgroundColor: '#FF5B22'}}></span>
+          LIVE THRIFT · 6 STREAMS · 3.2K WATCHING
         </div>
+        <h1 className="ecommerce-hero-title serif-heading thrift-heading">
+          Pre-<br/>loved.<br/>
+          <span className="text-orange" style={{fontStyle: 'italic'}}>Not</span><br/>
+          Pre-<br/>boring.
+        </h1>
+        <p className="ecommerce-hero-desc thrift-desc">
+          Every piece has a past. Watch sellers unbox, try on, and authenticate rare vintage finds live — and claim them before someone else does.
+        </p>
       </div>
       
       <div className="ecommerce-hero-right brutal-border">
