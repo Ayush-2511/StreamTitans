@@ -47,6 +47,7 @@ export const logIn = async (email, password) => {
 export const logInWithGoogle = async (role = 'buyer') => {
   try {
     const provider = new GoogleAuthProvider();
+    provider.setCustomParameters({ prompt: 'select_account' });
     const result = await signInWithPopup(auth, provider);
     const user = result.user;
     

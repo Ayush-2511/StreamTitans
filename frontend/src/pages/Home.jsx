@@ -28,6 +28,14 @@ export default function Home({ isDark, toggleDark, isAuthenticated, onOpenAuth, 
   const [tabHistory, setTabHistory] = useState(['Discover']);
   const { scoreItem } = useUserActivity();
 
+  // Reset to discover when logging out, so they don't get stuck on an empty Profile page
+  React.useEffect(() => {
+    if (!isAuthenticated && (activeTab === 'Profile' || activeTab === 'Settings' || activeTab === 'Wallet' || activeTab === 'Cart')) {
+      setActiveTab('Discover');
+      setTabHistory(['Discover']);
+    }
+  }, [isAuthenticated, activeTab]);
+
   // Create personalized feed based on user activity scores
   const personalizedFeed = [...THRIFT_POLAROIDS].sort((a, b) => {
     const scoreA = scoreItem(a.title);
