@@ -1,0 +1,35 @@
+.trending-bar-container {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  padding: 1.5rem;
+  background: #edece4; /* A slightly darker beige for the container */
+  border-radius: 12px;
+  margin: 2rem 0;
+}
+
+.trending-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  color: #FF5B22;
+  white-space: nowrap;
+}
+
+.trending-scroll {
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  align-items: center;
+}
+.trending-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+.icon-only-btn {
+  padding: 8px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

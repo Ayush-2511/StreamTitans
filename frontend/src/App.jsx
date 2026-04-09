@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import Home from './pages/Home';
 import LandingFlow from './pages/LandingFlow';
+import CreatorDashboard from './pages/CreatorDashboard';
 
 export default function App() {
-  const [currentView, setCurrentView] = useState('landing'); // 'landing' | 'app'
+  const [currentView, setCurrentView] = useState('landing'); // 'landing' | 'buyer' | 'creator' | 'auth-login' | 'auth-signup'
   const [isDark, setIsDark] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
     if (isDark) {
@@ -16,10 +18,44 @@ export default function App() {
 
   const toggleDark = () => setIsDark(!isDark);
 
+  const handleOpenAuth = (mode) => {
+    setCurrentView(mode === 'login' ? 'auth-login' : 'auth-signup');
+  };
+
+  const handleAuthComplete = (authenticated) => {
+    setIsAuthenticated(authenticated);
+    setCurrentView('buyer');
+  };
+
   if (currentView === 'landing') {
-    return <LandingFlow onComplete={() => setCurrentView('app')} />;
+    return (
+      <LandingFlow 
+        onBuyerSelect={() => setCurrentView('buyer')}
+        onCreatorSelect={() => setCurrentView('creator')}
+      />
+    );
   }
 
-  // Once unlocked, render main platform framework
-  return <Home isDark={isDark} toggleDark={toggleDark} />;
+  if (currentView.startsWith('auth-')) {
+    return (
+      <LandingFlow
+        startAtAuth
+        authMode={currentView.replace('auth-', '')}
+        onComplete={handleAuthComplete}
+      />
+    );
+  }
+
+  if (currentView === 'creator') {
+    return <CreatorDashboard isDark={isDark} toggleDark={toggleDark} />;
+  }
+
+  return (
+    <Home
+      isDark={isDark}
+      toggleDark={toggleDark}
+      isAuthenticated={isAuthenticated}
+      onOpenAuth={handleOpenAuth}
+    />
+  );
 }

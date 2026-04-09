@@ -1,0 +1,118 @@
+.category-browser-section {
+  padding: 4rem 5%;
+  background-color: #f4efeb;
+  margin: 0 auto;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 2rem;
+}
+
+.section-subtitle {
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  color: #FF5B22;
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+  display: block;
+  font-weight: 600;
+}
+
+.section-title {
+  font-size: 2.5rem;
+  font-family: 'Playfair Display', serif;
+  margin: 0;
+  color: #1a1a1a;
+  font-weight: 500;
+}
+
+.view-all-link {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-decoration: none;
+  font-size: 0.9rem;
+}
+
+.view-all-link:hover {
+  opacity: 0.8;
+}
+
+.vibe-grid {
+  display: flex;
+  overflow-x: auto;
+  gap: 1.5rem;
+  padding-bottom: 1rem;
+}
+
+.vibe-grid::-webkit-scrollbar {
+  display: none;
+}
+
+.vibe-card {
+  min-width: 220px;
+  height: 320px;
+  border-radius: 20px;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  color: white;
+  transition: transform 0.2s;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.vibe-card:hover {
+  transform: translateY(-4px);
+}
+
+.vibe-badge {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  color: white;
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-size: 0.7rem;
+  font-weight: bold;
+  letter-spacing: 0.05em;
+  z-index: 2;
+}
+
+.vibe-img-container {
+  flex: 1;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.vibe-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.vibe-info {
+  padding: 1.5rem;
+  background: inherit;
+  position: relative;
+  z-index: 1;
+}
+
+.vibe-info h3 {
+  margin: 0 0 0.2rem 0;
+  font-size: 1.2rem;
+  font-weight: 500;
+}
+
+.vibe-info p {
+  margin: 0;
+  font-size: 0.75rem;
+  color: #aaa;
+}

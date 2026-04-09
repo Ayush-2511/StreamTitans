@@ -2,7 +2,7 @@ import React from 'react';
 import { HERO_MOSAIC } from '../data/mockData';
 import './Hero.css';
 
-export default function Hero() {
+export default function Hero({ isAuthenticated }) {
   return (
     <section className="hero-section animate-fade-in-up" style={{ animationDelay: '200ms' }}>
       {/* HERO LEFT */}
@@ -18,39 +18,44 @@ export default function Hero() {
           </div>
           
           <h2 className="hero-title">
-            SHOP THE<br />
-            <span className="hero-title-accent">STREAM.</span>
+            {isAuthenticated ? (
+              <>WELCOME<br /><span className="hero-title-accent">BACK.</span></>
+            ) : (
+              <>SHOP THE<br /><span className="hero-title-accent">STREAM.</span></>
+            )}
           </h2>
           
           <p className="hero-desc">
-            The next generation of thrift & fashion. Watch live try-ons, interact with real sellers, and claim exclusive one-off pieces instantly.
+            {isAuthenticated 
+              ? "Ready for your next find? Explore new drops, catch up on past streams, and curate your personalized aesthetic."
+              : "The next generation of thrift & fashion. Watch live try-ons, interact with real sellers, and claim exclusive one-off pieces instantly."
+            }
           </p>
           
           <div className="hero-buttons">
             <button className="btn-primary-large">
               Explore Live
             </button>
-            <button className="btn-secondary-large brutal-border">
-              Start Selling
-            </button>
           </div>
         </div>
         
         {/* STATS ROW */}
-        <div className="hero-stats">
-          <div className="hero-stat-item">
-            <div className="hero-stat-num">24K+</div>
-            <div className="hero-stat-label">Active Users</div>
+        {!isAuthenticated && (
+          <div className="hero-stats">
+            <div className="hero-stat-item">
+              <div className="hero-stat-num">24K+</div>
+              <div className="hero-stat-label">Active Users</div>
+            </div>
+            <div className="hero-stat-item-bordered">
+              <div className="hero-stat-num">1.2K</div>
+              <div className="hero-stat-label">Daily Drops</div>
+            </div>
+            <div className="hero-stat-item-bordered">
+              <div className="hero-stat-num">₹12M+</div>
+              <div className="hero-stat-label">Seller Payouts</div>
+            </div>
           </div>
-          <div className="hero-stat-item-bordered">
-            <div className="hero-stat-num">1.2K</div>
-            <div className="hero-stat-label">Daily Drops</div>
-          </div>
-          <div className="hero-stat-item-bordered">
-            <div className="hero-stat-num">₹12M+</div>
-            <div className="hero-stat-label">Seller Payouts</div>
-          </div>
-        </div>
+        )}
       </div>
 
       {/* HERO RIGHT (2x2 MOSAIC) fixed sizing and overlap */}

@@ -1,0 +1,150 @@
+.watermark-banner {
+  display: flex;
+  flex-direction: column;
+  min-height: 80vh;
+  margin-top: 4rem;
+  margin-bottom: 4rem;
+  background-color: #1a1a1a;
+  position: relative;
+  overflow: hidden;
+}
+
+@media (min-width: 768px) {
+  .watermark-banner {
+    flex-direction: row;
+  }
+}
+
+.watermark-left {
+  flex: 1;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 4rem;
+  border-right: none;
+  border-bottom: 3px solid var(--border-dark);
+  z-index: 2;
+}
+
+@media (min-width: 768px) {
+  .watermark-left {
+    border-right: 3px solid var(--border-dark);
+    border-bottom: none;
+  }
+}
+
+.watermark-text {
+  position: absolute;
+  top: -10%;
+  left: 5%;
+  font-size: 40vw;
+  font-family: 'Times New Roman', Times, serif;
+  color: rgba(255, 255, 255, 0.05);
+  line-height: 1;
+  pointer-events: none;
+  z-index: 0;
+}
+
+@media (min-width: 768px) {
+  .watermark-text {
+    font-size: 30vw;
+  }
+}
+
+.watermark-left-header {
+  position: relative;
+  z-index: 1;
+}
+
+.watermark-subtitle {
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+}
+
+.watermark-title {
+  font-size: clamp(3rem, 5vw, 5rem);
+  color: #fff;
+  font-family: 'Times New Roman', Times, serif;
+  line-height: 1.1;
+  margin-top: 1rem;
+}
+
+.watermark-right {
+  flex: 1;
+  background-color: #e5e0d8; /* Beige vibe from screenshot */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+}
+
+.editor-pick-card {
+  background-color: var(--bg-main);
+  margin: 2rem;
+  padding: 1.5rem;
+  z-index: 2;
+  position: relative;
+}
+
+.tag-orange {
+  background-color: var(--brand-primary);
+  color: white;
+  border-color: var(--border-dark);
+}
+
+.editor-pick-card h3 {
+  font-size: 1.5rem;
+  font-family: 'Times New Roman', Times, serif;
+  margin: 0.5rem 0;
+  color: var(--text-main);
+}
+
+.editor-pick-card p {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.watermark-img-container {
+  flex: 1;
+  width: 100%;
+  position: relative;
+}
+
+.watermark-main-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  mix-blend-mode: multiply;
+}
+
+.scroll-down-btn {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translate(-50%, 50%);
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: var(--bg-main);
+  color: var(--text-main);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  cursor: pointer;
+  z-index: 10;
+  box-shadow: 2px 2px 0px 0px rgba(0,0,0,1);
+}
+
+html.dark .scroll-down-btn {
+  box-shadow: 2px 2px 0px 0px rgba(255,255,255,1);
+}
+
+.scroll-down-btn:hover {
+  background-color: var(--brand-primary);
+  color: white;
+}

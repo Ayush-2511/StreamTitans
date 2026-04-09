@@ -1,0 +1,235 @@
+.orders-tab {
+  max-width: 100%;
+  color: var(--color-ink);
+  padding-bottom: 2rem;
+}
+
+.orders-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1.5rem;
+}
+
+.orders-title {
+  font-size: 40px;
+  font-weight: 800;
+  margin-bottom: 8px;
+}
+
+.orders-subtitle {
+  font-size: 18px;
+  font-weight: 500;
+  opacity: 0.8;
+  margin: 0;
+}
+
+.orders-header-actions {
+  display: flex;
+  gap: 12px;
+}
+
+.search-box {
+  display: flex;
+  align-items: center;
+  border: 1.5px solid var(--color-ink);
+  border-radius: 8px;
+  padding: 8px 12px;
+  background-color: #fff;
+}
+
+.search-box input {
+  font-size: 13px;
+  width: 180px;
+  font-weight: 600;
+}
+
+.export-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border: 1.5px solid var(--color-ink);
+  border-radius: 8px;
+  padding: 8px 16px;
+  background-color: #fff;
+  font-size: 13px;
+  font-weight: 700;
+  transition: all 0.2s;
+  cursor: pointer;
+}
+
+.export-btn:hover {
+  background-color: var(--color-ink);
+  color: #fff;
+}
+
+.orders-metrics-row {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 2.5rem;
+  width: 100%;
+}
+
+.metric-card {
+  flex: 1;
+  border-radius: 16px;
+  padding: 24px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  border: 1.5px solid var(--color-ink);
+  background-color: #fff;
+}
+
+.metric-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  background-color: var(--color-surface);
+  border: 1.5px solid var(--color-ink);
+}
+
+.metric-card.to-ship .metric-icon { background-color: var(--color-orange); color: #fff; }
+.metric-card.packing .metric-icon { background-color: var(--color-ink); color: #fff; }
+.metric-card.completed .metric-icon { background-color: #fff; color: var(--color-ink); font-weight: 900; }
+
+.metric-card h2 {
+  font-size: 26px;
+  font-weight: 800;
+  line-height: 1;
+  margin-bottom: 4px;
+  color: var(--color-ink);
+}
+
+.metric-card p {
+  font-size: 14px;
+  font-weight: 700;
+  margin: 0;
+  color: var(--color-ink);
+  opacity: 0.8;
+}
+
+.table-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 1rem;
+}
+
+.table-header-row h3 {
+  font-size: 18px;
+  font-weight: 800;
+}
+
+.orders-table-wrapper {
+  border: 1.5px solid var(--color-ink);
+  border-radius: 12px;
+  overflow: hidden;
+  background-color: #fff;
+}
+
+.orders-table {
+  width: 100%;
+  text-align: left;
+  border-collapse: collapse;
+}
+
+.orders-table th {
+  padding: 16px 24px;
+  font-size: 11px;
+  color: var(--color-ink);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-weight: 800;
+  border-bottom: 1.5px solid var(--color-ink);
+}
+
+.orders-table td {
+  padding: 20px 24px;
+}
+
+.orders-table tr:not(:last-child) {
+  border-bottom: 1.5px solid var(--color-ink);
+}
+
+.item-cell {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  width: 250px;
+}
+
+.item-thumb {
+  width: 48px;
+  height: 48px;
+  border-radius: 8px;
+  border: 1px solid var(--color-ink);
+  flex-shrink: 0;
+}
+
+.item-details p {
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.item-title {
+  font-size: 15px;
+  font-weight: 800;
+}
+
+.item-sku {
+  font-size: 12px;
+  opacity: 0.7;
+  color: var(--color-ink);
+  font-weight: 500;
+}
+
+.customer-cell {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-ink);
+}
+
+.price-cell {
+  font-weight: 800;
+  color: var(--color-orange);
+  font-size: 15px;
+}
+
+.status-pill {
+  padding: 4px 12px;
+  font-size: 12px;
+  font-weight: 800;
+  border-radius: 99px;
+  display: inline-block;
+  border: 1.5px solid var(--color-ink);
+}
+
+.status-pill.orange { background-color: var(--color-orange); color: #fff; border-color: var(--color-orange); }
+.status-pill.blue { background-color: var(--color-surface); color: var(--color-ink); }
+.status-pill.green { background-color: var(--color-ink); color: #fff; }
+
+.action-btn {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  border: 1.5px solid var(--color-ink);
+  border-radius: 8px;
+  padding: 8px 16px;
+  font-size: 13px;
+  font-weight: 700;
+  background: white;
+  transition: all 0.2s;
+  cursor: pointer;
+}
+
+.action-btn:hover {
+  background-color: var(--color-ink);
+  color: #fff;
+}

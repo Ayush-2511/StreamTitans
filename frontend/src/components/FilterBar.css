@@ -114,11 +114,42 @@
   background-color: var(--color-surface-light);
 }
 
-.action-live-dot {
-  width: 0.5rem; /* w-2 */
-  height: 0.5rem; /* h-2 */
+.toggle-track {
+  width: 1.5rem;
+  height: 0.75rem;
   border-radius: 9999px;
+  background-color: var(--color-gray);
+  position: relative;
+  transition: background-color 0.2s ease-in-out;
+  border: 1px solid var(--color-ink);
+}
+
+.toggle-on {
   background-color: var(--color-orange);
+}
+
+.toggle-off {
+  background-color: var(--color-gray-soft);
+}
+
+.toggle-thumb {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 0.6rem;
+  height: 0.6rem;
+  border-radius: 50%;
+  background-color: var(--color-cream);
+  border: 1px solid var(--color-ink);
+  transition: left 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.toggle-on .toggle-thumb {
+  left: calc(100% - 0.7rem);
+}
+
+.toggle-off .toggle-thumb {
+  left: 0.05rem;
 }
 
 .action-icon {

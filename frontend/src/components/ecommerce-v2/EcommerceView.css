@@ -1,0 +1,82 @@
+.ecommerce-v2-container {
+  width: 100%;
+  min-height: 100vh;
+  background-color: #f2efe9; /* Beige base background for the content area */
+  color: #1a1a1a;
+  font-family: var(--font-sans);
+}
+
+.ecommerce-v2-container * {
+  box-sizing: border-box;
+}
+
+.ecommerce-v2-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 5%;
+  background-color: #f4efeb; /* Soft warm beige as seen in screenshots */
+}
+
+/* Common premium typography used across V2 */
+.serif-heading {
+  font-family: 'Playfair Display', serif;
+  font-weight: 500;
+}
+
+/* Utility to render the custom neon orange color */
+.text-ecom-orange {
+  color: #FF5B22;
+}
+
+/* A soft pill button */
+.pill-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: white;
+  border: 1px solid #e0dfd6;
+  border-radius: 40px;
+  padding: 8px 16px;
+  font-size: 0.9rem;
+  color: #1a1a1a;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.pill-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+/* Section Header Structure */
+.section-header {
+  margin-bottom: 2rem;
+  padding-top: 4rem;
+}
+
+.section-subtitle {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-weight: 600;
+  color: #FF5B22; /* that specific burnt orange */
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.section-subtitle .right-aligned-link {
+  margin-left: auto;
+  color: #1a1a1a;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.section-title {
+  font-size: 2.5rem;
+  color: #1a1a1a;
+  margin: 0;
+}

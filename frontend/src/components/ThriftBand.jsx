@@ -3,13 +3,13 @@ import { ChevronRight } from 'lucide-react';
 import { THRIFT_POLAROIDS } from '../data/mockData';
 import './ThriftBand.css';
 
-export default function ThriftBand() {
+export default function ThriftBand({ subtitle = "Live Thrift Drops", title = "Fast Moving Pieces", data = THRIFT_POLAROIDS }) {
   return (
     <section className="thrift-section animate-fade-in-up" style={{ animationDelay: '600ms' }}>
       <div className="thrift-header">
          <div>
-           <div className="thrift-subtitle">Live Thrift Drops</div>
-           <h3 className="thrift-title">Fast Moving Pieces</h3>
+           <div className="thrift-subtitle">{subtitle}</div>
+           <h3 className="thrift-title">{title}</h3>
          </div>
           <button className="thrift-see-all">
            View All <ChevronRight className="see-all-icon" />
@@ -17,7 +17,7 @@ export default function ThriftBand() {
       </div>
 
       <div className="thrift-carousel">
-         {THRIFT_POLAROIDS.map((item) => (
+         {data.map((item) => (
             <div key={item.id} className="thrift-polaroid">
               <div className="thrift-img" style={{ backgroundImage: `url(${item.img})` }}></div>
               <div className="thrift-content">
