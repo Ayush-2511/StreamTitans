@@ -2,16 +2,50 @@ import React, { useState } from 'react';
 import { X, Heart, Star, ChevronLeft, ChevronRight } from 'lucide-react';
 import { useProduct } from '../context/ProductContext';
 import { useStream } from '../context/StreamContext';
+import { useAuth } from '../context/AuthContext';
+import { buyRegularProduct, claimThriftProduct } from '../firebase/firestore';
+import toast from 'react-hot-toast';
 import './ProductOverlay.css';
 
 export default function ProductOverlay() {
   const { productData, closeProduct } = useProduct();
   const { openStream } = useStream();
+  const { currentUser } = useAuth();
   
   const [qty, setQty] = useState(1);
   const [selectedVariant, setSelectedVariant] = useState('Option A');
+  const [isProcessing, setIsProcessing] = useState(false);
 
   if (!productData) return null;
+
+  const handleBuy = async () => {
+    if (!currentUser) {
+      toast.error("Please login to complete your purchase.");
+      return;
+    }
+    if (!productData.id) {
+      // If it's mock data or missing Firestore ID, we simulate success
+      toast.success("Item successfully purchased! (Demo mode)");
+      closeProduct();
+      return;
+    }
+
+    try {
+      setIsProcessing(true);
+      if (productData.type === 'thrift') {
+         await claimThriftProduct(productData.id, currentUser.userId);
+         toast.success("Item successfully claimed! It's yours.");
+      } else {
+         await buyRegularProduct(productData.id, currentUser.userId, qty);
+         toast.success("Item successfully purchased!");
+      }
+      closeProduct();
+    } catch (err) {
+      toast.error(err.message);
+    } finally {
+      setIsProcessing(false);
+    }
+  };
 
   const handleWatchLive = () => {
     closeProduct();
@@ -134,8 +168,8 @@ export default function ProductOverlay() {
               </div>
 
               <div className="pdp-actions">
-                <button className="pdp-buy-btn">
-                  Buy Now — {productData.price}
+                <button className="pdp-buy-btn" onClick={handleBuy} disabled={isProcessing}>
+                  {isProcessing ? 'Processing...' : (productData.type === 'thrift' ? `Claim Now — ${productData.price}` : `Buy Now — ${productData.price}`)}
                 </button>
                 <button className="pdp-wishlist-btn">
                   <Heart size={20} />

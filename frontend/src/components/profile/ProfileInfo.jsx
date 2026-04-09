@@ -5,8 +5,8 @@ export default function ProfileInfo() {
   return (
     <div className="profile-info-container">
       <div className="profile-main-header">
-        <h2 className="profile-greeting serif-heading">
-          Good morning, <span className="greeting-highlight">R</span>
+        <h2 className="profile-greeting">
+          Good morning
         </h2>
         <p className="profile-subtitle">Manage your vintage identity & preferences</p>
       </div>
@@ -15,7 +15,7 @@ export default function ProfileInfo() {
         <div className="profile-card-header">
           <div className="profile-card-title-area">
             <span className="badge-pill">PERSONAL INFO</span>
-            <h3 className="card-title serif-heading">Your Profile</h3>
+            <h3 className="card-title">Your Profile</h3>
           </div>
           <button className="edit-btn">Edit Profile</button>
         </div>

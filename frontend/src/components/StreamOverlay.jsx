@@ -1,23 +1,36 @@
-import React, { useState, useRef, useEffect, useMemo } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { ShoppingCart, Heart, MessageCircle, Share2, X, Flame, Send } from 'lucide-react';
 import { useStream } from '../context/StreamContext';
 import { useProduct } from '../context/ProductContext';
+import { useAuth } from '../context/AuthContext';
+import { subscribeToChat, sendMessage } from '../firebase/firestore';
+import toast from 'react-hot-toast';
 import './StreamOverlay.css';
 
 export default function StreamOverlay() {
   const { streamData, isStreamLoading, closeStream } = useStream();
   const { openProduct } = useProduct();
+  const { currentUser } = useAuth();
+  
   const [comment, setComment] = useState('');
   const [liked, setLiked] = useState(false);
   const [likeCount, setLikeCount] = useState(48300);
   const [showComments, setShowComments] = useState(true);
-  const [comments, setComments] = useState([
-    { id: 1, avatar: 'M', color: '#7a604a', handle: '@mia_shop', text: 'This looks so good! 😍' },
-    { id: 2, avatar: 'R', color: '#4a607a', handle: '@riya_buys', text: 'Is this available in XS?' },
-    { id: 3, avatar: 'K', color: '#507a4a', handle: '@kai_trends', text: 'Just claimed mine ✅' },
-  ]);
+  const [messages, setMessages] = useState([]);
+  
   const commentsEndRef = useRef(null);
 
+  // Subscribe to real-time chat
+  useEffect(() => {
+    if (!streamData) return;
+    const streamId = streamData.id || streamData.title;
+    const unsub = subscribeToChat(streamId, (data) => {
+      setMessages(data);
+    });
+    return () => unsub();
+  }, [streamData]);
+
+  // Handle Like
   const handleLike = () => {
     setLiked(prev => !prev);
     setLikeCount(prev => prev + (liked ? -1 : 1));
@@ -28,22 +41,27 @@ export default function StreamOverlay() {
     return n.toString();
   };
 
-  const handleCommentSubmit = () => {
+  // Handle Comment Submit
+  const handleCommentSubmit = async () => {
     if (!comment.trim()) return;
-    setComments(prev => [...prev, {
-      id: Date.now(),
-      avatar: 'Y',
-      color: '#FF5B22',
-      handle: '@you',
-      text: comment.trim(),
-    }]);
-    setComment('');
-    setShowComments(true);
+    if (!currentUser) {
+      toast.error("Log in to join the chat");
+      return;
+    }
+    
+    try {
+      const streamId = streamData.id || streamData.title;
+      await sendMessage(streamId, currentUser.name || 'User', comment.trim());
+      setComment('');
+      setShowComments(true);
+    } catch (err) {
+      toast.error("Failed to post comment");
+    }
   };
 
   useEffect(() => {
     commentsEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  }, [comments]);
+  }, [messages]);
 
   if (!streamData) return null;
 
@@ -132,7 +150,7 @@ export default function StreamOverlay() {
               >
                 <MessageCircle size={20} />
               </button>
-              <span className="stream-action-label">{comments.length}</span>
+              <span className="stream-action-label">{messages.length}</span>
            </div>
 
            <div className="stream-action-item">
@@ -153,13 +171,18 @@ export default function StreamOverlay() {
         <div className="stream-bottom-section">
            {showComments && (
            <div className="stream-comments">
-               {comments.map(c => (
-                 <div key={c.id} className="stream-comment-bubble">
-                   <div className="stream-comment-avatar" style={{ backgroundColor: c.color }}>{c.avatar}</div>
-                   <div className="stream-comment-body">
-                     <span className="stream-comment-handle">{c.handle}</span>
-                     <span className="stream-comment-text">{c.text}</span>
-                   </div>
+               {messages.length === 0 && (
+                 <div style={{color: 'rgba(255,255,255,0.5)', padding: '1rem', fontSize: '13px'}}>Be the first to comment...</div>
+               )}
+               {messages.map((msg) => (
+                 <div key={msg.id} className="stream-comment-bubble">
+                    <div className="stream-comment-avatar" style={{backgroundColor: `hsl(${(msg.author?.length || 0) * 30}, 50%, 50%)`}}>
+                      {msg.author ? msg.author.charAt(0).toUpperCase() : '?'}
+                    </div>
+                    <div className="stream-comment-body">
+                      <span className="stream-comment-handle">@{msg.author || 'Guest'}</span>
+                      <span className="stream-comment-text">{msg.text}</span>
+                    </div>
                  </div>
                ))}
                <div ref={commentsEndRef} />

@@ -31,7 +31,7 @@ export default function SemanticSearchModal({ isOpen, onClose }) {
         throw new Error("Missing API Key");
       }
       
-      const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+      const model = genAI.getGenerativeModel({ model: "gemini-flash-latest" });
       
       // We pass the products catalog and the user's natural language query
       const productCatalogText = ALL_PRODUCTS.map(p => `ID:${p.id} TYPE:${p.type} TITLE:"${p.title}"`).join('\n');
@@ -44,11 +44,27 @@ ${productCatalogText}
 
 Return a comma-separated list of product IDs (matching exactly as they appear in the catalog) that best match the user's query. Return ONLY the IDs. If none match well, return an empty string.`;
 
-      const result = await model.generateContent(prompt);
-      const output = result.response.text().trim();
+      let responseText = "";
+      let retries = 3;
+      
+      while (retries > 0) {
+        try {
+          const result = await model.generateContent(prompt);
+          responseText = result.response.text().trim();
+          break;
+        } catch (e) {
+          if (e.message.includes("503") && retries > 1) {
+            retries--;
+            console.warn("Google API 503 Overload detected. Retrying smoothly in 2 seconds...", retries, "attempts left");
+            await new Promise(resolve => setTimeout(resolve, 2000));
+          } else {
+            throw e;
+          }
+        }
+      }
       
       let matchedIds = [];
-      if (output && !output.toLowerCase().includes('empty')) {
+      if (responseText && !responseText.toLowerCase().includes('empty')) {
         matchedIds = output.split(',').map(id => id.trim());
       }
       
