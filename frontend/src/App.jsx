@@ -52,14 +52,21 @@ export default function App() {
   // Sync top-level view → URL hash
   useEffect(() => {
     const viewToHash = {
-      landing: '#/',
+      landing: '', 
       creator: '#/dashboard',
       'creator-auth': '#/creator-auth',
       'auth-login': '#/login',
       'auth-signup': '#/signup',
     };
-    if (viewToHash[currentView]) {
-      window.history.pushState(null, '', viewToHash[currentView]);
+    const targetHash = viewToHash[currentView];
+    const currentHash = window.location.hash;
+
+    if (currentView === 'landing') {
+      if (currentHash !== '' && currentHash !== '#/') {
+        window.history.pushState(null, '', '/');
+      }
+    } else if (targetHash && currentHash !== targetHash) {
+      window.history.pushState(null, '', targetHash);
     }
   }, [currentView]);
 
@@ -67,17 +74,14 @@ export default function App() {
   useEffect(() => {
     const handlePopState = () => {
       const hash = window.location.hash;
-      if (!hash || hash === '#/') setCurrentView('landing');
-      else if (hash === '#/dashboard') setCurrentView('creator');
-      else if (hash === '#/login') setCurrentView('auth-login');
-      else if (hash === '#/signup') setCurrentView('auth-signup');
-      else if (hash === '#/creator-auth') setCurrentView('creator-auth');
-      else if (TAB_HASHES[hash]) setCurrentView('buyer');
-      else setCurrentView('landing');
+      const view = getInitialViewFromHash();
+      if (view !== currentView) {
+        setCurrentView(view);
+      }
     };
     window.addEventListener('popstate', handlePopState);
     return () => window.removeEventListener('popstate', handlePopState);
-  }, []);
+  }, [currentView]);
 
   const toggleDark = () => setIsDark(!isDark);
 

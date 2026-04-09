@@ -60,7 +60,10 @@ export default function Home({ isDark, toggleDark, isAuthenticated, onOpenAuth, 
       'Settings': '#/settings',
     };
     const hash = tabToHash[activeTab];
-    if (hash) window.history.pushState(null, '', hash);
+    // Only push if the target hash is NOT already in the address bar
+    if (hash && window.location.hash !== hash) {
+      window.history.pushState(null, '', hash);
+    }
   }, [activeTab]);
 
   // Browser back/forward → sync activeTab from hash
