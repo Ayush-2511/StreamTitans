@@ -16,7 +16,7 @@ export default function CreatorListingsTab() {
     setEstimatedPrice('');
     try {
       const genAI = new GoogleGenerativeAI(import.meta.env.VITE_GEMINI_API_KEY || "dummy_key");
-      const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+      const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash-lite" });
       const prompt = `You are a pricing expert for second hand and thrifted clothing in India.
       Suggest an optimal selling price in INR (e.g., "₹800 - ₹1,200") for the following item:
       Title: ${newProduct.title}

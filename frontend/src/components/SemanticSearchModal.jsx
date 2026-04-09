@@ -31,7 +31,7 @@ export default function SemanticSearchModal({ isOpen, onClose }) {
         throw new Error("Missing API Key");
       }
       
-      const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+      const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash-lite" });
       
       // We pass the products catalog and the user's natural language query
       const productCatalogText = ALL_PRODUCTS.map(p => `ID:${p.id} TYPE:${p.type} TITLE:"${p.title}"`).join('\n');

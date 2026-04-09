@@ -46,14 +46,14 @@ export default function Chatbot() {
         throw new Error("API Key missing");
       }
       
-      const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+      const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash-lite" });
       
       // We pass the conversation history + system prompt
       const chat = model.startChat({
         history: [
           { role: "user", parts: [{ text: SYSTEM_PROMPT }] },
-          { role: "model", parts: [{ text: "Understood. I will act as the StreamTitans assistant." }] },
-          ...messages.map(m => ({
+          { role: "model", parts: [{ text: messages[0].content }] },
+          ...messages.slice(1).map(m => ({
             role: m.role === 'assistant' ? 'model' : 'user',
             parts: [{ text: m.content }]
           }))
@@ -66,9 +66,9 @@ export default function Chatbot() {
       setMessages((prev) => [...prev, { role: 'assistant', content: response }]);
     } catch (error) {
       console.error("Chatbot Error:", error);
-      let errorMsg = "Oops! Something went wrong.";
-      if (error.message.includes("API Key missing")) {
-        errorMsg = "API key not configured. The site owner needs to add VITE_GEMINI_API_KEY to their .env.local file!";
+      let errorMsg = `Oops! Error: ${error.message}`;
+      if (error.message.includes("API Key missing") || error.message.includes("API_KEY_INVALID")) {
+        errorMsg = "API key not configured or invalid. The site owner needs to add a valid VITE_GEMINI_API_KEY to their .env.local file!";
       }
       setMessages((prev) => [...prev, { 
         role: 'assistant', 
