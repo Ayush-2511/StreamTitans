@@ -30,6 +30,14 @@ export default function Home({ isDark, toggleDark, isAuthenticated, onOpenAuth, 
   const [isLiveOnly, setIsLiveOnly] = useState(false);
   const { scoreItem } = useUserActivity();
 
+  // Reset to discover when logging out, so they don't get stuck on an empty Profile page
+  React.useEffect(() => {
+    if (!isAuthenticated && (activeTab === 'Profile' || activeTab === 'Settings' || activeTab === 'Wallet' || activeTab === 'Cart')) {
+      setActiveTab('Discover');
+      setTabHistory(['Discover']);
+    }
+  }, [isAuthenticated, activeTab]);
+
   const TAB_FROM_HASH = {
     '#/discover': 'Discover',
     '#/ecommerce': 'E-commerce',
@@ -74,8 +82,6 @@ export default function Home({ isDark, toggleDark, isAuthenticated, onOpenAuth, 
     window.addEventListener('popstate', handlePopState);
     return () => window.removeEventListener('popstate', handlePopState);
   }, [activeTab]);
-
-
   const personalizedFeed = [...THRIFT_POLAROIDS].sort((a, b) => {
     const scoreA = scoreItem(a.title);
     const scoreB = scoreItem(b.title);

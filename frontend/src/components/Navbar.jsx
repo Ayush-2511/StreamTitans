@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Sparkles, Moon, Sun, User, ShoppingBag, Search } from 'lucide-react';
 import SemanticSearchModal from './SemanticSearchModal';
+import { logOut } from '../firebase/auth';
+import toast from 'react-hot-toast';
 import './Navbar.css';
 
 export default function Navbar({ isDark, toggleDark, isAuthenticated, onOpenAuth, activeTab, setActiveTab }) {
@@ -18,6 +20,17 @@ export default function Navbar({ isDark, toggleDark, isAuthenticated, onOpenAuth
     document.addEventListener('mousedown', handleOutside);
     return () => document.removeEventListener('mousedown', handleOutside);
   }, [showProfileMenu]);
+
+  const handleLogout = async (e) => {
+    e.preventDefault();
+    try {
+      await logOut();
+      toast.success('Logged out successfully');
+      setShowProfileMenu(false);
+    } catch (err) {
+      toast.error('Failed to log out');
+    }
+  };
 
   const navItems = isAuthenticated
     ? ['Discover', 'E-commerce', 'Thrift', 'Wallet']
@@ -116,6 +129,7 @@ export default function Navbar({ isDark, toggleDark, isAuthenticated, onOpenAuth
               >
                 <a href="#" className="nav-link" onClick={(e) => { e.preventDefault(); setActiveTab('Profile'); setShowProfileMenu(false); }} style={{ padding: '5px 15px', color: 'var(--text-main)' }}>Profile</a>
                 <a href="#" className="nav-link" onClick={(e) => { e.preventDefault(); setActiveTab('Settings'); setShowProfileMenu(false); }} style={{ padding: '5px 15px', color: 'var(--text-main)' }}>Settings</a>
+                <a href="#" className="nav-link" onClick={handleLogout} style={{ padding: '5px 15px', color: 'var(--color-orange)', borderTop: '1px solid rgba(0,0,0,0.1)', marginTop: '4px' }}>Log Out</a>
               </div>
             )}
           </div>

@@ -1,10 +1,24 @@
 import React from 'react';
 import { User, MapPin, ShoppingBag, TrendingUp, Heart, Settings, Clock, Star, KeyRound, LogOut } from 'lucide-react';
+import { useAuth } from '../../context/AuthContext';
 import ProfileInfo from './ProfileInfo';
 import SettingsView from './SettingsView';
 import './ProfileLayout.css';
 
 export default function ProfileLayout({ activeSubTab, onChange }) {
+  const { currentUser } = useAuth();
+  
+  // Get display name from Google Auth or Firestore
+  const displayName = currentUser?.name || currentUser?.displayName || '';
+  const nameParts = displayName.trim().split(' ');
+  const firstName = nameParts[0] || '';
+  const lastName = nameParts.length > 1 ? nameParts[nameParts.length - 1] : '';
+  const initials = (firstName.charAt(0) + (lastName ? lastName.charAt(0) : '')).toUpperCase() || '?';
+  
+  // Get current time greeting
+  const now = new Date();
+  const timeStr = now.toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' });
+  
   // We unified the sidebar from both screenshots
   
   return (
@@ -12,10 +26,10 @@ export default function ProfileLayout({ activeSubTab, onChange }) {
       <aside className="profile-sidebar">
         
         <div className="sidebar-header">
-          <div className="sidebar-avatar">RS</div>
+          <div className="sidebar-avatar">{initials}</div>
           <div className="sidebar-user-details">
-            <h3 className="sidebar-user-name">R S</h3>
-            <p className="sidebar-user-meta">11:55 AM</p>
+            <h3 className="sidebar-user-name">{displayName || 'User'}</h3>
+            <p className="sidebar-user-meta">{timeStr}</p>
           </div>
         </div>
 
