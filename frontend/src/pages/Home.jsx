@@ -17,11 +17,30 @@ import Footer from '../components/Footer';
 import EcommerceView from '../components/ecommerce-v2/EcommerceView';
 import CartView from '../components/CartView';
 import WalletView from '../components/WalletView';
+import ProfileLayout from '../components/profile/ProfileLayout';
 import { THRIFT_POLAROIDS } from '../data/mockData';
+import { ArrowLeft } from 'lucide-react';
 import './Home.css';
 
 export default function Home({ isDark, toggleDark, isAuthenticated, onOpenAuth }) {
   const [activeTab, setActiveTab] = useState('Discover');
+  const [tabHistory, setTabHistory] = useState(['Discover']);
+
+  const navigateToTab = (tab) => {
+    if (tab !== activeTab) {
+      setTabHistory(prev => [...prev, tab]);
+      setActiveTab(tab);
+    }
+  };
+
+  const handleBack = () => {
+    if (tabHistory.length > 1) {
+      const newHistory = [...tabHistory];
+      newHistory.pop();
+      setTabHistory(newHistory);
+      setActiveTab(newHistory[newHistory.length - 1]);
+    }
+  };
 
   return (
     <div className="home-container">
@@ -32,7 +51,7 @@ export default function Home({ isDark, toggleDark, isAuthenticated, onOpenAuth }
           isAuthenticated={isAuthenticated}
           onOpenAuth={onOpenAuth}
           activeTab={activeTab}
-          setActiveTab={setActiveTab}
+          setActiveTab={navigateToTab}
         />
 
         <div key={activeTab} className="animate-fade-in-up tab-transition-wrapper">
@@ -67,13 +86,44 @@ export default function Home({ isDark, toggleDark, isAuthenticated, onOpenAuth }
           )}
 
           {activeTab === 'Cart' && (
-            <CartView onBack={() => setActiveTab('Discover')} />
+            <CartView onBack={handleBack} />
           )}
 
           {activeTab === 'Wallet' && (
             <WalletView />
           )}
+
+          {(activeTab === 'Profile' || activeTab === 'Settings') && (
+            <ProfileLayout activeSubTab={activeTab === 'Settings' ? 'settings' : 'profile'} onChange={navigateToTab} />
+          )}
         </div>
+
+        {tabHistory.length > 1 && (
+          <button 
+            onClick={handleBack}
+            className="animate-fade-in-up"
+            style={{
+              position: 'fixed',
+              bottom: '30px',
+              left: '30px',
+              zIndex: 9999,
+              display: 'flex',
+              alignItems: 'center',
+              gap: '8px',
+              backgroundColor: '#1a1a1a',
+              color: '#fff',
+              border: '1.5px solid #1a1a1a',
+              padding: '12px 24px',
+              borderRadius: '40px',
+              boxShadow: '4px 4px 0 0 #FF5B22',
+              cursor: 'pointer',
+              fontWeight: '600',
+              fontFamily: 'system-ui, sans-serif'
+            }}
+          >
+            <ArrowLeft size={16} /> Back
+          </button>
+        )}
 
         <Footer />
       </div>

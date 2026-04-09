@@ -91,9 +91,8 @@ export default function Navbar({ isDark, toggleDark, isAuthenticated, onOpenAuth
                   boxShadow: 'var(--shadow-brutal, 4px 4px 0px 0px rgba(0,0,0,1))'
                 }}
               >
-                <a href="#" className="nav-link" style={{ padding: '5px 15px', color: 'var(--text-main)' }}>Profile</a>
-                <a href="#" className="nav-link" style={{ padding: '5px 15px', color: 'var(--text-main)' }}>About</a>
-                <a href="#" className="nav-link" style={{ padding: '5px 15px', color: 'var(--text-main)' }}>Settings</a>
+                <a href="#" className="nav-link" onClick={(e) => { e.preventDefault(); setActiveTab('Profile'); setShowProfileMenu(false); }} style={{ padding: '5px 15px', color: 'var(--text-main)' }}>Profile</a>
+                <a href="#" className="nav-link" onClick={(e) => { e.preventDefault(); setActiveTab('Settings'); setShowProfileMenu(false); }} style={{ padding: '5px 15px', color: 'var(--text-main)' }}>Settings</a>
               </div>
             )}
           </div>
