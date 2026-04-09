@@ -19,12 +19,25 @@ import CartView from '../components/CartView';
 import WalletView from '../components/WalletView';
 import ProfileLayout from '../components/profile/ProfileLayout';
 import { THRIFT_POLAROIDS } from '../data/mockData';
+import { useUserActivity } from '../context/UserActivityContext';
 import { ArrowLeft } from 'lucide-react';
 import './Home.css';
 
-export default function Home({ isDark, toggleDark, isAuthenticated, onOpenAuth }) {
+export default function Home({ isDark, toggleDark, isAuthenticated, onOpenAuth, onBackParent }) {
   const [activeTab, setActiveTab] = useState('Discover');
   const [tabHistory, setTabHistory] = useState(['Discover']);
+  const { scoreItem } = useUserActivity();
+
+  // Create personalized feed based on user activity scores
+  const personalizedFeed = [...THRIFT_POLAROIDS].sort((a, b) => {
+    const scoreA = scoreItem(a.title);
+    const scoreB = scoreItem(b.title);
+    if (scoreA !== scoreB) {
+      return scoreB - scoreA; // highest score first
+    }
+    // fall back to random for ties or zero scores to keep it fresh
+    return Math.random() - 0.5;
+  });
 
   const navigateToTab = (tab) => {
     if (tab !== activeTab) {
@@ -39,6 +52,8 @@ export default function Home({ isDark, toggleDark, isAuthenticated, onOpenAuth }
       newHistory.pop();
       setTabHistory(newHistory);
       setActiveTab(newHistory[newHistory.length - 1]);
+    } else if (onBackParent) {
+      onBackParent();
     }
   };
 
@@ -64,8 +79,8 @@ export default function Home({ isDark, toggleDark, isAuthenticated, onOpenAuth }
               <PastStreams />
               <MasonryGrid />
               <ThriftBand />
+              <ThriftBand subtitle="For You" title="Personalized Feed" data={personalizedFeed} />
               <ThriftBand subtitle="Curated Archives" title="Vintage Grails" data={[...THRIFT_POLAROIDS].reverse()} />
-              <ThriftBand subtitle="Eco-Conscious Finds" title="Sustainable Staples" data={[...THRIFT_POLAROIDS].sort(() => Math.random() - 0.5)} />
             </>
           )}
 

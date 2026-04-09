@@ -1,0 +1,461 @@
+/* Dot Pattern Background */
+.ca-container {
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  background-color: #f4efeb;
+  background-image: 
+    radial-gradient(#ccc 1px, transparent 1px);
+  background-size: 20px 20px;
+  background-position: 0 0;
+  font-family: 'Inter', system-ui, sans-serif;
+  color: #1a1a1a;
+}
+
+/* Base Card structure for all 3 views */
+.ca-login-card,
+.ca-signup-card {
+  background-color: #eeeae4;
+  border: 1.5px solid #1a1a1a;
+  border-radius: 16px;
+  box-shadow: 6px 6px 0 0 rgba(0,0,0,0.1);
+  width: 100%;
+  position: relative;
+}
+
+.ca-login-card {
+  max-width: 400px;
+  padding: 3rem 2.5rem;
+  text-align: center;
+}
+
+.ca-signup-card {
+  max-width: 480px;
+  padding: 2.5rem;
+}
+
+/* LOGIN SCREEN Typography */
+.ca-login-title {
+  font-size: 2rem;
+  font-weight: 800;
+  margin: 0 0 0.5rem 0;
+  letter-spacing: -0.02em;
+}
+
+.ca-login-subtitle {
+  font-size: 0.8rem;
+  color: #666;
+  font-weight: bold;
+  letter-spacing: 0.05em;
+  margin: 0 0 2rem 0;
+}
+
+/* FORM ELEMENTS */
+.ca-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.ca-form-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.ca-form-stack.dense {
+  gap: 1rem;
+}
+
+.ca-input-pill {
+  width: 100%;
+  padding: 14px 20px;
+  border: 1px solid #1a1a1a;
+  border-radius: 30px;
+  background-color: #e5e0d8;
+  font-size: 0.95rem;
+  color: #1a1a1a;
+  outline: none;
+  transition: all 0.2s;
+}
+
+.ca-input-pill::placeholder {
+  color: #888;
+}
+
+.ca-input-pill:focus {
+  background-color: white;
+  border-width: 1.5px;
+}
+
+/* BUTTONS */
+.ca-btn-primary.pill {
+  width: 100%;
+  padding: 14px 20px;
+  border: 1px solid #1a1a1a;
+  border-radius: 30px;
+  background-color: #E55B32; /* Orange red */
+  color: white;
+  font-size: 1.05rem;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  cursor: pointer;
+  box-shadow: inset 0 -2px 0 rgba(0,0,0,0.1);
+  transition: transform 0.1s;
+  margin-top: 0.5rem;
+}
+
+.ca-btn-primary.pill:active {
+  transform: translateY(2px);
+  box-shadow: none;
+}
+
+.ca-bottom-link {
+  margin: 2rem 0 1rem 0;
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.ca-link-orange {
+  color: #E55B32;
+  font-weight: bold;
+  background: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+.ca-link-orange:hover {
+  text-decoration: underline;
+}
+
+.ca-btn-skip {
+  background: transparent;
+  border: none;
+  font-size: 0.8rem;
+  font-weight: bold;
+  letter-spacing: 0.05em;
+  color: #666;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  width: 100%;
+  cursor: pointer;
+  margin-top: 1rem;
+}
+
+.ca-btn-skip:hover {
+  color: #1a1a1a;
+}
+
+/* SIGNUP HEADER & STEPPER */
+.ca-stepper {
+  position: absolute;
+  top: -2rem;
+  left: 0;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  font-size: 0.75rem;
+  font-weight: bold;
+  color: #888;
+  letter-spacing: 0.02em;
+}
+
+.ca-step { display: flex; align-items: center; gap: 6px; }
+.ca-step.active { color: #1a1a1a; }
+.ca-step.active.orange { color: #E55B32; }
+.ca-step.past, .ca-step.inactive { color: #888; }
+
+.ca-step-num {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  background: #888;
+}
+
+.ca-step.active .ca-step-num { background: #1a1a1a; }
+.ca-step.active.orange .ca-step-num { background: #E55B32; }
+.ca-step.past .ca-step-num { background: #1a1a1a; }
+
+.ca-stepper-line {
+  height: 1px;
+  width: 40px;
+  background: #ccc;
+}
+
+.ca-stepper-line.filled {
+  background: #1a1a1a;
+}
+
+/* Branding in Signup */
+.ca-logo-wrap {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 1rem;
+}
+
+.ca-logo {
+  font-weight: 900;
+  letter-spacing: 0.1em;
+  font-size: 1.1rem;
+}
+
+.ca-badge {
+  background: #1a1a1a;
+  color: white;
+  font-size: 0.6rem;
+  padding: 2px 6px;
+  border-radius: 12px;
+  font-weight: bold;
+  letter-spacing: 0.05em;
+}
+
+.ca-signup-header h2 {
+  font-size: 2.2rem;
+  margin: 0 0 0.5rem 0;
+  letter-spacing: -0.02em;
+}
+
+.ca-signup-header p {
+  color: #666;
+  font-size: 0.95rem;
+  line-height: 1.4;
+  margin: 0 0 1.5rem 0;
+}
+
+.ca-progress-bar {
+  width: 100%;
+  height: 2px;
+  background: #dfdac8;
+  margin-bottom: 2rem;
+}
+
+.ca-progress-fill {
+  height: 100%;
+  background: #E55B32;
+}
+
+.ca-progress-fill.step-1 { width: 50%; }
+.ca-progress-fill.step-2 { width: 100%; }
+
+/* Form Controls Setup */
+.ca-form-group {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+.ca-row {
+  display: flex;
+  gap: 16px;
+}
+
+.ca-form-group.half {
+  flex: 1;
+}
+
+.ca-form-group label {
+  font-size: 0.75rem;
+  font-weight: bold;
+  color: #444;
+  letter-spacing: 0.05em;
+  margin-bottom: 6px;
+}
+
+.ca-sub-label {
+  font-size: 0.7rem;
+  color: #888;
+  margin-top: 6px;
+}
+
+.ca-sub-label-bottom {
+  font-size: 0.7rem;
+  color: #888;
+  margin: -0.5rem 0 0 0;
+  text-align: left;
+}
+
+.ca-opt-label {
+  color: #999;
+  font-weight: normal;
+  text-transform: none;
+  letter-spacing: normal;
+}
+
+.ca-input-rect {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  background-color: white;
+  font-size: 0.95rem;
+  color: #1a1a1a;
+  outline: none;
+}
+
+.ca-input-rect::placeholder { color: #999; }
+.ca-input-rect:focus { border-color: #E55B32; }
+
+/* Continue Step Button */
+.ca-btn-continue {
+  padding: 14px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background: transparent;
+  font-weight: bold;
+  font-size: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+  margin-top: 0.5rem;
+}
+
+.ca-btn-continue:hover {
+  background: white;
+  border-color: #1a1a1a;
+}
+
+.ca-btn-continue.success { background: transparent; }
+.ca-btn-continue.success:hover { background: #fdfafa; }
+
+.ca-btn-back {
+  background: transparent;
+  border: 1px solid #ddd;
+  padding: 14px;
+  border-radius: 8px;
+  font-weight: bold;
+  font-size: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.ca-btn-back:hover { background: white; border-color:#ccc; }
+
+.ca-footer-link {
+  margin-top: 2rem;
+  text-align: center;
+  font-size: 0.9rem;
+  color: #666;
+  border-top: 1px solid #ddd;
+  padding-top: 1.5rem;
+}
+
+/* Pilling Section Headers inside Step 2 */
+.ca-section-pill {
+  align-self: flex-start;
+  padding: 4px 12px 4px 4px;
+  border-radius: 20px;
+  font-size: 0.7rem;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  letter-spacing: 0.05em;
+  margin-top: 1rem;
+}
+
+.ca-section-pill:first-child { margin-top: 0; }
+
+.ca-section-pill.dark { background: #1a1a1a; color: white; }
+.ca-section-pill.orange { background: #E55B32; color: white; }
+
+.pill-icon {
+  background: white;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ca-section-pill.dark .pill-icon { color: #1a1a1a; }
+.ca-section-pill.orange .pill-icon { color: #E55B32; }
+
+/* Upload Box Custom */
+.ca-upload-box {
+  border: 1.5px dashed #ccc;
+  border-radius: 8px;
+  background-color: rgba(0,0,0,0.02);
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.ca-upload-box:hover {
+  background-color: rgba(0,0,0,0.05);
+  border-color: #aaa;
+}
+
+.ca-upload-icon {
+  width: 36px;
+  height: 36px;
+  background: #ddd;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 0.5rem;
+  color: #444;
+}
+
+.ca-upload-box p {
+  margin: 0;
+  font-size: 0.85rem;
+  color: #444;
+  font-weight: 500;
+}
+
+.ca-upload-box span {
+  font-size: 0.7rem;
+  color: #999;
+  margin-top: 4px;
+}
+
+/* Checkbox Row */
+.ca-checkbox-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin: 1rem 0;
+  cursor: pointer;
+}
+
+.ca-checkbox-row input {
+  margin-top: 2px;
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+}
+
+.ca-checkbox-row span {
+  font-size: 0.8rem;
+  color: #444;
+  line-height: 1.4;
+}

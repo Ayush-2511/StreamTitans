@@ -2,16 +2,19 @@ import React, { useState, useEffect } from 'react';
 import Home from './pages/Home';
 import LandingFlow from './pages/LandingFlow';
 import CreatorDashboard from './pages/CreatorDashboard';
+import CreatorAuthFlow from './pages/CreatorAuthFlow';
 import { StreamProvider } from './context/StreamContext';
 import StreamOverlay from './components/StreamOverlay';
 import { ProductProvider } from './context/ProductContext';
 import ProductOverlay from './components/ProductOverlay';
+import { UserActivityProvider } from './context/UserActivityContext';
+import Chatbot from './components/Chatbot';
 import { ArrowLeft } from 'lucide-react';
 
 import { useAuth } from './context/AuthContext';
 
 export default function App() {
-  const [currentView, setCurrentView] = useState('landing'); // 'landing' | 'buyer' | 'creator' | 'auth-login' | 'auth-signup'
+  const [currentView, setCurrentView] = useState('landing'); // 'landing' | 'buyer' | 'creator' | 'auth-login' | 'auth-signup' | 'creator-auth'
   const [isDark, setIsDark] = useState(false);
   const { currentUser, userRole, loading } = useAuth();
 
@@ -59,7 +62,7 @@ export default function App() {
     content = (
       <LandingFlow 
         onBuyerSelect={() => setCurrentView('auth-login')}
-        onCreatorSelect={() => setCurrentView('creator')}
+        onCreatorSelect={() => setCurrentView('creator-auth')}
         onComplete={handleAuthComplete}
       />
     );
@@ -71,6 +74,8 @@ export default function App() {
         onComplete={handleAuthComplete}
       />
     );
+  } else if (currentView === 'creator-auth') {
+    content = <CreatorAuthFlow onComplete={() => setCurrentView('creator')} />;
   } else if (currentView === 'creator') {
     content = <CreatorDashboard isDark={isDark} toggleDark={toggleDark} />;
   } else {
@@ -80,20 +85,24 @@ export default function App() {
         toggleDark={toggleDark}
         isAuthenticated={!!currentUser}
         onOpenAuth={handleOpenAuth}
+        onBackParent={() => setCurrentView('landing')}
       />
     );
   }
 
   return (
-    <ProductProvider>
-      <StreamProvider>
-        <div key={currentView} className="animate-fade-in-up" style={{ minHeight: '100vh', width: '100%' }}>
-          {content}
-        </div>
+    <UserActivityProvider>
+      <ProductProvider>
+        <StreamProvider>
+          <div key={currentView} className="animate-fade-in-up" style={{ minHeight: '100vh', width: '100%' }}>
+            {content}
+          </div>
 
-        <StreamOverlay />
-        <ProductOverlay />
-      </StreamProvider>
-    </ProductProvider>
+          <StreamOverlay />
+          <ProductOverlay />
+          <Chatbot />
+        </StreamProvider>
+      </ProductProvider>
+    </UserActivityProvider>
   );
 }

@@ -9,7 +9,7 @@ export default function SettingsView() {
         <button className="settings-back-icon">
           <ChevronLeft size={20} />
         </button>
-        <h2 className="settings-title serif-heading">Settings</h2>
+        <h2 className="settings-title">Settings</h2>
       </div>
 
       <div className="settings-profile-card">

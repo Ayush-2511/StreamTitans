@@ -7,6 +7,7 @@ import CreatorListingsTab from '../components/creator/tabs/CreatorListingsTab';
 import CreatorOrdersTab from '../components/creator/tabs/CreatorOrdersTab';
 import CreatorAnalyticsTab from '../components/creator/tabs/CreatorAnalyticsTab';
 import CreatorStreamsTab from '../components/creator/tabs/CreatorStreamsTab';
+import CreatorProfileView from '../components/creator/CreatorProfileView';
 import Footer from '../components/Footer';
 import './CreatorDashboard.css';
 
@@ -15,6 +16,7 @@ export default function CreatorDashboard({ isDark, toggleDark }) {
 
   const renderTab = () => {
     switch (activeTab) {
+      case 'Profile': return <CreatorProfileView />;
       case 'My Streams': return <CreatorStreamsTab />;
       case 'Listings': return <CreatorListingsTab />;
       case 'Orders': return <CreatorOrdersTab />;

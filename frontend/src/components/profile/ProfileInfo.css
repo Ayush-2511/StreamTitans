@@ -9,16 +9,16 @@
 
 .profile-greeting {
   font-size: 3rem;
-  color: #1a1a1a;
+  font-weight: 800;
+  color: var(--color-ink);
   margin: 0 0 0.5rem 0;
-}
-
-.greeting-highlight {
-  color: #c9a473; /* gold from the image */
+  line-height: 1.2;
 }
 
 .profile-subtitle {
-  color: #888;
+  color: var(--color-ink);
+  opacity: 0.8;
+  font-weight: 500;
   font-size: 1.1rem;
   margin: 0;
 }
@@ -27,7 +27,14 @@
   background: white;
   border-radius: 12px;
   padding: 2.5rem;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+  border: 1.5px solid var(--color-ink);
+  box-shadow: 4px 4px 0px var(--color-ink);
+}
+
+.dark .profile-card {
+  background: #1a1a1a;
+  border-color: #333;
+  box-shadow: none;
 }
 
 .profile-card-header {
@@ -35,36 +42,51 @@
   justify-content: space-between;
   align-items: flex-start;
   margin-bottom: 2rem;
-  border-bottom: 1px solid #f0f0f0;
+  border-bottom: 1.5px solid var(--color-ink);
   padding-bottom: 1.5rem;
 }
 
 .badge-pill {
   display: inline-block;
-  background: transparent;
-  border: 1px solid #ddd;
-  color: #888;
+  background: var(--color-surface);
+  border: 1px solid var(--color-ink);
+  color: var(--color-ink);
   padding: 4px 12px;
   border-radius: 20px;
   font-size: 0.75rem;
-  font-weight: 500;
+  font-weight: 800;
   letter-spacing: 0.05em;
   margin-bottom: 1.5rem;
 }
 
 .card-title {
   font-size: 1.75rem;
-  color: #1a1a1a;
+  font-weight: 800;
+  color: var(--color-ink);
   margin: 0;
 }
 
+.dark .card-title {
+  color: white;
+}
+
 .edit-btn {
-  background: transparent;
-  border: 1px solid #eee;
-  padding: 8px 16px;
+  background: var(--color-ink);
+  border: none;
+  padding: 10px 16px;
   border-radius: 8px;
-  color: #f5f5f5; /* Light grey text out, maybe image is super faint text */
-  color: #eee; /* it barely shows in image 1 */
+  color: white;
+  font-weight: 800;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+.edit-btn:hover {
+  transform: translateY(-2px);
+}
+.dark .edit-btn {
+  background: white;
+  color: #1a1a1a;
 }
 
 .profile-form {
@@ -89,23 +111,35 @@
 
 .form-group label {
   font-size: 0.75rem;
-  color: #888;
-  font-weight: 500;
+  color: var(--color-ink);
+  font-weight: 800;
   letter-spacing: 0.05em;
   text-transform: uppercase;
 }
-
-.dark-input {
-  background: #2a2a2a;
-  color: white;
-  padding: 12px 16px;
-  border-radius: 6px;
-  border: none;
-  font-size: 1rem;
+.dark .form-group label {
+  color: #ccc;
 }
 
+.dark-input {
+  background: transparent;
+  color: var(--color-ink);
+  padding: 12px 16px;
+  border-radius: 8px;
+  border: 1.5px solid var(--color-ink);
+  font-weight: 500;
+  font-size: 1rem;
+}
 .dark-input:focus {
-  outline: 1px solid #FF5B22;
+  border-color: var(--color-orange);
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(232, 87, 42, 0.1);
+}
+.dark .dark-input {
+  border-color: #444;
+  color: white;
+}
+.dark .dark-input:focus {
+  border-color: var(--color-orange);
 }
 
 .birthdate-row {
@@ -125,32 +159,35 @@
   gap: 8px;
   cursor: pointer;
   font-size: 0.85rem;
-  color: #555;
-  font-weight: 500;
+  color: var(--color-ink);
+  font-weight: 800;
   letter-spacing: 0.05em;
 }
+.dark .radio-label { color: white; }
 
 .radio-custom {
-  width: 16px;
-  height: 16px;
+  width: 18px;
+  height: 18px;
   border-radius: 50%;
-  border: 1px solid #ccc;
+  border: 1.5px solid var(--color-ink);
   display: inline-block;
   position: relative;
+  background: white;
 }
+.dark .radio-custom { border-color: #555; background: #222; }
 
 .radio-label input {
   display: none;
 }
 
 .radio-label input:checked + .radio-custom {
-  border-color: #1a1a1a;
+  border-color: var(--color-orange);
 }
 .radio-label input:checked + .radio-custom::after {
   content: '';
   position: absolute;
   top: 3px; left: 3px; width: 8px; height: 8px;
-  background: #1a1a1a;
+  background: var(--color-orange);
   border-radius: 50%;
 }
 
@@ -163,16 +200,26 @@
 
 .style-pill {
   padding: 8px 16px;
-  border-radius: 20px;
-  border: 1px solid #e0e0e0;
-  background: transparent;
-  color: #888;
+  border-radius: 99px;
+  border: 1.5px solid var(--color-ink);
+  background: white;
+  color: var(--color-ink);
   font-size: 0.85rem;
-  font-weight: 500;
+  font-weight: 800;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.dark .style-pill {
+  background: #2a2a2a;
+  border-color: #444;
+  color: white;
 }
 
 .style-pill.active {
-  background: #1a1a1a;
+  background: var(--color-ink);
   color: white;
-  border-color: #1a1a1a;
+}
+.dark .style-pill.active {
+  background: white;
+  color: #1a1a1a;
 }

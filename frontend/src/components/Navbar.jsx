@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
-import { Sparkles, Moon, Sun, User, ShoppingBag } from 'lucide-react';
+import { Sparkles, Moon, Sun, User, ShoppingBag, Search } from 'lucide-react';
+import SemanticSearchModal from './SemanticSearchModal';
 import './Navbar.css';
 
 export default function Navbar({ isDark, toggleDark, isAuthenticated, onOpenAuth, activeTab, setActiveTab }) {
   const [showProfileMenu, setShowProfileMenu] = useState(false);
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
 
   const navItems = isAuthenticated
     ? ['Discover', 'E-commerce', 'Thrift', 'Wallet']
@@ -36,6 +38,15 @@ export default function Navbar({ isDark, toggleDark, isAuthenticated, onOpenAuth
       </nav>
       
       <div className="nav-actions">
+        <button 
+          onClick={() => setIsSearchOpen(true)} 
+          className="nav-btn-secondary brutal-border"
+          style={{ display: 'flex', alignItems: 'center', gap: '6px', color: 'var(--color-orange)' }}
+          aria-label="AI Search"
+        >
+          <Sparkles size={16} />
+          <span style={{ fontWeight: 'bold' }}>AI Search</span>
+        </button>
         <button 
           onClick={toggleDark} 
           className="nav-btn-icon brutal-border focus-visible"
@@ -99,6 +110,13 @@ export default function Navbar({ isDark, toggleDark, isAuthenticated, onOpenAuth
           </div>
         )}
       </div>
+
+      {isSearchOpen && (
+        <SemanticSearchModal 
+          isOpen={isSearchOpen} 
+          onClose={() => setIsSearchOpen(false)} 
+        />
+      )}
     </header>
   );
 }

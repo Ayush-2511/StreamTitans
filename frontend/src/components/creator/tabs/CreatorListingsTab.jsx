@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Search, Filter, ArrowDownUp, Plus, MoreHorizontal } from 'lucide-react';
+import { Search, Filter, ArrowDownUp, Plus, MoreHorizontal, Sparkles, X, Loader2 } from 'lucide-react';
 import { useAuth } from '../../../context/AuthContext';
 import { subscribeToProducts, addProduct } from '../../../firebase/firestore';
 import { uploadMediaToCloudinary } from '../../../firebase/cloudinary';
+import { GoogleGenerativeAI } from '@google/generative-ai';
 import toast from 'react-hot-toast';
 import './CreatorListingsTab.css';
 
@@ -10,10 +11,36 @@ export default function CreatorListingsTab() {
   const [storeMode, setStoreMode] = useState('Thrifting');
   const { currentUser } = useAuth();
   const [products, setProducts] = useState([]);
-  const [isAddingProduct, setIsAddingProduct] = useState(false);
-  const [newProduct, setNewProduct] = useState({ title: '', price: '', stock: '', category: '' });
+  const [showAddModal, setShowAddModal] = useState(false);
+  const [newProduct, setNewProduct] = useState({ title: '', price: '', stock: '1', category: '', condition: 'Gently Used' });
   const [file, setFile] = useState(null);
   const [uploading, setUploading] = useState(false);
+  const [isEstimating, setIsEstimating] = useState(false);
+  const [estimatedPrice, setEstimatedPrice] = useState('');
+
+  const handleEstimatePrice = async () => {
+    if (!newProduct.title || !newProduct.category) return toast.error("Enter Title & Category to estimate");
+    setIsEstimating(true);
+    setEstimatedPrice('');
+    try {
+      const genAI = new GoogleGenerativeAI(import.meta.env.VITE_GEMINI_API_KEY || "dummy_key");
+      const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+      const prompt = `You are a pricing expert for second hand and thrifted clothing in India.
+      Suggest an optimal selling price in INR (e.g., "₹800 - ₹1,200") for the following item:
+      Title: ${newProduct.title}
+      Category: ${newProduct.category}
+      Condition: ${newProduct.condition}
+      
+      Return ONLY the suggested price range. Nothing else.`;
+      const result = await model.generateContent(prompt);
+      setEstimatedPrice(result.response.text().trim());
+    } catch(err) {
+      console.error(err);
+      setEstimatedPrice('Failed to estimate.');
+    } finally {
+      setIsEstimating(false);
+    }
+  };
 
   useEffect(() => {
     if (!currentUser) return;
@@ -44,8 +71,8 @@ export default function CreatorListingsTab() {
       });
       
       toast.success("Product added!");
-      setIsAddingProduct(false);
-      setNewProduct({ title: '', price: '', stock: '', category: '' });
+      setShowAddModal(false);
+      setNewProduct({ title: '', price: '', stock: '1', category: '', condition: 'Gently Used' });
       setFile(null);
     } catch(err) {
       toast.error(err.message);
@@ -90,12 +117,76 @@ export default function CreatorListingsTab() {
             <button className="export-btn">
               <ArrowDownUp size={14} /> Sort
             </button>
-            <button className="export-btn text-cream" style={{ backgroundColor: 'var(--color-ink)' }} onClick={() => setIsAddingProduct(!isAddingProduct)}>
+            <button className="export-btn text-cream" style={{ backgroundColor: 'var(--color-ink)' }} onClick={() => setShowAddModal(true)}>
               <Plus size={14} /> Add product
             </button>
           </div>
         </div>
       </div>
+
+      {showAddModal && (
+        <div className="add-modal-overlay">
+          <div className="add-modal-content">
+            <button className="add-modal-close" onClick={() => setShowAddModal(false)}>
+              <X size={20} />
+            </button>
+            <h2 className="add-modal-title">Add New Listing</h2>
+            
+            <div>
+              <div className="add-modal-form-group">
+                <label className="add-modal-label">Title</label>
+                <input type="text" className="add-modal-input" placeholder="e.g. Vintage Denim Jacket" value={newProduct.title} onChange={e => setNewProduct({...newProduct, title: e.target.value})} />
+              </div>
+              <div className="add-modal-form-group">
+                <label className="add-modal-label">Category</label>
+                <input type="text" className="add-modal-input" placeholder="e.g. Women's Fashion" value={newProduct.category} onChange={e => setNewProduct({...newProduct, category: e.target.value})} />
+              </div>
+              <div className="add-modal-form-group">
+                <label className="add-modal-label">Condition</label>
+                <select className="add-modal-input" value={newProduct.condition} onChange={e => setNewProduct({...newProduct, condition: e.target.value})}>
+                  <option>Brand New</option>
+                  <option>Like New</option>
+                  <option>Gently Used</option>
+                  <option>Well Worn</option>
+                </select>
+              </div>
+              
+              <div className="add-modal-form-group">
+                <button 
+                  onClick={handleEstimatePrice}
+                  disabled={!newProduct.title || !newProduct.category || isEstimating}
+                  className="add-modal-estimate-btn"
+                >
+                  {isEstimating ? <Loader2 size={16} className="animate-spin" /> : <Sparkles size={16} />} 
+                  AI Price Estimator
+                </button>
+                {estimatedPrice && (
+                  <p className="add-modal-estimated-price">Suggested: {estimatedPrice}</p>
+                )}
+              </div>
+
+              <div className="add-modal-form-group">
+                <label className="add-modal-label">Price</label>
+                <input type="text" className="add-modal-input" placeholder="e.g. ₹999" value={newProduct.price} onChange={e => setNewProduct({...newProduct, price: e.target.value})} />
+              </div>
+
+              <div className="add-modal-form-group">
+                <label className="add-modal-label">Stock</label>
+                <input type="number" className="add-modal-input" placeholder="1" value={newProduct.stock} onChange={e => setNewProduct({...newProduct, stock: e.target.value})} />
+              </div>
+
+              <div className="add-modal-form-group">
+                <label className="add-modal-label">Product Image</label>
+                <input type="file" onChange={e => setFile(e.target.files[0])} accept="image/*" className="add-modal-input" />
+              </div>
+
+              <button className="add-modal-save-btn" onClick={handleAddProduct} disabled={uploading}>
+                {uploading ? 'Publishing...' : 'Save & Publish Listing'}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Metrics Row */}
       <div className="inventory-metrics" style={{ marginTop: '24px' }}>
@@ -171,22 +262,6 @@ export default function CreatorListingsTab() {
       </div>
 
       <div className="products-grid mt-4">
-        {isAddingProduct && (
-          <form onSubmit={handleAddProduct} className="brutal-border" style={{ padding: '1rem', background: '#222', gridColumn: '1 / -1', marginBottom: '1rem', borderRadius: '12px' }}>
-            <h4 style={{ margin: '0 0 1rem 0' }}>Add New {storeMode === 'Thrifting' ? 'Thrift' : 'Retail'} Product</h4>
-            <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
-              <input type="text" placeholder="Title" value={newProduct.title} onChange={e=>setNewProduct({...newProduct, title: e.target.value})} style={{ padding: '8px', flex: 1, minWidth: '200px', backgroundColor: '#111', color: '#fff', border: '1px solid #555', borderRadius: '4px' }} />
-              <input type="text" placeholder="Category" value={newProduct.category} onChange={e=>setNewProduct({...newProduct, category: e.target.value})} style={{ padding: '8px', flex: 1, minWidth: '150px', backgroundColor: '#111', color: '#fff', border: '1px solid #555', borderRadius: '4px' }} />
-              <input type="text" placeholder="Price (e.g. ₹299)" value={newProduct.price} onChange={e=>setNewProduct({...newProduct, price: e.target.value})} style={{ padding: '8px', width: '120px', backgroundColor: '#111', color: '#fff', border: '1px solid #555', borderRadius: '4px' }} />
-              <input type="number" placeholder="Stock" value={newProduct.stock} onChange={e=>setNewProduct({...newProduct, stock: e.target.value})} style={{ padding: '8px', width: '100px', backgroundColor: '#111', color: '#fff', border: '1px solid #555', borderRadius: '4px' }} />
-              <input type="file" onChange={e => setFile(e.target.files[0])} accept="image/*" style={{ padding: '8px', width: '100%', fontSize: '0.9rem' }} />
-            </div>
-            <div style={{ display: 'flex', gap: '1rem', marginTop: '1rem', justifyContent: 'flex-end' }}>
-              <button type="button" onClick={() => setIsAddingProduct(false)} style={{ padding: '8px 16px', background: 'transparent', color: '#fff', border: '1px solid #555', cursor: 'pointer', borderRadius: '4px' }}>Cancel</button>
-              <button type="submit" disabled={uploading} style={{ padding: '8px 16px', background: 'var(--color-ink)', color: '#fff', border: 'none', cursor: 'pointer', borderRadius: '4px' }}>{uploading ? 'Adding...' : 'Submit Workflow'}</button>
-            </div>
-          </form>
-        )}
 
         {currentProducts.map((item, i) => (
           <div key={i} className="product-card brutal-shadow">
@@ -303,7 +378,7 @@ export default function CreatorListingsTab() {
             </div>
           </div>
           
-          <div className="new-product-card">
+          <div className="new-product-card" style={{ cursor: 'pointer' }} onClick={() => setShowAddModal(true)}>
              <div className="add-circle">
                 <Plus size={20} />
              </div>

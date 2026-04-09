@@ -54,12 +54,6 @@ export default function CreatorWelcome() {
             <span><strong>318</strong> messages</span>
             <span><strong>18</strong> sold</span>
           </div>
-          
-          <div className="stream-actions">
-            <button className="action-btn brutal-border bg-cream text-ink"><Play size={16} /> Replay</button>
-            <button className="action-btn brutal-border bg-cream text-ink"><Share2 size={16} /> Share</button>
-            <button className="action-btn brutal-border text-ink bg-surface-light"><Trash2 size={16} /> Delete</button>
-          </div>
         </div>
       </div>
     </div>
