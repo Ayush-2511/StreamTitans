@@ -9,9 +9,9 @@ import ProductOverlay from './components/ProductOverlay';
 import { ArrowLeft } from 'lucide-react';
 
 export default function App() {
-  const [currentView, setCurrentView] = useState('buyer'); // 'landing' | 'buyer' | 'creator' | 'auth-login' | 'auth-signup'
+  const [currentView, setCurrentView] = useState('landing'); // 'landing' | 'buyer' | 'creator' | 'auth-login' | 'auth-signup'
   const [isDark, setIsDark] = useState(false);
-  const [isAuthenticated, setIsAuthenticated] = useState(true);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
     if (isDark) {

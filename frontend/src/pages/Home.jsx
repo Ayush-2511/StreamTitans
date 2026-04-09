@@ -109,19 +109,21 @@ export default function Home({ isDark, toggleDark, isAuthenticated, onOpenAuth }
               zIndex: 9999,
               display: 'flex',
               alignItems: 'center',
-              gap: '8px',
+              justifyContent: 'center',
               backgroundColor: '#1a1a1a',
               color: '#fff',
               border: '1.5px solid #1a1a1a',
-              padding: '12px 24px',
-              borderRadius: '40px',
+              width: '48px',
+              height: '48px',
+              borderRadius: '50%',
               boxShadow: '4px 4px 0 0 #FF5B22',
               cursor: 'pointer',
-              fontWeight: '600',
-              fontFamily: 'system-ui, sans-serif'
+              transition: 'transform 0.2s ease'
             }}
+            onMouseOver={(e) => { e.currentTarget.style.transform = 'translateY(-2px)' }}
+            onMouseOut={(e) => { e.currentTarget.style.transform = 'translateY(0)' }}
           >
-            <ArrowLeft size={16} /> Back
+            <ArrowLeft size={20} />
           </button>
         )}
 
