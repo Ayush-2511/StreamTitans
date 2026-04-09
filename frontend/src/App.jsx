@@ -40,6 +40,28 @@ export default function App() {
   // If Firebase is checking login state, show nothing or spinner.
   if (loading) return null;
 
+  // Check for missing configuration (Diagnostic for team collaborators)
+  if (!import.meta.env.VITE_FIREBASE_API_KEY || import.meta.env.VITE_FIREBASE_API_KEY === 'your_api_key_here') {
+    return (
+      <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: '#000', color: '#fff', padding: '2rem', textAlign: 'center', fontFamily: 'Inter, sans-serif' }}>
+        <div style={{ maxWidth: '600px', border: '2px solid #FF5B22', padding: '2.5rem', borderRadius: '16px' }}>
+          <h1 style={{ color: '#FF5B22', fontSize: '2rem', marginBottom: '1.5rem' }}>Configuration Missing</h1>
+          <p style={{ fontSize: '1.1rem', lineHeight: '1.6', marginBottom: '2rem', opacity: 0.9 }}>
+            It looks like you've pulled the code but haven't set up your <strong>.env</strong> file yet. 
+            Firebase and AI features will not work without it.
+          </p>
+          <div style={{ background: '#111', padding: '1.5rem', borderRadius: '8px', textAlign: 'left', marginBottom: '2rem' }}>
+            <p style={{ color: '#aaa', fontSize: '0.9rem', marginBottom: '0.5rem' }}>QUICK FIX:</p>
+            <p style={{ fontSize: '0.95rem' }}>1. Rename <strong>.env.example</strong> to <strong>.env</strong></p>
+            <p style={{ fontSize: '0.95rem' }}>2. Paste the keys provided by your team lead</p>
+            <p style={{ fontSize: '0.95rem' }}>3. Restart your dev server (<code>npm run dev</code>)</p>
+          </div>
+          <p style={{ fontSize: '0.85rem', color: '#666' }}>StreamTitans © 2026 · Project Collaboration Mode</p>
+        </div>
+      </div>
+    );
+  }
+
   let content;
 
   // Protect creator route

@@ -23,7 +23,11 @@ export default function LandingAuthForm({ isHidden, onComplete, initialMode = 's
       }
       onComplete(true);
     } catch (err) {
-      toast.error(err.message);
+      if (err.code === 'auth/configuration-not-found' || err.code === 'auth/invalid-api-key') {
+        toast.error("Firebase keys are missing or invalid. Check your .env file!");
+      } else {
+        toast.error(err.message);
+      }
     }
   };
 
@@ -33,7 +37,13 @@ export default function LandingAuthForm({ isHidden, onComplete, initialMode = 's
       toast.success("Authenticated with Google!");
       onComplete(true);
     } catch (err) {
-      toast.error(err.message);
+      if (err.code === 'auth/unauthorized-domain') {
+        toast.error("This domain/IP is not authorized in Firebase Console. Add it to 'Authorized Domains'!", { duration: 6000 });
+      } else if (err.code === 'auth/operation-not-allowed') {
+        toast.error("Google login is not enabled in Firebase > Auth > Sign-in Method.", { duration: 6000 });
+      } else {
+        toast.error(err.message);
+      }
     }
   };
 
