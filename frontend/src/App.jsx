@@ -6,6 +6,7 @@ import { StreamProvider } from './context/StreamContext';
 import StreamOverlay from './components/StreamOverlay';
 import { ProductProvider } from './context/ProductContext';
 import ProductOverlay from './components/ProductOverlay';
+import { ArrowLeft } from 'lucide-react';
 
 export default function App() {
   const [currentView, setCurrentView] = useState('landing'); // 'landing' | 'buyer' | 'creator' | 'auth-login' | 'auth-signup'
@@ -64,7 +65,39 @@ export default function App() {
   return (
     <ProductProvider>
       <StreamProvider>
-        {content}
+        <div key={currentView} className="animate-fade-in-up" style={{ minHeight: '100vh', width: '100%' }}>
+          {content}
+        </div>
+        
+        {currentView !== 'landing' && (
+          <button 
+            onClick={() => setCurrentView('landing')}
+            style={{
+              position: 'fixed',
+              bottom: '30px',
+              left: '30px',
+              zIndex: 9999,
+              display: 'flex',
+              alignItems: 'center',
+              gap: '8px',
+              backgroundColor: '#1a1a1a',
+              color: '#fff',
+              border: '1.5px solid #1a1a1a',
+              padding: '12px 24px',
+              borderRadius: '40px',
+              boxShadow: '4px 4px 0 0 #FF5B22',
+              cursor: 'pointer',
+              fontWeight: '600',
+              fontFamily: 'system-ui, sans-serif',
+              transition: 'transform 0.2s'
+            }}
+            onMouseOver={(e) => { e.currentTarget.style.transform = 'translateY(-2px)' }}
+            onMouseOut={(e) => { e.currentTarget.style.transform = 'translateY(0)' }}
+          >
+            <ArrowLeft size={16} /> Exit to Gateway
+          </button>
+        )}
+
         <StreamOverlay />
         <ProductOverlay />
       </StreamProvider>

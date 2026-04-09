@@ -35,43 +35,45 @@ export default function Home({ isDark, toggleDark, isAuthenticated, onOpenAuth }
           setActiveTab={setActiveTab}
         />
         
-        {activeTab === 'Discover' && <Hero isAuthenticated={isAuthenticated} />}
-        
-        {activeTab === 'Discover' && (
-          <>
-            <FilterBar />
-            <LiveDeck />
-            <PastStreams />
-            <MasonryGrid />
-            <ThriftBand />
-            <ThriftBand subtitle="Curated Archives" title="Vintage Grails" data={[...THRIFT_POLAROIDS].reverse()} />
-            <ThriftBand subtitle="Eco-Conscious Finds" title="Sustainable Staples" data={[...THRIFT_POLAROIDS].sort(() => Math.random() - 0.5)} />
-          </>
-        )}
+        <div key={activeTab} className="animate-fade-in-up tab-transition-wrapper">
+          {activeTab === 'Discover' && <Hero isAuthenticated={isAuthenticated} />}
+          
+          {activeTab === 'Discover' && (
+            <>
+              <FilterBar />
+              <LiveDeck />
+              <PastStreams />
+              <MasonryGrid />
+              <ThriftBand />
+              <ThriftBand subtitle="Curated Archives" title="Vintage Grails" data={[...THRIFT_POLAROIDS].reverse()} />
+              <ThriftBand subtitle="Eco-Conscious Finds" title="Sustainable Staples" data={[...THRIFT_POLAROIDS].sort(() => Math.random() - 0.5)} />
+            </>
+          )}
 
-        {activeTab === 'Thrift' && (
-          <div className="ecommerce-page-vibe" style={{ display: 'flex', flexDirection: 'column' }}>
-            <EcommerceHero />
-            <BrandTicker />
-            <ThriftLiveDrops />
-            <CategoryBrowser />
-            <FeaturedDrops />
-            <WatermarkBanner />
-            <ThriftTopSellers />
-          </div>
-        )}
+          {activeTab === 'Thrift' && (
+            <div className="ecommerce-page-vibe" style={{ display: 'flex', flexDirection: 'column' }}>
+              <EcommerceHero />
+              <BrandTicker />
+              <ThriftLiveDrops />
+              <CategoryBrowser />
+              <FeaturedDrops />
+              <WatermarkBanner />
+              <ThriftTopSellers />
+            </div>
+          )}
 
-        {activeTab === 'E-commerce' && (
-          <EcommerceView />
-        )}
+          {activeTab === 'E-commerce' && (
+            <EcommerceView />
+          )}
 
-        {activeTab === 'Cart' && (
-          <CartView onBack={() => setActiveTab('Discover')} />
-        )}
+          {activeTab === 'Cart' && (
+            <CartView onBack={() => setActiveTab('Discover')} />
+          )}
 
-        {activeTab === 'Wallet' && (
-          <WalletView />
-        )}
+          {activeTab === 'Wallet' && (
+            <WalletView />
+          )}
+        </div>
 
         <Footer />
       </div>
