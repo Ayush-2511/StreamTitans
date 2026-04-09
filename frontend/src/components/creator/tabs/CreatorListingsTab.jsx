@@ -1,9 +1,38 @@
 import React, { useState } from 'react';
-import { Search, Filter, ArrowDownUp, Plus, MoreHorizontal } from 'lucide-react';
+import { Search, Filter, ArrowDownUp, Plus, MoreHorizontal, Sparkles, X, Loader2 } from 'lucide-react';
+import { GoogleGenerativeAI } from '@google/generative-ai';
 import './CreatorListingsTab.css';
 
 export default function CreatorListingsTab() {
   const [storeMode, setStoreMode] = useState('Thrifting');
+  const [showAddModal, setShowAddModal] = useState(false);
+  const [newProduct, setNewProduct] = useState({ title: '', category: '', condition: 'Gently Used', price: '' });
+  const [isEstimating, setIsEstimating] = useState(false);
+  const [estimatedPrice, setEstimatedPrice] = useState('');
+
+  const handleEstimatePrice = async () => {
+    if (!newProduct.title || !newProduct.category) return;
+    setIsEstimating(true);
+    setEstimatedPrice('');
+    try {
+      const genAI = new GoogleGenerativeAI(import.meta.env.VITE_GEMINI_API_KEY || "dummy_key");
+      const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+      const prompt = `You are a pricing expert for second hand and thrifted clothing in India.
+      Suggest an optimal selling price in INR (e.g., "₹800 - ₹1,200") for the following item:
+      Title: ${newProduct.title}
+      Category: ${newProduct.category}
+      Condition: ${newProduct.condition}
+      
+      Return ONLY the suggested price range. Nothing else.`;
+      const result = await model.generateContent(prompt);
+      setEstimatedPrice(result.response.text().trim());
+    } catch(err) {
+      console.error(err);
+      setEstimatedPrice('Failed to estimate.');
+    } finally {
+      setIsEstimating(false);
+    }
+  };
 
   const thriftProducts = [
     { title: 'Floral Midi Dress', type: "Women's fashion", price: '₹299', stock: '14 in stock', stockClass: 'ok', views: '42', sold: '8', rating: '4.8', img: 'https://images.unsplash.com/photo-1515347619362-67bd86fa2e72?w=500&q=80' },
@@ -57,12 +86,66 @@ export default function CreatorListingsTab() {
             <button className="export-btn">
               <ArrowDownUp size={14} /> Sort
             </button>
-            <button className="export-btn text-cream" style={{ backgroundColor: 'var(--color-ink)' }}>
+            <button className="export-btn text-cream" style={{ backgroundColor: 'var(--color-ink)' }} onClick={() => setShowAddModal(true)}>
               <Plus size={14} /> Add product
             </button>
           </div>
         </div>
       </div>
+
+      {showAddModal && (
+        <div className="add-modal-overlay">
+          <div className="add-modal-content">
+            <button className="add-modal-close" onClick={() => setShowAddModal(false)}>
+              <X size={20} />
+            </button>
+            <h2 className="add-modal-title">Add New Listing</h2>
+            
+            <div>
+              <div className="add-modal-form-group">
+                <label className="add-modal-label">Title</label>
+                <input type="text" className="add-modal-input" placeholder="e.g. Vintage Denim Jacket" value={newProduct.title} onChange={e => setNewProduct({...newProduct, title: e.target.value})} />
+              </div>
+              <div className="add-modal-form-group">
+                <label className="add-modal-label">Category</label>
+                <input type="text" className="add-modal-input" placeholder="e.g. Women's Fashion" value={newProduct.category} onChange={e => setNewProduct({...newProduct, category: e.target.value})} />
+              </div>
+              <div className="add-modal-form-group">
+                <label className="add-modal-label">Condition</label>
+                <select className="add-modal-input" value={newProduct.condition} onChange={e => setNewProduct({...newProduct, condition: e.target.value})}>
+                  <option>Brand New</option>
+                  <option>Like New</option>
+                  <option>Gently Used</option>
+                  <option>Well Worn</option>
+                </select>
+              </div>
+              
+              <div className="add-modal-form-group">
+                <button 
+                  onClick={handleEstimatePrice}
+                  disabled={!newProduct.title || !newProduct.category || isEstimating}
+                  className="add-modal-estimate-btn"
+                >
+                  {isEstimating ? <Loader2 size={16} className="animate-spin" /> : <Sparkles size={16} />} 
+                  AI Price Estimator
+                </button>
+                {estimatedPrice && (
+                  <p className="add-modal-estimated-price">Suggested: {estimatedPrice}</p>
+                )}
+              </div>
+
+              <div className="add-modal-form-group">
+                <label className="add-modal-label">Price</label>
+                <input type="text" className="add-modal-input" placeholder="e.g. ₹999" value={newProduct.price} onChange={e => setNewProduct({...newProduct, price: e.target.value})} />
+              </div>
+
+              <button className="add-modal-save-btn" onClick={() => setShowAddModal(false)}>
+                Save Listing
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Metrics Row */}
       <div className="inventory-metrics" style={{ marginTop: '24px' }}>
@@ -253,7 +336,7 @@ export default function CreatorListingsTab() {
             </div>
           </div>
           
-          <div className="new-product-card">
+          <div className="new-product-card" style={{ cursor: 'pointer' }} onClick={() => setShowAddModal(true)}>
              <div className="add-circle">
                 <Plus size={20} />
              </div>

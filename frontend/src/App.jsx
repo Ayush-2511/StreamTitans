@@ -7,6 +7,8 @@ import { StreamProvider } from './context/StreamContext';
 import StreamOverlay from './components/StreamOverlay';
 import { ProductProvider } from './context/ProductContext';
 import ProductOverlay from './components/ProductOverlay';
+import { UserActivityProvider } from './context/UserActivityContext';
+import Chatbot from './components/Chatbot';
 import { ArrowLeft } from 'lucide-react';
 
 export default function App() {
@@ -67,15 +69,18 @@ export default function App() {
   }
 
   return (
-    <ProductProvider>
-      <StreamProvider>
-        <div key={currentView} className="animate-fade-in-up" style={{ minHeight: '100vh', width: '100%' }}>
-          {content}
-        </div>
+    <UserActivityProvider>
+      <ProductProvider>
+        <StreamProvider>
+          <div key={currentView} className="animate-fade-in-up" style={{ minHeight: '100vh', width: '100%' }}>
+            {content}
+          </div>
 
-        <StreamOverlay />
-        <ProductOverlay />
-      </StreamProvider>
-    </ProductProvider>
+          <StreamOverlay />
+          <ProductOverlay />
+          <Chatbot />
+        </StreamProvider>
+      </ProductProvider>
+    </UserActivityProvider>
   );
 }
