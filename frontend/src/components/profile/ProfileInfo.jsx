@@ -27,7 +27,7 @@ export default function ProfileInfo() {
     <div className="profile-info-container">
       <div className="profile-main-header">
         <h2 className="profile-greeting">
-          Good morning
+          Good morning, {firstName || currentUser?.displayName?.split(' ')[0] || 'there'}
         </h2>
         <p className="profile-subtitle">Manage your vintage identity & preferences</p>
       </div>
