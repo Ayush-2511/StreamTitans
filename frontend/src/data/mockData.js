@@ -157,30 +157,30 @@ export const BRANDS_LIST = [
 ];
 
 export const ECOMMERCE_V2_LIVE_STREAMS = [
-  { id: 1, title: "Smart Air Fryer XL", seller: "@chef_gadgets", category: "ELECTRONICS · KITCHEN", viewers: "2.4K", price: "₹3,499", img: getImage("Smart Air Fryer XL", 0, "ELECTRONICS"), icon: "🍳" },
-  { id: 2, title: "Wireless Earbuds Pro", seller: "@tech_drops", category: "ELECTRONICS", viewers: "1.1K", price: "₹1,999", img: getImage("Wireless Earbuds Pro", 1, "ELECTRONICS"), icon: "🎧" },
-  { id: 3, title: "Homemade Preserve Set", seller: "@kitchen_studio", category: "FOOD · ARTISAN", viewers: "640", price: "₹649", img: getImage("Homemade Preserve Set", 2, "FOOD"), icon: "🕯️" },
-  { id: 4, title: "Minimalist Desk Lamp", seller: "@home_essentials", category: "HOME · DECOR", viewers: "890", price: "₹1,299", img: getImage("Minimalist Desk Lamp", 3, "HOME"), icon: "💡" },
-  { id: 5, title: "Mechanical Keyboard", seller: "@desk_setup", category: "ELECTRONICS", viewers: "3.2K", price: "₹4,999", img: getImage("Mechanical Keyboard", 4, "ELECTRONICS"), icon: "⌨️" },
-  { id: 6, title: "Ergonomic Lounge Chair", seller: "@living_space", category: "HOME · FURNITURE", viewers: "1.8K", price: "₹8,499", img: getImage("Ergonomic Lounge Chair", 5, "HOME"), icon: "🪑" },
-  { id: 7, title: "Retro Gaming Consoles", seller: "@pixel_perfect", category: "ELECTRONICS", viewers: "5.1K", price: "₹4,200", img: getImage("Retro Gaming Consoles", 6, "ELECTRONICS"), icon: "🎮" },
-  { id: 8, title: "Silk Scarf Edition", seller: "@luxe_loop", category: "ACCESSORIES", viewers: "920", price: "₹1,299", img: getImage("Silk Scarf Edition", 7, "ACCESSORIES"), icon: "🧣" },
+  { id: 1, title: "Smart Air Fryer XL", seller: "@chef_gadgets", category: "ELECTRONICS · KITCHEN", viewers: "2.4K", price: "₹3,499", img: getImage("Smart Air Fryer XL", 0, "ELECTRONICS"), icon: "CookingPot" },
+  { id: 2, title: "Wireless Earbuds Pro", seller: "@tech_drops", category: "ELECTRONICS", viewers: "1.1K", price: "₹1,999", img: getImage("Wireless Earbuds Pro", 1, "ELECTRONICS"), icon: "Headphones" },
+  { id: 3, title: "Homemade Preserve Set", seller: "@kitchen_studio", category: "FOOD · ARTISAN", viewers: "640", price: "₹649", img: getImage("Homemade Preserve Set", 2, "FOOD"), icon: "Flame" },
+  { id: 4, title: "Minimalist Desk Lamp", seller: "@home_essentials", category: "HOME · DECOR", viewers: "890", price: "₹1,299", img: getImage("Minimalist Desk Lamp", 3, "HOME"), icon: "Lightbulb" },
+  { id: 5, title: "Mechanical Keyboard", seller: "@desk_setup", category: "ELECTRONICS", viewers: "3.2K", price: "₹4,999", img: getImage("Mechanical Keyboard", 4, "ELECTRONICS"), icon: "Keyboard" },
+  { id: 6, title: "Ergonomic Lounge Chair", seller: "@living_space", category: "HOME · FURNITURE", viewers: "1.8K", price: "₹8,499", img: getImage("Ergonomic Lounge Chair", 5, "HOME"), icon: "Armchair" },
+  { id: 7, title: "Retro Gaming Consoles", seller: "@pixel_perfect", category: "ELECTRONICS", viewers: "5.1K", price: "₹4,200", img: getImage("Retro Gaming Consoles", 6, "ELECTRONICS"), icon: "Gamepad2" },
+  { id: 8, title: "Silk Scarf Edition", seller: "@luxe_loop", category: "ACCESSORIES", viewers: "920", price: "₹1,299", img: getImage("Silk Scarf Edition", 7, "ACCESSORIES"), icon: "Shirt" },
 ];
 
 export const ECOMMERCE_V2_TRENDING = [
-  { id: 1, label: "Artisan Chocolate", icon: "🍫" },
-  { id: 2, label: "Refurbished Phones", icon: "📱" },
-  { id: 3, label: "Indoor Plants", icon: "🪴" },
-  { id: 4, label: "Ceramics", icon: "🏺" },
+  { id: 1, label: "Artisan Chocolate", icon: "Gift" },
+  { id: 2, label: "Refurbished Phones", icon: "Smartphone" },
+  { id: 3, label: "Indoor Plants", icon: "Sprout" },
+  { id: 4, label: "Ceramics", icon: "Gem" },
 ];
 
 export const ECOMMERCE_V2_CATEGORIES = [
-  { id: 'food', title: 'Food & Gourmet', items: '340 items live', icon: '🍽️', bg: '#f4ede4' },
-  { id: 'electronics', title: 'Electronics', items: '210 items live', icon: '📱', bg: '#e5eff5' },
-  { id: 'home', title: 'Home & Living', items: '185 items live', icon: '🏠', bg: '#f2e8f1' },
-  { id: 'wellness', title: 'Wellness', items: '160 items live', icon: '🌿', bg: '#e8f4eb' },
-  { id: 'fashion', title: 'Fashion', items: '420 items live', icon: '👗', bg: '#f5ebe6' },
-  { id: 'crafts', title: 'Art & Crafts', items: '120 items live', icon: '🎨', bg: '#f2f1e6' },
+  { id: 'food', title: 'Food & Gourmet', items: '340 items live', icon: 'Utensils', bg: '#f4ede4' },
+  { id: 'electronics', title: 'Electronics', items: '210 items live', icon: 'Smartphone', bg: '#e5eff5' },
+  { id: 'home', title: 'Home & Living', items: '185 items live', icon: 'Home', bg: '#f2e8f1' },
+  { id: 'wellness', title: 'Wellness', items: '160 items live', icon: 'Flower2', bg: '#e8f4eb' },
+  { id: 'fashion', title: 'Fashion', items: '420 items live', icon: 'Shirt', bg: '#f5ebe6' },
+  { id: 'crafts', title: 'Art & Crafts', items: '120 items live', icon: 'Palette', bg: '#f2f1e6' },
 ];
 
 export const ECOMMERCE_V2_HOT_RIGHT_NOW = [
@@ -224,10 +224,10 @@ export const THRIFT_TRENDING_WEEK_DATA = [
 ];
 
 export const THRIFT_TOP_SELLERS_DATA = [
-  { id: 1, name: "Vintage Vault", handle: "@vintage_vault", img: "👟", followers: "5.2K", rating: "99%", sold: "412", tags: ["Sneakers", "Denim"] },
-  { id: 2, name: "Luxe Loop", handle: "@luxe_loop", img: "👜", followers: "3.8K", rating: "98%", sold: "290", tags: ["Luxury", "Bags"] },
-  { id: 3, name: "Y2K Babe", handle: "@y2k_babe", img: "👗", followers: "4.1K", rating: "97%", sold: "358", tags: ["Y2K", "Womenswear"] },
-  { id: 4, name: "Hype Kicks", handle: "@hype_kicks", img: "🕶️", followers: "6.4K", rating: "99%", sold: "520", tags: ["Sneakers", "Accessories"] }
+  { id: 1, name: "Vintage Vault", handle: "@vintage_vault", img: "Footprints", followers: "5.2K", rating: "99%", sold: "412", tags: ["Sneakers", "Denim"] },
+  { id: 2, name: "Luxe Loop", handle: "@luxe_loop", img: "ShoppingBag", followers: "3.8K", rating: "98%", sold: "290", tags: ["Luxury", "Bags"] },
+  { id: 3, name: "Y2K Babe", handle: "@y2k_babe", img: "Shirt", followers: "4.1K", rating: "97%", sold: "358", tags: ["Y2K", "Womenswear"] },
+  { id: 4, name: "Hype Kicks", handle: "@hype_kicks", img: "Glasses", followers: "6.4K", rating: "99%", sold: "520", tags: ["Sneakers", "Accessories"] }
 ];
 
 export const THRIFT_SHOP_EDIT_DATA = [

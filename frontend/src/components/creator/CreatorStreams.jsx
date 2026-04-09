@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Play, Calendar, Flame, Target, MessageCircle, ArrowRight } from 'lucide-react';
+import { Play, Calendar, Flame, Target, MessageCircle, ArrowRight, Layout, Users, Settings, PlaySquare, Video, ChevronRight } from 'lucide-react';
 import { PAST_STREAMS, UPCOMING_DROPS } from '../../data/creatorMockData';
 import './CreatorStreams.css';
 
@@ -20,13 +20,13 @@ export default function CreatorStreams({ storeMode = 'Thrifting' }) {
               className={`glance-tab brutal-border ${activeTab === 'replays' ? 'bg-ink text-cream' : 'bg-surface text-ink'}`}
               onClick={() => setActiveTab('replays')}
             >
-              🎬 Past Replays
+              <Play size={16} /> Past Replays
             </button>
             <button 
               className={`glance-tab brutal-border ${activeTab === 'scheduled' ? 'bg-ink text-cream' : 'bg-surface text-ink'}`}
               onClick={() => setActiveTab('scheduled')}
             >
-              📅 Scheduled
+              <Calendar size={16} /> Scheduled
             </button>
             <button 
               className={`glance-tab brutal-border ${activeTab === 'top' ? 'bg-ink text-cream' : 'bg-surface text-ink'}`}

@@ -1,6 +1,7 @@
 import React from 'react';
 import { ECOMMERCE_V2_TRENDING } from '../../data/mockData';
 import { ChevronRight } from 'lucide-react';
+import LucideIcon from '../common/LucideIcon';
 import './TrendingBar.css';
 
 export default function TrendingBar() {
@@ -10,7 +11,7 @@ export default function TrendingBar() {
       <div className="trending-scroll">
         {ECOMMERCE_V2_TRENDING.map(item => (
           <button key={item.id} className="pill-btn">
-            <span>{item.icon}</span> {item.label}
+            <LucideIcon name={item.icon} size={14} style={{ marginRight: '6px' }} /> {item.label}
           </button>
         ))}
         <button className="pill-btn icon-only-btn">

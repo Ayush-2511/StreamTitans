@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ArrowRight, Upload, ArrowLeft, Check } from 'lucide-react';
+import { Camera, Shield, FileText, CheckCircle, ChevronRight, ArrowLeft } from 'lucide-react';
 import { logIn, logInWithGoogle } from '../firebase/auth';
 import toast from 'react-hot-toast';
 import './CreatorAuthFlow.css';
@@ -222,7 +222,7 @@ function CreatorSignupStep2({ onSubmit, onBack }) {
         
         {/* Section 1 */}
         <div className="ca-section-pill dark">
-          <span className="pill-icon">🪪</span> IDENTITY DOCUMENTS
+          <span className="pill-icon"><FileText size={14} /></span> IDENTITY DOCUMENTS
         </div>
         <div className="ca-row">
           <div className="ca-form-group half">

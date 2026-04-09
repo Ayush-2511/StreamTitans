@@ -1,6 +1,7 @@
 import React from 'react';
 import { THRIFT_TOP_SELLERS_DATA } from '../../data/mockData';
 import { ArrowRight } from 'lucide-react';
+import LucideIcon from '../common/LucideIcon';
 import { useStream } from '../../context/StreamContext';
 import './ThriftTopSellers.css';
 

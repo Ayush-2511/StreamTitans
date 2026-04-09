@@ -3,6 +3,7 @@ import { ArrowRight } from 'lucide-react';
 import { useStream } from '../../context/StreamContext';
 import { useProduct } from '../../context/ProductContext';
 import { subscribeToLiveStreams } from '../../firebase/firestore';
+import LucideIcon from '../common/LucideIcon';
 import './LiveStreamsGrid.css';
 
 export default function LiveStreamsGrid() {
@@ -49,7 +50,9 @@ export default function LiveStreamsGrid() {
             </div>
             
             <div className="card-center">
-              <div className="big-icon">🎬</div>
+              <div className="big-icon">
+                {stream.icon ? <LucideIcon name={stream.icon} size={48} /> : <LucideIcon name="Tv" size={48} />}
+              </div>
               <span className="viewers-count">{stream.viewers || 0}</span>
             </div>
 

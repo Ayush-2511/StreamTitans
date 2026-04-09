@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { X, Heart, Star, ChevronLeft, ChevronRight } from 'lucide-react';
+import { X, Heart, Star, ChevronLeft, ChevronRight, BadgeCheck, RotateCcw, Truck, Banknote } from 'lucide-react';
 import { useProduct } from '../context/ProductContext';
 import { useStream } from '../context/StreamContext';
 import { useAuth } from '../context/AuthContext';
@@ -177,10 +177,18 @@ export default function ProductOverlay() {
               </div>
 
               <div className="pdp-perks">
-                <span className="perk-badge">✓ Lumina Verified</span>
-                <span className="perk-badge">↔ 7-day returns</span>
-                <span className="perk-badge">↑ Free shipping ₹999+</span>
-                <span className="perk-badge">₹ Pay on delivery</span>
+                <span className="perk-badge">
+                  <BadgeCheck size={14} style={{ marginRight: '6px' }} /> Lumina Verified
+                </span>
+                <span className="perk-badge">
+                  <RotateCcw size={14} style={{ marginRight: '6px' }} /> 7-day returns
+                </span>
+                <span className="perk-badge">
+                  <Truck size={14} style={{ marginRight: '6px' }} /> Free shipping ₹999+
+                </span>
+                <span className="perk-badge">
+                  <Banknote size={14} style={{ marginRight: '6px' }} /> Pay on delivery
+                </span>
               </div>
 
               <div className="pdp-delivery-section">
