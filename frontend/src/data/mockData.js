@@ -13,6 +13,9 @@ export const LIVE_DECK = [
   { id: 3, variantClass: 'live-card-v3', title: "Outerwear Grails", seller: "@winter_wardrobe", viewers: "3.4k" },
   { id: 4, variantClass: 'live-card-v4', title: "Gorpcore Basics", seller: "@trail_mix", viewers: "420" },
   { id: 5, variantClass: 'live-card-v5', title: "Upcycled Denim", seller: "@patch_work", viewers: "115" },
+  { id: 6, variantClass: 'live-card-v1', title: "Designer Handbags", seller: "@luxe_collector", viewers: "920" },
+  { id: 7, variantClass: 'live-card-v2', title: "Retro Gaming Consoles", seller: "@pixel_perfect", viewers: "5.1k" },
+  { id: 8, variantClass: 'live-card-v4', title: "Vintage Band Tees", seller: "@rock_n_roll", viewers: "389" },
 ];
 
 export const THRIFT_POLAROIDS = [
@@ -22,6 +25,9 @@ export const THRIFT_POLAROIDS = [
   { id: 4, title: "Knit Sweater", price: "₹1,499", img: "https://images.unsplash.com/photo-1620799140188-3b2a02fd9a77?w=400&q=80" },
   { id: 5, title: "Silver Chain", price: "₹699", img: "https://images.unsplash.com/photo-1618244972963-dbee1a7edc95?w=400&q=80" },
   { id: 6, title: "Vintage Cap", price: "₹499", img: "https://images.unsplash.com/photo-1521369909029-13c5836f5efa?w=400&q=80" },
+  { id: 7, title: "Retro Sunglasses", price: "₹899", img: "https://images.unsplash.com/photo-1511499767150-a48a237f0083?w=400&q=80" },
+  { id: 8, title: "Denim Overall", price: "₹1,899", img: "https://images.unsplash.com/photo-1542272454315-4c01d7abdf4a?w=400&q=80" },
+  { id: 9, title: "Puffer Vest", price: "₹2,199", img: "https://images.unsplash.com/photo-1551028719-00167b16eac5?w=400&q=80" },
 ];
 
 export const ECOMMERCE_CATEGORIES = [
@@ -51,6 +57,9 @@ export const ECOMMERCE_V2_LIVE_STREAMS = [
   { id: 1, title: "Smart Air Fryer XL", seller: "@chef_gadgets", category: "ELECTRONICS · KITCHEN", viewers: "2.4K", price: "₹3,499", img: "https://images.unsplash.com/photo-1584269600464-37b1b58a9fe7?w=600&q=80", icon: "🍳" },
   { id: 2, title: "Wireless Earbuds Pro", seller: "@tech_drops", category: "ELECTRONICS", viewers: "1.1K", price: "₹1,999", img: "https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=600&q=80", icon: "🎧" },
   { id: 3, title: "Homemade Preserve Set", seller: "@kitchen_studio", category: "FOOD · ARTISAN", viewers: "640", price: "₹649", img: "https://images.unsplash.com/photo-1589255653818-47c34b6b15ef?w=600&q=80", icon: "🕯️" },
+  { id: 4, title: "Minimalist Desk Lamp", seller: "@home_essentials", category: "HOME · DECOR", viewers: "890", price: "₹1,299", img: "https://images.unsplash.com/photo-1507473885765-e6ed057f782c?w=600&q=80", icon: "💡" },
+  { id: 5, title: "Mechanical Keyboard", seller: "@desk_setup", category: "ELECTRONICS", viewers: "3.2K", price: "₹4,999", img: "https://images.unsplash.com/photo-1595225476474-87563907a212?w=600&q=80", icon: "⌨️" },
+  { id: 6, title: "Matte Lipstick Bundle", seller: "@glam_beauty", category: "BEAUTY", viewers: "1.5K", price: "₹899", img: "https://images.unsplash.com/photo-1586495777744-4413f21062fa?w=600&q=80", icon: "💄" },
 ];
 
 export const ECOMMERCE_V2_TRENDING = [
@@ -73,20 +82,29 @@ export const ECOMMERCE_V2_HOT_RIGHT_NOW = [
   { id: 1, title: "Mango Chilli Preserve", seller: "@kitchen_studio is streaming", category: "FOOD · ARTISAN", details: "200g · Homemade · Limited Batch", badge: "LIVE", badgeColor: "#FF5B22", bg: "#faf6f2", img: "https://images.unsplash.com/photo-1589255653818-47c34b6b15ef?w=400&q=80" },
   { id: 2, title: "Portable Bluetooth Speaker", seller: "@tech_drops is streaming", category: "ELECTRONICS", details: "Waterproof · 12hr Battery", badge: "40% OFF", badgeColor: "#1A1A1A", bg: "#eff4f8", img: "https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=400&q=80" },
   { id: 3, title: "Rosehip Face Serum", seller: "@pure_roots is streaming", category: "WELLNESS · SKINCARE", details: "30ml · Cold-pressed", badge: "NEW", badgeColor: "#2A8139", bg: "#f8f2f6", img: "https://images.unsplash.com/photo-1620916566398-39f1143ab7be?w=400&q=80" },
-  { id: 4, title: "Monstera Deliciosa", seller: "@home_vibes is streaming", category: "HOME · PLANTS", details: "6\" pot · Healthy rooted cutting", badge: "LIVE", badgeColor: "#FF5B22", bg: "#f2f7ef", img: "https://images.unsplash.com/photo-1614594975525-e45190c55d0b?w=400&q=80" }
+  { id: 4, title: "Monstera Deliciosa", seller: "@home_vibes is streaming", category: "HOME · PLANTS", details: "6\" pot · Healthy rooted cutting", badge: "LIVE", badgeColor: "#FF5B22", bg: "#f2f7ef", img: "https://images.unsplash.com/photo-1614594975525-e45190c55d0b?w=400&q=80" },
+  { id: 5, title: "Retro Instant Camera", seller: "@photo_vault is streaming", category: "ELECTRONICS", details: "Vintage Yellow · Includes Film", badge: "20% OFF", badgeColor: "#1A1A1A", bg: "#fff7e6", img: "https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?w=400&q=80" },
+  { id: 6, title: "Hand Poured Soy Candle", seller: "@scent_studio is streaming", category: "HOME · WELLNESS", details: "Vanilla Bean · 40hr Burn", badge: "LIVE", badgeColor: "#FF5B22", bg: "#f9f6f0", img: "https://images.unsplash.com/photo-1603006905393-cb1cb8b7762c?w=400&q=80" },
+  { id: 7, title: "Bamboo Yoga Mat", seller: "@flex_body is streaming", category: "FITNESS", details: "Eco-friendly non-slip", badge: "HOT", badgeColor: "#FF5B22", bg: "#eef5f0", img: "https://images.unsplash.com/photo-1601925260368-ae2f83cf8b7f?w=400&q=80" }
 ];
 
 export const ECOMMERCE_V2_CURATED_PICKS = [
   { id: 1, title: "Artisan Ceramic Mug", seller: "@clay_studio is streaming", category: "HOME · KITCHEN", details: "Handmade · Off-white", badge: "LIVE", badgeColor: "#FF5B22", bg: "#fdf5ea", img: "https://images.unsplash.com/photo-1610701596007-11502861dcfa?w=400&q=80" },
   { id: 2, title: "Linen Lounge Shirt", seller: "@minimalist_threads", category: "FASHION", details: "Size M · Beige", badge: "20% OFF", badgeColor: "#1A1A1A", bg: "#f0efe9", img: "https://images.unsplash.com/photo-1596755094514-f87e32f85e2c?w=400&q=80" },
   { id: 3, title: "Silver Loop Earrings", seller: "@silversmith is streaming", category: "ACCESSORIES", details: "Handcrafted 925 Silver", badge: "NEW", badgeColor: "#2A8139", bg: "#f2f7f9", img: "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=400&q=80" },
-  { id: 4, title: "Matcha Whisk Set", seller: "@zen_tea is streaming", category: "WELLNESS", details: "Bamboo · Authentic", badge: "LIVE", badgeColor: "#FF5B22", bg: "#eef3eb", img: "https://images.unsplash.com/photo-1582782715783-a0e2ee343dd3?w=400&q=80" }
+  { id: 4, title: "Matcha Whisk Set", seller: "@zen_tea is streaming", category: "WELLNESS", details: "Bamboo · Authentic", badge: "LIVE", badgeColor: "#FF5B22", bg: "#eef3eb", img: "https://images.unsplash.com/photo-1582782715783-a0e2ee343dd3?w=400&q=80" },
+  { id: 5, title: "Minimalist Wall Clock", seller: "@time_decor is streaming", category: "HOME · DECOR", details: "Silent Sweep · Matte Black", badge: "15% OFF", badgeColor: "#1A1A1A", bg: "#f5f5f5", img: "https://images.unsplash.com/photo-1563861826100-9cb868fdbe1c?w=400&q=80" },
+  { id: 6, title: "Leather Card Holder", seller: "@hide_craft is streaming", category: "ACCESSORIES", details: "Full Grain · Tan", badge: "LIVE", badgeColor: "#FF5B22", bg: "#f4edeb", img: "https://images.unsplash.com/photo-1627042633145-b780d842bacb?w=400&q=80" },
+  { id: 7, title: "Organic Cotton Throw", seller: "@cozy_home is streaming", category: "HOME", details: "Queen Size · Handwoven", badge: "RESTOCKED", badgeColor: "#2A8139", bg: "#f8f5f2", img: "https://images.unsplash.com/photo-1584824388155-244f5701ce1b?w=400&q=80" }
 ];
 
 export const THRIFT_LIVE_DROPS_DATA = [
   { id: 1, badge: "LIVE", tag: "1990s", title: "Sherpa Trucker Jacket", brand: "LEVI'S VINTAGE", details: "Size L · 9/10 · Authenticated", price: "₹3,200", viewers: "640 watching", img: "https://images.unsplash.com/photo-1601333144130-8c1f12356227?w=600&q=80" },
   { id: 2, badge: "LIVE", tag: "2000s", title: "Air Max '97 OG", brand: "NIKE ARCHIVE", details: "UK 9 · 8/10 · Original box", price: "₹5,499", viewers: "890 watching", img: "https://images.unsplash.com/photo-1605348532760-6753d2c43329?w=600&q=80" },
-  { id: 3, badge: "LIVE", tag: "Rare", title: "Nylon Mini Bag", brand: "PRADA ARCHIVE", details: "Black · Like New · 1 left", price: "₹12,999", viewers: "1.2K watching", img: "https://images.unsplash.com/photo-1584916201218-f4242ceb4809?w=600&q=80" }
+  { id: 3, badge: "LIVE", tag: "Rare", title: "Nylon Mini Bag", brand: "PRADA ARCHIVE", details: "Black · Like New · 1 left", price: "₹12,999", viewers: "1.2K watching", img: "https://images.unsplash.com/photo-1584916201218-f4242ceb4809?w=600&q=80" },
+  { id: 4, badge: "LIVE", tag: "Vintage", title: "Oversized Leather Jacket", brand: "ALLSAINTS", details: "Size M · 7/10 · Natural fade", price: "₹4,500", viewers: "430 watching", img: "https://images.unsplash.com/photo-1520975954732-57dd00bcbadb?w=600&q=80" },
+  { id: 5, badge: "LIVE", tag: "Streetwear", title: "Box Logo Hoodie", brand: "SUPREME", details: "Size L · 9/10 · Verified", price: "₹8,999", viewers: "2.1K watching", img: "https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=600&q=80" },
+  { id: 6, badge: "LIVE", tag: "Archive", title: "Canvas Tote Bag", brand: "DIOR", details: "Beige · 8.5/10 Condition", price: "₹14,500", viewers: "950 watching", img: "https://images.unsplash.com/photo-1590874103328-eac38a683ce7?w=600&q=80" }
 ];
 
 export const THRIFT_TRENDING_WEEK_DATA = [

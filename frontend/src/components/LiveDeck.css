@@ -100,8 +100,8 @@
   scroll-snap-align: start;
   flex: none;
   position: relative;
-  width: 220px;
-  height: 300px;
+  width: 280px;
+  height: 380px;
   background-color: var(--color-cream);
   border-radius: 0.75rem; /* rounded-xl */
   overflow: hidden;
@@ -110,17 +110,18 @@
   justify-content: flex-end;
   padding: 1.25rem; /* p-5 */
   transition: all 0.3s;
-  box-shadow: 8px 8px 0 0 #1a1a1a;
+  box-shadow: 10px 10px 0 0 var(--color-orange);
+  border: 2px solid var(--color-orange);
   cursor: pointer;
 }
 :global(.dark) .live-card {
-  box-shadow: 8px 8px 0 0 #000;
+  box-shadow: 10px 10px 0 0 var(--color-orange);
 }
 
 @media (min-width: 768px) {
   .live-card {
-    width: 260px;
-    height: 340px;
+    width: 320px;
+    height: 420px;
   }
 }
 
@@ -139,7 +140,6 @@
 .live-card-v3 {
   transform: rotate(-1deg) translateY(0) scale(1.02);
   z-index: 10;
-  border: 2px solid var(--color-orange);
 }
 .live-card-v4 {
   transform: rotate(2deg) translateY(0.75rem);

@@ -11,7 +11,7 @@
 }
 
 .ecommerce-v2-content {
-  max-width: 1200px;
+  width: 100%;
   margin: 0 auto;
   padding: 0 5%;
   background-color: #f4efeb; /* Soft warm beige as seen in screenshots */

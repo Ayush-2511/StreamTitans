@@ -5,7 +5,9 @@ import './Navbar.css';
 export default function Navbar({ isDark, toggleDark, isAuthenticated, onOpenAuth, activeTab, setActiveTab }) {
   const [showProfileMenu, setShowProfileMenu] = useState(false);
 
-  const navItems = ['Discover', 'E-commerce', 'Thrift', 'Wallet'];
+  const navItems = isAuthenticated
+    ? ['Discover', 'E-commerce', 'Thrift', 'Wallet']
+    : ['Discover', 'E-commerce', 'Thrift'];
 
   return (
     <header className="navbar animate-fade-in-up" style={{ animationDelay: '100ms' }}>

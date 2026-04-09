@@ -18,7 +18,7 @@ export function StreamProvider({ children }) {
 
     setTimeout(() => {
       setIsStreamLoading(false);
-    }, 3000);
+    }, 1500);
   };
 
   const closeStream = () => {
