@@ -17,6 +17,7 @@ import PastStreams from '../components/PastStreams';
 import Footer from '../components/Footer';
 import EcommerceView from '../components/ecommerce-v2/EcommerceView';
 import CartView from '../components/CartView';
+import WalletView from '../components/WalletView';
 import { THRIFT_POLAROIDS } from '../data/mockData';
 import './Home.css';
 
@@ -71,9 +72,7 @@ export default function Home({ isDark, toggleDark, isAuthenticated, onOpenAuth }
         )}
 
         {activeTab === 'Wallet' && (
-          <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '50vh', padding: '4rem' }}>
-            <h2 className="serif-heading" style={{ fontSize: '2rem', color: 'var(--text-main)' }}>Wallet Coming Soon</h2>
-          </div>
+          <WalletView />
         )}
 
         <Footer />

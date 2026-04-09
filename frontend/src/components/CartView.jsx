@@ -1,8 +1,10 @@
-import React from 'react';
-import { ShoppingBag, ArrowRight } from 'lucide-react';
+import React, { useState } from 'react';
+import { ShoppingBag, ArrowRight, CreditCard, Wallet } from 'lucide-react';
 import './CartView.css';
 
 export default function CartView({ onBack }) {
+  const [paymentMethod, setPaymentMethod] = useState('card');
+
   return (
     <div className="cart-view animate-fade-in-up">
       <div className="cart-header brutal-border">
@@ -34,6 +36,29 @@ export default function CartView({ onBack }) {
         <div className="cart-summary-row cart-total-row">
           <span className="cart-summary-label">Total</span>
           <span className="cart-summary-value">$0.00</span>
+        </div>
+        
+        <div className="cart-payment-methods">
+          <h4 className="payment-heading">Make payment with</h4>
+          <div className="payment-options">
+            <label className={`payment-method-option brutal-border ${paymentMethod === 'card' ? 'active' : ''}`}>
+              <input type="radio" name="paymentMethod" value="card" checked={paymentMethod === 'card'} onChange={() => setPaymentMethod('card')} />
+              <div className="payment-method-details">
+                <CreditCard size={20} />
+                <span className="payment-method-title">Credit / Debit Card</span>
+              </div>
+            </label>
+            <label className={`payment-method-option brutal-border ${paymentMethod === 'wallet' ? 'active' : ''}`}>
+              <input type="radio" name="paymentMethod" value="wallet" checked={paymentMethod === 'wallet'} onChange={() => setPaymentMethod('wallet')} />
+              <div className="payment-method-details">
+                <Wallet size={20} />
+                <div className="payment-method-text">
+                  <span className="payment-method-title">Lumina Wallet</span>
+                  <span className="payment-method-subtitle">Balance: $250.00</span>
+                </div>
+              </div>
+            </label>
+          </div>
         </div>
         
         <button className="btn-primary-large cart-checkout-btn brutal-border focus-visible" disabled>
