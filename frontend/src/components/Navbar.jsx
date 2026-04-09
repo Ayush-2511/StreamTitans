@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Sparkles, Moon, Sun, User } from 'lucide-react';
+import { Sparkles, Moon, Sun, User, ShoppingBag } from 'lucide-react';
 import './Navbar.css';
 
 export default function Navbar({ isDark, toggleDark, isAuthenticated, onOpenAuth, activeTab, setActiveTab }) {
@@ -40,6 +40,13 @@ export default function Navbar({ isDark, toggleDark, isAuthenticated, onOpenAuth
           aria-label="Toggle dark mode"
         >
           {isDark ? <Sun className="nav-btn-svg" /> : <Moon className="nav-btn-svg" />}
+        </button>
+        <button
+          onClick={() => setActiveTab && setActiveTab('Cart')}
+          className="nav-btn-icon brutal-border focus-visible"
+          aria-label="View cart"
+        >
+          <ShoppingBag className="nav-btn-svg" />
         </button>
         {!isAuthenticated ? (
           <>

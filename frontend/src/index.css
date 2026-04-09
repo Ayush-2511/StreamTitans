@@ -22,6 +22,12 @@
   --bg-dot: rgba(255,255,255,0.15);
 }
 
+.dark .action-btn,
+.dark .nav-btn-primary,
+.dark .btn-primary-large {
+  color: #000000 !important;
+}
+
 /* Base CSS Reset / Preflight */
 *, *::before, *::after {
   box-sizing: border-box;

@@ -16,6 +16,7 @@ import ThriftBand from '../components/ThriftBand';
 import PastStreams from '../components/PastStreams';
 import Footer from '../components/Footer';
 import EcommerceView from '../components/ecommerce-v2/EcommerceView';
+import CartView from '../components/CartView';
 import { THRIFT_POLAROIDS } from '../data/mockData';
 import './Home.css';
 
@@ -63,6 +64,10 @@ export default function Home({ isDark, toggleDark, isAuthenticated, onOpenAuth }
 
         {activeTab === 'E-commerce' && (
           <EcommerceView />
+        )}
+
+        {activeTab === 'Cart' && (
+          <CartView onBack={() => setActiveTab('Discover')} />
         )}
 
         {activeTab === 'Wallet' && (
