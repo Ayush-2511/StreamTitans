@@ -89,6 +89,9 @@
   text-transform: uppercase;
   font-weight: 600; /* font-semibold */
 }
+:global(.dark) .hero-badge-text {
+  color: #ffffff;
+}
 
 .hero-title {
   font-size: 3rem; /* text-5xl */
@@ -220,6 +223,9 @@
   color: var(--color-gray-dark);
   font-weight: 600;
   margin-top: 0.25rem; /* mt-1 */
+}
+:global(.dark) .hero-stat-label {
+  color: #ffffff;
 }
 
 /* HERO RIGHT (MOSAIC) */

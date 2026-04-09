@@ -15,11 +15,11 @@
 }
 
 .dark {
-  --bg-color: #121212;
-  --fg-color: #f5f4f0;
+  --bg-color: #000000;
+  --fg-color: #ffffff;
   --surface-light: #282828;
   --surface: #1e1e1e;
-  --bg-dot: rgba(245,244,240,0.15);
+  --bg-dot: rgba(255,255,255,0.15);
 }
 
 /* Base CSS Reset / Preflight */
