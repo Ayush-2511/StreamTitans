@@ -57,7 +57,7 @@ export default function Home({ isDark, toggleDark, isAuthenticated, onOpenAuth }
             <ThriftLiveDrops />
             <CategoryBrowser />
             <ThriftTrending />
-            <FeaturedDrops />
+            {/* FeaturedDrops removed per user request */}
             <WatermarkBanner />
             <ThriftTopSellers />
           </div>

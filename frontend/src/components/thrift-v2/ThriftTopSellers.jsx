@@ -1,9 +1,12 @@
 import React from 'react';
 import { THRIFT_TOP_SELLERS_DATA } from '../../data/mockData';
 import { ArrowRight } from 'lucide-react';
+import { useStream } from '../../context/StreamContext';
 import './ThriftTopSellers.css';
 
 export default function ThriftTopSellers() {
+  const { openStream } = useStream();
+
   return (
     <section className="thrift-v2-section thrift-darker-section">
       <div className="thrift-v2-header">
@@ -16,7 +19,18 @@ export default function ThriftTopSellers() {
 
       <div className="top-sellers-grid">
         {THRIFT_TOP_SELLERS_DATA.map(seller => (
-          <div key={seller.id} className="thrift-seller-card">
+          <div 
+            key={seller.id} 
+            className="thrift-seller-card"
+            onClick={() => openStream({
+              title: `${seller.name}'s Live Drop`,
+              seller: seller.handle,
+              sellerName: seller.name,
+              viewers: '3.1K',
+              category: 'Curator'
+            })}
+            style={{ cursor: 'pointer' }}
+          >
             
             <div className="seller-avatar-wrapper">
               <div className="seller-avatar">

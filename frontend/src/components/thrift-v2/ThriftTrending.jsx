@@ -1,9 +1,14 @@
 import React from 'react';
 import { THRIFT_TRENDING_WEEK_DATA } from '../../data/mockData';
 import { ArrowRight } from 'lucide-react';
+import { useStream } from '../../context/StreamContext';
+import { useProduct } from '../../context/ProductContext';
 import './ThriftTrending.css';
 
 export default function ThriftTrending() {
+  const { openStream } = useStream();
+  const { openProduct } = useProduct();
+
   return (
     <section className="thrift-v2-section thrift-light-section">
       <div className="thrift-v2-header">
@@ -16,7 +21,18 @@ export default function ThriftTrending() {
 
       <div className="thrift-trending-grid">
         {THRIFT_TRENDING_WEEK_DATA.map(item => (
-          <div key={item.id} className="thrift-trending-card">
+          <div 
+            key={item.id} 
+            className="thrift-trending-card"
+            onClick={() => openStream({
+              title: item.title,
+              seller: `@${item.seller.replace(' ', '_').toLowerCase()}`,
+              sellerName: item.seller,
+              viewers: item.viewers || '1.1K',
+              category: 'Trending'
+            })}
+            style={{ cursor: 'pointer' }}
+          >
             <div className="trending-img-area">
               <span className="trending-badge" style={{ backgroundColor: item.badgeColor }}>
                 {item.badge === 'LIVE' && <span className="live-dot inline-white"></span>}
@@ -41,7 +57,19 @@ export default function ThriftTrending() {
                   <span className="trending-price">{item.price}</span>
                   {item.originalPrice && <span className="trending-original-price">{item.originalPrice}</span>}
                 </div>
-                <button className="trending-claim-btn">Claim</button>
+                <button className="trending-claim-btn" onClick={(e) => {
+                  e.stopPropagation();
+                  openProduct({
+                    title: item.title,
+                    seller: `@${item.seller.replace(' ', '_').toLowerCase()}`,
+                    sellerName: item.seller,
+                    price: item.price,
+                    originalPrice: item.originalPrice,
+                    category: 'Trending',
+                    viewers: item.viewers || '1.1K',
+                    image: item.img
+                  });
+                }}>Claim</button>
               </div>
             </div>
           </div>

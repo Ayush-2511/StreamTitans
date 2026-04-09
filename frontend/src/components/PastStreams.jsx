@@ -1,9 +1,12 @@
 import React from 'react';
 import { Clock, ChevronRight } from 'lucide-react';
 import { LIVE_DECK } from '../data/mockData';
+import { useStream } from '../context/StreamContext';
 import './PastStreams.css';
 
 export default function PastStreams() {
+  const { openStream } = useStream();
+
   return (
     <section className="past-deck animate-fade-in-up" style={{ animationDelay: '500ms' }}>
       <div className="past-deck-header">
@@ -24,6 +27,14 @@ export default function PastStreams() {
             <div 
               key={card.id} 
               className={`past-card brutal-border ${card.variantClass.replace('live-', 'past-')}`}
+              onClick={() => openStream({
+                title: card.title,
+                seller: card.seller,
+                sellerName: card.seller.replace('@', ''),
+                viewers: 'Recorded',
+                category: 'Discover'
+              })}
+              style={{ cursor: 'pointer' }}
             >
               <div className="past-card-bg" style={{ backgroundImage: `url(https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=400&q=80)` }}></div>
               <div className="past-card-overlay"></div>
