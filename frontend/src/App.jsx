@@ -119,10 +119,9 @@ export default function App() {
   // Protect creator route
   if (currentView === 'creator' && (!currentUser || userRole !== 'seller')) {
     content = (
-      <LandingFlow 
-        startAtAuth
-        authMode="login"
-        onComplete={handleAuthComplete}
+      <CreatorAuthFlow 
+        onComplete={() => setCurrentView('creator')} 
+        onBack={() => setCurrentView('landing')} 
       />
     );
   } else if ((currentView === 'landing' || currentView === 'auth-login' || currentView === 'auth-signup') && currentUser) {
@@ -146,6 +145,7 @@ export default function App() {
         startAtAuth
         authMode={currentView === 'auth-login' ? 'login' : 'signup'}
         onComplete={handleAuthComplete}
+        onCreatorSelect={() => setCurrentView('creator-auth')}
         onBack={() => setCurrentView('landing')}
       />
     );

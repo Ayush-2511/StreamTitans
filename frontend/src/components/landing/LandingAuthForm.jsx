@@ -4,12 +4,12 @@ import toast from 'react-hot-toast';
 import { logIn, signUp, logInWithGoogle } from '../../firebase/auth';
 import './LandingAuthForm.css';
 
-export default function LandingAuthForm({ isHidden, onComplete, initialMode = 'signup', onBack }) {
+export default function LandingAuthForm({ isHidden, onComplete, initialMode = 'signup', onBack, onCreatorSelect }) {
   const [mode, setMode] = useState(initialMode); // 'signup' or 'login'
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [role, setRole] = useState('buyer');
+  const role = 'buyer';
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -78,14 +78,6 @@ export default function LandingAuthForm({ isHidden, onComplete, initialMode = 's
                 required
                 className="auth-input-field brutal-border"
               />
-              <select 
-                value={role} 
-                onChange={e => setRole(e.target.value)} 
-                className="auth-input-field brutal-border"
-              >
-                <option value="buyer">I am a Buyer</option>
-                <option value="seller">I am a Seller / Creator</option>
-              </select>
             </>
           )}
           <input 
@@ -132,6 +124,15 @@ export default function LandingAuthForm({ isHidden, onComplete, initialMode = 's
             </>
           )}
         </p>
+
+        {onCreatorSelect && (
+          <p className="auth-switch-text" style={{ marginTop: '0.5rem' }}>
+            Want to sell on Lumina?{' '}
+            <span className="auth-switch-link" onClick={onCreatorSelect} style={{ color: 'var(--color-orange)' }}>
+              Join as a Seller
+            </span>
+          </p>
+        )}
 
         {onBack && (
           <button onClick={onBack} className="auth-back-btn">

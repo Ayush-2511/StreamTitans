@@ -80,6 +80,7 @@ export default function AuthSection({ onBuyerSelect, onCreatorSelect, onComplete
           isHidden={!personaSelected}
           initialMode={authMode || 'signup'}
           onBack={onBack}
+          onCreatorSelect={handleCreatorClick}
         />
       </div>
     );
