@@ -24,7 +24,7 @@ export default function CreatorListingsTab() {
     setEstimatedPrice('');
     try {
       const genAI = new GoogleGenerativeAI(import.meta.env.VITE_GEMINI_API_KEY || "dummy_key");
-      const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash-lite" });
+      const model = genAI.getGenerativeModel({ model: "gemini-flash-latest" });
       const prompt = `You are a pricing expert for second hand and thrifted clothing in India.
       Suggest an optimal selling price in INR (e.g., "₹800 - ₹1,200") for the following item:
       Title: ${newProduct.title}
@@ -32,8 +32,25 @@ export default function CreatorListingsTab() {
       Condition: ${newProduct.condition}
       
       Return ONLY the suggested price range. Nothing else.`;
-      const result = await model.generateContent(prompt);
-      setEstimatedPrice(result.response.text().trim());
+      let responseText = "";
+      let retries = 3;
+      
+      while (retries > 0) {
+        try {
+          const result = await model.generateContent(prompt);
+          responseText = result.response.text().trim();
+          break;
+        } catch (e) {
+          if (e.message.includes("503") && retries > 1) {
+            retries--;
+            console.warn("Google API 503 Overload detected. Retrying smoothly in 2 seconds...", retries, "attempts left");
+            await new Promise(resolve => setTimeout(resolve, 2000));
+          } else {
+            throw e;
+          }
+        }
+      }
+      setEstimatedPrice(responseText);
     } catch(err) {
       console.error(err);
       setEstimatedPrice('Failed to estimate.');

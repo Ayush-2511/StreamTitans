@@ -46,24 +46,40 @@ export default function Chatbot() {
         throw new Error("API Key missing");
       }
       
-      const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash-lite" });
+      const model = genAI.getGenerativeModel({ model: "gemini-flash-latest" });
       
-      // We pass the conversation history + system prompt
-      const chat = model.startChat({
-        history: [
-          { role: "user", parts: [{ text: SYSTEM_PROMPT }] },
-          { role: "model", parts: [{ text: messages[0].content }] },
-          ...messages.slice(1).map(m => ({
-            role: m.role === 'assistant' ? 'model' : 'user',
-            parts: [{ text: m.content }]
-          }))
-        ]
-      });
+      let responseText = "";
+      let retries = 3;
+      
+      while (retries > 0) {
+        try {
+          // Re-initialize the chat session inside the retry loop to prevent history corruption on a failed attempt
+          const chatSession = model.startChat({
+            history: [
+              { role: "user", parts: [{ text: SYSTEM_PROMPT }] },
+              { role: "model", parts: [{ text: messages[0].content }] },
+              ...messages.slice(1).map(m => ({
+                role: m.role === 'assistant' ? 'model' : 'user',
+                parts: [{ text: m.content }]
+              }))
+            ]
+          });
 
-      const result = await chat.sendMessage(userMessage);
-      const response = result.response.text();
+          const result = await chatSession.sendMessage(userMessage);
+          responseText = result.response.text();
+          break; // Success! Break out of the retry loop
+        } catch (e) {
+          if (e.message.includes("503") && retries > 1) {
+            retries--;
+            console.warn("Google API 503 Overload detected. Retrying smoothly in 2 seconds...", retries, "attempts left");
+            await new Promise(resolve => setTimeout(resolve, 2000));
+          } else {
+            throw e; // Throw the error if it's not a 503 or we ran out of retries
+          }
+        }
+      }
 
-      setMessages((prev) => [...prev, { role: 'assistant', content: response }]);
+      setMessages((prev) => [...prev, { role: 'assistant', content: responseText }]);
     } catch (error) {
       console.error("Chatbot Error:", error);
       let errorMsg = `Oops! Error: ${error.message}`;
