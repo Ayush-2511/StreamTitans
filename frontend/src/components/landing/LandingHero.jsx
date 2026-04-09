@@ -2,15 +2,17 @@ import React from 'react';
 import { ChevronDown } from 'lucide-react';
 import './LandingHero.css';
 
-const MOCK_IMAGES = [
-  "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=600&q=80",
-  "https://images.unsplash.com/photo-1529139574466-a303027c028b?w=600&q=80",
-  "https://images.unsplash.com/photo-1620799140188-3b2a02fd9a77?w=600&q=80",
-  "https://images.unsplash.com/photo-1550614000-4b95dd2cb888?w=600&q=80",
-  "https://images.unsplash.com/photo-1560243563-062bfc001d68?w=600&q=80",
-  "https://images.unsplash.com/photo-1434389678232-0675a580a6c6?w=600&q=80",
-  "https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=600&q=80"
-];
+const LOCAL_IMAGES = [
+  "accessories.jpg", "bags-and-luxury.jpg", "box-logo-hoodie.jpg", "canvas-tote-bag.jpg",
+  "cloth-jacket.jpg", "curated-90s-streetwear.jpg", "early-2000s-finds.jpg", "gorpcore-basics.jpg",
+  "homemade-preserve-set.jpg", "mechanical-keyboard.jpg", "menswear.jpg", "mini-bag.jpg",
+  "minimalist-desk-lamp.jpg", "nylon-mini-bag.jpg", "oversized-leather-jacket.jpg", "retro-gaming-consoles.jpg",
+  "sherpa-trucker-jacket.jpg", "shoes.jpg", "silk-scarf.jpg", "silver-chain.jpg",
+  "smart-air-fryer-xl.jpg", "upcycled-denim.jpg", "vintage-band-tees.jpg", "vintage-cap.jpg",
+  "vintage-denim-jacket.jpg", "wireless-earbuds-pro.jpg", "desklamp.jpg", "ergonomic-chair.jpg"
+].map(name => `/assets/products/${name}`);
+
+const MOCK_IMAGES = LOCAL_IMAGES;
 
 // Helper to create massive perfect loops. 
 // 20 items per half = 40 items per column.

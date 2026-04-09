@@ -61,9 +61,14 @@ export default function PromoHero() {
               </div>
 
               <div className="stream-featured-product">
-                <span className="featured-tag">Featured now</span>
-                <span className="featured-title">Air Fryer Pro 5L</span>
-                <span className="featured-price">$49.99</span>
+                <div className="featured-product-image-container">
+                  <img src="/assets/products/smart-air-fryer-xl.jpg" alt="Air Fryer" />
+                </div>
+                <div className="featured-product-details">
+                  <span className="featured-tag">Featured now</span>
+                  <span className="featured-title">Air Fryer Pro 5L</span>
+                  <span className="featured-price">$49.99</span>
+                </div>
                 <button className="claim-now-btn">Claim now</button>
               </div>
             </div>

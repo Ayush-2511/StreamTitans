@@ -136,10 +136,13 @@
   width: 500px; height: 500px;
 }
 
-.deal-product-icon {
-  font-size: 8rem;
+.deal-product-image {
+  width: 280px;
+  height: auto;
   z-index: 10;
-  filter: drop-shadow(0 0 40px rgba(255, 230, 150, 0.4));
+  filter: drop-shadow(0 0 40px rgba(0, 0, 0, 0.5));
+  object-fit: contain;
+  mix-blend-mode: lighten;
 }
 
 .deal-progress-bar {

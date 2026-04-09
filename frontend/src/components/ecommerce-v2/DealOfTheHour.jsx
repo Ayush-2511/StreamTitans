@@ -40,7 +40,7 @@ export default function DealOfTheHour() {
           <div className="deal-visual">
             <div className="glow-ring glow-ring-1"></div>
             <div className="glow-ring glow-ring-2"></div>
-            <div className="deal-product-icon">💡</div>
+            <img src="/assets/products/desklamp.jpg" alt="Desk Lamp" className="deal-product-image" />
           </div>
           
           <div className="deal-progress-bar">
@@ -82,7 +82,7 @@ export default function DealOfTheHour() {
           <div className="deal-visual">
             <div className="glow-ring glow-ring-1"></div>
             <div className="glow-ring glow-ring-2"></div>
-            <div className="deal-product-icon">🪑</div>
+            <img src="/assets/products/ergonomic-chair.jpg" alt="Ergonomic Chair" className="deal-product-image" />
           </div>
           
           <div className="deal-progress-bar">
