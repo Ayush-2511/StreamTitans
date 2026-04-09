@@ -15,19 +15,27 @@
   height: 40px;
   border-radius: 50%;
   background: white;
-  border: 1px solid #e0dfd6;
+  border: 1.5px solid var(--color-ink);
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #1a1a1a;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+  color: var(--color-ink);
+  cursor: pointer;
+}
+.dark .settings-back-icon {
+  background: #1a1a1a;
+  border-color: #555;
+  color: white;
 }
 
 .settings-title {
-  font-size: 2rem;
-  color: #1a1a1a;
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: var(--color-ink);
   margin: 0;
+  letter-spacing: -0.02em;
 }
+.dark .settings-title { color: white; }
 
 .settings-profile-card {
   background: white;
@@ -37,34 +45,46 @@
   align-items: center;
   gap: 16px;
   margin-bottom: 1.5rem;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+  border: 1.5px solid var(--color-ink);
+  box-shadow: 4px 4px 0px var(--color-ink);
+}
+.dark .settings-profile-card {
+  background: #1a1a1a;
+  border-color: #444;
+  box-shadow: none;
 }
 
 .sp-avatar {
-  background: #252320; /* Very dark brownish black */
-  color: #c9a473; /* Gold */
+  background: var(--color-ink);
+  color: white;
   width: 64px;
   height: 64px;
   border-radius: 50%;
+  border: 1.5px solid var(--color-ink);
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 1.25rem;
+  font-weight: 800;
   letter-spacing: 0.1em;
 }
 
 .sp-name {
   font-size: 1.5rem;
-  color: #1a1a1a;
+  font-weight: 800;
+  color: var(--color-ink);
   margin: 0 0 0.2rem 0;
-  letter-spacing: 0.1em;
 }
+.dark .sp-name { color: white; }
 
 .sp-contact {
-  color: #888;
+  color: var(--color-ink);
+  opacity: 0.7;
   font-size: 0.85rem;
+  font-weight: 500;
   margin: 0;
 }
+.dark .sp-contact { color: #aaa; }
 
 .settings-quick-actions {
   display: flex;
@@ -82,20 +102,25 @@
   align-items: center;
   justify-content: center;
   gap: 12px;
-  color: #1a1a1a;
-  border: 1px solid #e0dfd6;
+  color: var(--color-ink);
+  border: 1.5px solid var(--color-ink);
   font-size: 0.85rem;
-  font-weight: 500;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.02);
-  transition: transform 0.2s;
+  font-weight: 800;
+  transition: transform 0.2s, background-color 0.2s;
+  cursor: pointer;
 }
-
 .sq-action-btn:hover {
-  transform: translateY(-2px);
+  background: var(--color-surface);
 }
+.dark .sq-action-btn {
+  background: #1a1a1a;
+  border-color: #444;
+  color: white;
+}
+.dark .sq-action-btn:hover { background: #2a2a2a; }
 
 .thrift-credits-card {
-  background: #252320; /* matching avatar bg */
+  background: var(--color-ink);
   color: white;
   border-radius: 16px;
   padding: 1.5rem 2rem;
@@ -103,7 +128,8 @@
   justify-content: space-between;
   align-items: center;
   margin-bottom: 2.5rem;
-  box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+  border: 1.5px solid var(--color-ink);
+  box-shadow: 4px 4px 0px var(--color-orange);
 }
 
 .tc-left {
@@ -116,7 +142,8 @@
   background: rgba(255, 255, 255, 0.1);
   padding: 12px;
   border-radius: 12px;
-  color: #c9a473;
+  color: var(--color-orange);
+  border: 1.5px solid rgba(255, 255, 255, 0.2);
 }
 
 .tc-title-row {
@@ -127,35 +154,39 @@
 }
 
 .tc-title {
-  font-weight: 500;
-  font-size: 1rem;
+  font-weight: 800;
+  font-size: 1.1rem;
 }
 
 .tc-badge {
-  background: #c9a473; /* Gold */
-  color: #1a1a1a;
+  background: var(--color-orange);
+  color: white;
   padding: 2px 8px;
-  border-radius: 10px;
+  border-radius: 99px;
   font-size: 0.65rem;
-  font-weight: bold;
+  font-weight: 800;
 }
 
 .tc-balance {
-  color: #aaa;
+  color: rgba(255,255,255,0.7);
   font-size: 0.85rem;
+  font-weight: 500;
 }
 
 .tc-add-btn {
   background: transparent;
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  border: 1.5px solid white;
   color: white;
   padding: 8px 16px;
   border-radius: 8px;
+  font-weight: 800;
   font-size: 0.85rem;
-  transition: background 0.2s;
+  transition: background 0.2s, color 0.2s;
+  cursor: pointer;
 }
 .tc-add-btn:hover {
-  background: rgba(255, 255, 255, 0.1);
+  background: white;
+  color: var(--color-ink);
 }
 
 .settings-list-section {
@@ -163,19 +194,26 @@
 }
 
 .sl-title {
-  color: #888;
+  color: var(--color-ink);
+  opacity: 0.6;
   font-size: 0.75rem;
   letter-spacing: 0.1em;
-  font-weight: 600;
+  font-weight: 800;
   margin-bottom: 1rem;
   margin-left: 0.5rem;
+  text-transform: uppercase;
 }
+.dark .sl-title { color: #aaa; }
 
 .sl-group {
   background: white;
   border-radius: 16px;
   overflow: hidden;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.03);
+  border: 1.5px solid var(--color-ink);
+}
+.dark .sl-group {
+  background: #1a1a1a;
+  border-color: #444;
 }
 
 .sl-item {
@@ -183,34 +221,45 @@
   display: flex;
   align-items: center;
   padding: 18px 24px;
-  background: white;
+  background: transparent;
   border: none;
-  border-bottom: 1px solid #f5f4f0;
-  color: #1a1a1a;
+  border-bottom: 1.5px solid var(--color-ink);
+  color: var(--color-ink);
   font-size: 0.95rem;
-  font-weight: 500;
+  font-weight: 800;
   gap: 16px;
   text-align: left;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+.dark .sl-item {
+  border-bottom-color: #444;
+  color: white;
 }
 
-.sl-item:active {
-  background: #f9f9f9;
+.sl-item:hover {
+  background: var(--color-surface);
 }
+.dark .sl-item:hover { background: #222; }
 
 .sl-item:last-child {
   border-bottom: none;
 }
 
 .sl-icon, .sl-icon-pin {
-  color: #888;
+  color: var(--color-ink);
   width: 20px;
   text-align: center;
+  opacity: 0.8;
 }
+.dark .sl-icon, .dark .sl-icon-pin { color: #aaa; }
 
 .sl-chevron {
   margin-left: auto;
-  color: #ccc;
+  color: var(--color-ink);
+  opacity: 0.4;
 }
+.dark .sl-chevron { color: #555; }
 
 .sl-item-stacked {
   display: flex;
@@ -219,10 +268,12 @@
 
 .sl-item-sub {
   font-size: 0.75rem;
-  color: #888;
-  font-weight: 400;
+  color: var(--color-ink);
+  opacity: 0.6;
+  font-weight: 500;
   margin-top: 2px;
 }
+.dark .sl-item-sub { color: #888; }
 
 .settings-footer {
   margin-top: 3rem;
@@ -232,24 +283,28 @@
 .settings-logout-btn {
   width: 100%;
   background: transparent;
-  color: #aaa;
-  border: 1px solid #e0dfd6;
+  color: var(--color-orange);
+  border: 1.5px solid var(--color-orange);
   border-radius: 12px;
   padding: 16px;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 0.95rem;
+  font-weight: 800;
   transition: all 0.2s;
+  cursor: pointer;
 }
 
 .settings-logout-btn:hover {
-  background: white;
-  color: #1a1a1a;
+  background: var(--color-orange);
+  color: white;
 }
 
 .app-version {
   margin-top: 1.5rem;
-  color: #aaa;
+  color: var(--color-ink);
+  opacity: 0.5;
   font-size: 0.75rem;
+  font-weight: 500;
 }
