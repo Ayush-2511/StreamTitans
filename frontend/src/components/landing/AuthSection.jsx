@@ -4,7 +4,7 @@ import LandingPersona from './LandingPersona';
 import LandingAuthForm from './LandingAuthForm';
 import './AuthSection.css';
 
-export default function AuthSection({ onBuyerSelect, onCreatorSelect, onComplete, startAtAuth, authMode }) {
+export default function AuthSection({ onBuyerSelect, onCreatorSelect, onComplete, startAtAuth, authMode, onBack }) {
   const [emailEntered, setEmailEntered] = useState(false);
   const [email, setEmail] = useState('');
   const [personaSelected, setPersonaSelected] = useState(false);
@@ -79,6 +79,7 @@ export default function AuthSection({ onBuyerSelect, onCreatorSelect, onComplete
           onComplete={handleAuthComplete}
           isHidden={!personaSelected}
           initialMode={authMode || 'signup'}
+          onBack={onBack}
         />
       </div>
     );

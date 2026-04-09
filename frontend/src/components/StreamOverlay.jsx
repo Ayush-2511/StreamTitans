@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { ShoppingCart, Heart, MessageCircle, Share2, X, Flame } from 'lucide-react';
+import React, { useState, useRef, useEffect } from 'react';
+import { ShoppingCart, Heart, MessageCircle, Share2, X, Flame, Send } from 'lucide-react';
 import { useStream } from '../context/StreamContext';
 import { useProduct } from '../context/ProductContext';
 import { useAuth } from '../context/AuthContext';
@@ -11,17 +11,57 @@ export default function StreamOverlay() {
   const { streamData, isStreamLoading, closeStream } = useStream();
   const { openProduct } = useProduct();
   const { currentUser } = useAuth();
+  
   const [comment, setComment] = useState('');
+  const [liked, setLiked] = useState(false);
+  const [likeCount, setLikeCount] = useState(48300);
+  const [showComments, setShowComments] = useState(true);
   const [messages, setMessages] = useState([]);
+  
+  const commentsEndRef = useRef(null);
 
+  // Subscribe to real-time chat
   useEffect(() => {
     if (!streamData) return;
-    const streamId = streamData.id || streamData.title; // Fallback to title if no ID
+    const streamId = streamData.id || streamData.title;
     const unsub = subscribeToChat(streamId, (data) => {
       setMessages(data);
     });
     return () => unsub();
   }, [streamData]);
+
+  // Handle Like
+  const handleLike = () => {
+    setLiked(prev => !prev);
+    setLikeCount(prev => prev + (liked ? -1 : 1));
+  };
+
+  const formatLikeCount = (n) => {
+    if (n >= 1000) return (n / 1000).toFixed(1) + 'K';
+    return n.toString();
+  };
+
+  // Handle Comment Submit
+  const handleCommentSubmit = async () => {
+    if (!comment.trim()) return;
+    if (!currentUser) {
+      toast.error("Log in to join the chat");
+      return;
+    }
+    
+    try {
+      const streamId = streamData.id || streamData.title;
+      await sendMessage(streamId, currentUser.name || 'User', comment.trim());
+      setComment('');
+      setShowComments(true);
+    } catch (err) {
+      toast.error("Failed to post comment");
+    }
+  };
+
+  useEffect(() => {
+    commentsEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [messages]);
 
   if (!streamData) return null;
 
@@ -38,7 +78,6 @@ export default function StreamOverlay() {
   }
 
   const handleBuyClick = () => {
-    // We intentionally DO NOT close stream here, so ProductOverlay acts as a layer over the live stream!
     openProduct({
       title: streamData.title || 'Product from Stream',
       seller: streamData.seller,
@@ -69,7 +108,7 @@ export default function StreamOverlay() {
                  <p className="stream-seller-handle">{streamData.seller || '@handle'} • {streamData.category || 'Category'}</p>
               </div>
            </div>
-           
+
            <div className="stream-badges">
               <div className="stream-badge live">
                  <span className="live-dot"></span> LIVE
@@ -78,7 +117,7 @@ export default function StreamOverlay() {
                  {streamData.viewers || '4,527'}
               </div>
            </div>
-           
+
            <button className="stream-close-btn" onClick={closeStream}>
              <X size={24} />
            </button>
@@ -91,28 +130,36 @@ export default function StreamOverlay() {
              </button>
              <span className="stream-action-label">Buy</span>
            </div>
-           
+
            <div className="stream-action-item">
-             <button className="stream-action-btn">
-               <Heart size={20} />
-             </button>
-             <span className="stream-action-label">48.3K</span>
+              <button
+                className="stream-action-btn"
+                onClick={handleLike}
+                style={liked ? { background: 'rgba(255, 91, 34, 0.25)', color: '#FF5B22', border: '1px solid rgba(255,91,34,0.5)' } : {}}
+              >
+                <Heart size={20} fill={liked ? '#FF5B22' : 'none'} color={liked ? '#FF5B22' : 'white'} />
+              </button>
+              <span className="stream-action-label" style={liked ? { color: '#FF5B22' } : {}}>{formatLikeCount(likeCount)}</span>
            </div>
-           
+
            <div className="stream-action-item">
-             <button className="stream-action-btn">
-               <MessageCircle size={20} />
-             </button>
-             <span className="stream-action-label">78</span>
+              <button
+                className="stream-action-btn"
+                onClick={() => setShowComments(prev => !prev)}
+                style={showComments ? { background: 'rgba(255,255,255,0.2)' } : {}}
+              >
+                <MessageCircle size={20} />
+              </button>
+              <span className="stream-action-label">{messages.length}</span>
            </div>
-           
+
            <div className="stream-action-item">
              <button className="stream-action-btn">
                <Flame size={20} />
              </button>
              <span className="stream-action-label">React</span>
            </div>
-           
+
            <div className="stream-action-item">
              <button className="stream-action-btn">
                <Share2 size={20} />
@@ -122,47 +169,42 @@ export default function StreamOverlay() {
         </div>
 
         <div className="stream-bottom-section">
+           {showComments && (
            <div className="stream-comments">
-              {messages.length === 0 && (
-                <div style={{color: 'rgba(255,255,255,0.5)', padding: '1rem', fontSize: '13px'}}>Be the first to comment...</div>
-              )}
-              {messages.map((msg) => (
-                <div key={msg.id} className="stream-comment-bubble">
-                   <div className="stream-comment-avatar" style={{backgroundColor: `hsl(${(msg.author?.length || 0) * 30}, 50%, 50%)`}}>
-                     {msg.author ? msg.author.charAt(0).toUpperCase() : '?'}
-                   </div>
-                   <div className="stream-comment-body">
-                     <span className="stream-comment-handle">@{msg.author || 'Guest'}</span>
-                     <span className="stream-comment-text">{msg.text}</span>
-                   </div>
-                </div>
-              ))}
-           </div>
+               {messages.length === 0 && (
+                 <div style={{color: 'rgba(255,255,255,0.5)', padding: '1rem', fontSize: '13px'}}>Be the first to comment...</div>
+               )}
+               {messages.map((msg) => (
+                 <div key={msg.id} className="stream-comment-bubble">
+                    <div className="stream-comment-avatar" style={{backgroundColor: `hsl(${(msg.author?.length || 0) * 30}, 50%, 50%)`}}>
+                      {msg.author ? msg.author.charAt(0).toUpperCase() : '?'}
+                    </div>
+                    <div className="stream-comment-body">
+                      <span className="stream-comment-handle">@{msg.author || 'Guest'}</span>
+                      <span className="stream-comment-text">{msg.text}</span>
+                    </div>
+                 </div>
+               ))}
+               <div ref={commentsEndRef} />
+            </div>
+           )}
 
            <div className="stream-product-drop">
               <h4 className="stream-drop-seller">{streamData.seller || '@seller_handle'}</h4>
               <p className="stream-drop-desc" style={{cursor: 'pointer'}} onClick={handleBuyClick}>Featured drop • Limited stock • Tap Buy →</p>
            </div>
-           
+
            <div className="stream-input-bar">
-             <input 
-               type="text" 
+             <input
+               type="text"
                placeholder="Add a comment..."
                value={comment}
                onChange={(e) => setComment(e.target.value)}
-               onKeyDown={async (e) => {
-                 if (e.key === 'Enter') {
-                   if (!comment.trim()) return;
-                   if (!currentUser) return toast.error("Log in to chat");
-                   try {
-                     await sendMessage(streamData.id || streamData.title, currentUser.name || 'User', comment.trim());
-                     setComment('');
-                   } catch(err) {
-                     toast.error("Failed to post comment");
-                   }
-                 }
-               }}
+               onKeyDown={(e) => e.key === 'Enter' && handleCommentSubmit()}
              />
+             <button className="stream-send-btn" onClick={handleCommentSubmit}>
+               <Send size={14} />
+             </button>
            </div>
         </div>
       </div>

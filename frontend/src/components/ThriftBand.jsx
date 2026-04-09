@@ -4,7 +4,7 @@ import { THRIFT_POLAROIDS } from '../data/mockData';
 import { useStream } from '../context/StreamContext';
 import './ThriftBand.css';
 
-export default function ThriftBand({ subtitle = "Live Thrift Drops", title = "Fast Moving Pieces", data = THRIFT_POLAROIDS }) {
+export default function ThriftBand({ subtitle = "Live Thrift Drops", title = "Fast Moving Pieces", data = THRIFT_POLAROIDS, onNavigate }) {
   const { openStream } = useStream();
 
   return (
@@ -14,7 +14,7 @@ export default function ThriftBand({ subtitle = "Live Thrift Drops", title = "Fa
            <div className="thrift-subtitle">{subtitle}</div>
            <h3 className="thrift-title">{title}</h3>
          </div>
-          <button className="thrift-see-all">
+          <button className="thrift-see-all" onClick={onNavigate}>
            View All <ChevronRight className="see-all-icon" />
          </button>
       </div>

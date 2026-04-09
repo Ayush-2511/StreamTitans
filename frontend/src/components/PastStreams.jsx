@@ -4,11 +4,11 @@ import { LIVE_DECK } from '../data/mockData';
 import { useStream } from '../context/StreamContext';
 import './PastStreams.css';
 
-export default function PastStreams() {
+export default function PastStreams({ onSeeAll }) {
   const { openStream } = useStream();
 
   return (
-    <section className="past-deck animate-fade-in-up" style={{ animationDelay: '500ms' }}>
+    <section id="past-streams-section" className="past-deck animate-fade-in-up" style={{ animationDelay: '500ms' }}>
       <div className="past-deck-header">
          <div className="past-deck-title-group">
             <h3 className="past-deck-title">
@@ -17,15 +17,15 @@ export default function PastStreams() {
             </h3>
             <p className="past-deck-subtitle">Catch up on recent drops</p>
          </div>
-         <button className="past-deck-see-all">
+         <button className="past-deck-see-all" onClick={onSeeAll}>
            See All <ChevronRight className="see-all-icon" />
          </button>
       </div>
 
       <div className="past-carousel">
          {LIVE_DECK.map((card) => (
-            <div 
-              key={card.id} 
+            <div
+              key={card.id}
               className={`past-card brutal-border ${card.variantClass.replace('live-', 'past-')}`}
               onClick={() => openStream({
                 title: card.title,
@@ -36,9 +36,9 @@ export default function PastStreams() {
               })}
               style={{ cursor: 'pointer' }}
             >
-              <div className="past-card-bg" style={{ backgroundImage: `url(https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=400&q=80)` }}></div>
+              <div className="past-card-bg" style={{ backgroundImage: `url(${card.image})` }}></div>
               <div className="past-card-overlay"></div>
-              
+
               <div className="past-card-content">
                 <div className="past-card-badge">
                   <span className="past-card-dot"></span>

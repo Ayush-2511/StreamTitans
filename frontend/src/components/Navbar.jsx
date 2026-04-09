@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Sparkles, Moon, Sun, User, ShoppingBag, Search } from 'lucide-react';
 import SemanticSearchModal from './SemanticSearchModal';
 import './Navbar.css';
@@ -6,6 +6,18 @@ import './Navbar.css';
 export default function Navbar({ isDark, toggleDark, isAuthenticated, onOpenAuth, activeTab, setActiveTab }) {
   const [showProfileMenu, setShowProfileMenu] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const profileRef = useRef(null);
+
+  useEffect(() => {
+    if (!showProfileMenu) return;
+    const handleOutside = (e) => {
+      if (profileRef.current && !profileRef.current.contains(e.target)) {
+        setShowProfileMenu(false);
+      }
+    };
+    document.addEventListener('mousedown', handleOutside);
+    return () => document.removeEventListener('mousedown', handleOutside);
+  }, [showProfileMenu]);
 
   const navItems = isAuthenticated
     ? ['Discover', 'E-commerce', 'Thrift', 'Wallet']
@@ -77,7 +89,7 @@ export default function Navbar({ isDark, toggleDark, isAuthenticated, onOpenAuth
             </button>
           </>
         ) : (
-          <div style={{ position: 'relative' }}>
+          <div style={{ position: 'relative' }} ref={profileRef}>
             <button
               className="nav-btn-icon brutal-border focus-visible"
               onClick={() => setShowProfileMenu(!showProfileMenu)}
@@ -86,8 +98,8 @@ export default function Navbar({ isDark, toggleDark, isAuthenticated, onOpenAuth
               <User className="nav-btn-svg" />
             </button>
             {showProfileMenu && (
-              <div 
-                className="profile-dropdown brutal-border" 
+              <div
+                className="profile-dropdown brutal-border"
                 style={{
                   position: 'absolute',
                   top: '120%',
@@ -103,7 +115,6 @@ export default function Navbar({ isDark, toggleDark, isAuthenticated, onOpenAuth
                 }}
               >
                 <a href="#" className="nav-link" onClick={(e) => { e.preventDefault(); setActiveTab('Profile'); setShowProfileMenu(false); }} style={{ padding: '5px 15px', color: 'var(--text-main)' }}>Profile</a>
-                <a href="#" className="nav-link" style={{ padding: '5px 15px', color: 'var(--text-main)' }}>About</a>
                 <a href="#" className="nav-link" onClick={(e) => { e.preventDefault(); setActiveTab('Settings'); setShowProfileMenu(false); }} style={{ padding: '5px 15px', color: 'var(--text-main)' }}>Settings</a>
               </div>
             )}

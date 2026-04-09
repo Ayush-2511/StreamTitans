@@ -9,23 +9,75 @@ import { ProductProvider } from './context/ProductContext';
 import ProductOverlay from './components/ProductOverlay';
 import { UserActivityProvider } from './context/UserActivityContext';
 import Chatbot from './components/Chatbot';
+import { useAuth } from './context/AuthContext';
 import { ArrowLeft } from 'lucide-react';
 
-import { useAuth } from './context/AuthContext';
+const TAB_HASHES = {
+  '#/discover': 'Discover',
+  '#/ecommerce': 'E-commerce',
+  '#/thrift': 'Thrift',
+  '#/cart': 'Cart',
+  '#/wallet': 'Wallet',
+  '#/profile': 'Profile',
+  '#/settings': 'Settings',
+};
+
+const getInitialViewFromHash = () => {
+  const hash = window.location.hash;
+  if (hash === '#/dashboard') return 'creator';
+  if (hash === '#/login') return 'auth-login';
+  if (hash === '#/signup') return 'auth-signup';
+  if (hash === '#/creator-auth') return 'creator-auth';
+  if (TAB_HASHES[hash]) return 'buyer';
+  return 'landing';
+};
+
+const getInitialTabFromHash = () => TAB_HASHES[window.location.hash] || 'Discover';
 
 export default function App() {
-  const [currentView, setCurrentView] = useState('landing'); // 'landing' | 'buyer' | 'creator' | 'auth-login' | 'auth-signup' | 'creator-auth'
-  const [isDark, setIsDark] = useState(false);
+  const [currentView, setCurrentView] = useState(getInitialViewFromHash);
+  const [isDark, setIsDark] = useState(() => localStorage.getItem('lumina-theme') === 'dark');
   const { currentUser, userRole, loading } = useAuth();
-
 
   useEffect(() => {
     if (isDark) {
       document.documentElement.classList.add('dark');
+      localStorage.setItem('lumina-theme', 'dark');
     } else {
       document.documentElement.classList.remove('dark');
+      localStorage.setItem('lumina-theme', 'light');
     }
   }, [isDark]);
+
+  // Sync top-level view → URL hash
+  useEffect(() => {
+    const viewToHash = {
+      landing: '#/',
+      creator: '#/dashboard',
+      'creator-auth': '#/creator-auth',
+      'auth-login': '#/login',
+      'auth-signup': '#/signup',
+    };
+    if (viewToHash[currentView]) {
+      window.history.pushState(null, '', viewToHash[currentView]);
+    }
+  }, [currentView]);
+
+  // Browser back button support
+  useEffect(() => {
+    const handlePopState = () => {
+      const hash = window.location.hash;
+      if (!hash || hash === '#/') setCurrentView('landing');
+      else if (hash === '#/dashboard') setCurrentView('creator');
+      else if (hash === '#/login') setCurrentView('auth-login');
+      else if (hash === '#/signup') setCurrentView('auth-signup');
+      else if (hash === '#/creator-auth') setCurrentView('creator-auth');
+      else if (TAB_HASHES[hash]) setCurrentView('buyer');
+      else setCurrentView('landing');
+    };
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, []);
 
   const toggleDark = () => setIsDark(!isDark);
 
@@ -94,10 +146,11 @@ export default function App() {
         startAtAuth
         authMode={currentView === 'auth-login' ? 'login' : 'signup'}
         onComplete={handleAuthComplete}
+        onBack={() => setCurrentView('landing')}
       />
     );
   } else if (currentView === 'creator-auth') {
-    content = <CreatorAuthFlow onComplete={() => setCurrentView('creator')} />;
+    content = <CreatorAuthFlow onComplete={() => setCurrentView('creator')} onBack={() => setCurrentView('landing')} />;
   } else if (currentView === 'creator') {
     content = <CreatorDashboard isDark={isDark} toggleDark={toggleDark} />;
   } else {
@@ -108,6 +161,7 @@ export default function App() {
         isAuthenticated={!!currentUser}
         onOpenAuth={handleOpenAuth}
         onBackParent={() => setCurrentView('landing')}
+        initialTab={getInitialTabFromHash()}
       />
     );
   }
