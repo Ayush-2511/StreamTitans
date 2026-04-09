@@ -2,6 +2,10 @@ import React, { useState, useEffect } from 'react';
 import Home from './pages/Home';
 import LandingFlow from './pages/LandingFlow';
 import CreatorDashboard from './pages/CreatorDashboard';
+import { StreamProvider } from './context/StreamContext';
+import StreamOverlay from './components/StreamOverlay';
+import { ProductProvider } from './context/ProductContext';
+import ProductOverlay from './components/ProductOverlay';
 
 export default function App() {
   const [currentView, setCurrentView] = useState('landing'); // 'landing' | 'buyer' | 'creator' | 'auth-login' | 'auth-signup'
@@ -27,35 +31,43 @@ export default function App() {
     setCurrentView('buyer');
   };
 
+  let content;
+
   if (currentView === 'landing') {
-    return (
+    content = (
       <LandingFlow 
         onBuyerSelect={() => setCurrentView('buyer')}
         onCreatorSelect={() => setCurrentView('creator')}
       />
     );
-  }
-
-  if (currentView.startsWith('auth-')) {
-    return (
+  } else if (currentView.startsWith('auth-')) {
+    content = (
       <LandingFlow
         startAtAuth
         authMode={currentView.replace('auth-', '')}
         onComplete={handleAuthComplete}
       />
     );
-  }
-
-  if (currentView === 'creator') {
-    return <CreatorDashboard isDark={isDark} toggleDark={toggleDark} />;
+  } else if (currentView === 'creator') {
+    content = <CreatorDashboard isDark={isDark} toggleDark={toggleDark} />;
+  } else {
+    content = (
+      <Home
+        isDark={isDark}
+        toggleDark={toggleDark}
+        isAuthenticated={isAuthenticated}
+        onOpenAuth={handleOpenAuth}
+      />
+    );
   }
 
   return (
-    <Home
-      isDark={isDark}
-      toggleDark={toggleDark}
-      isAuthenticated={isAuthenticated}
-      onOpenAuth={handleOpenAuth}
-    />
+    <ProductProvider>
+      <StreamProvider>
+        {content}
+        <StreamOverlay />
+        <ProductOverlay />
+      </StreamProvider>
+    </ProductProvider>
   );
 }

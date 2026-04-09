@@ -1,9 +1,12 @@
 import React from 'react';
 import { ECOMMERCE_V2_HOT_RIGHT_NOW } from '../../data/mockData';
 import { ArrowRight, ArrowDown } from 'lucide-react';
+import { useStream } from '../../context/StreamContext';
 import './HotRightNow.css';
 
 export default function HotRightNow() {
+  const { openStream } = useStream();
+
   return (
     <section className="ecom-section ecom-hot">
       <div className="section-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
@@ -16,7 +19,18 @@ export default function HotRightNow() {
 
       <div className="hot-grid-v2">
         {ECOMMERCE_V2_HOT_RIGHT_NOW.map(item => (
-          <div key={item.id} className="hot-card-v2">
+          <div 
+            key={item.id} 
+            className="hot-card-v2"
+            onClick={() => openStream({
+              title: item.title,
+              seller: item.seller,
+              sellerName: item.seller.replace('@', '').replace(' is streaming', ''),
+              viewers: '2.4K',
+              category: item.category
+            })}
+            style={{ cursor: 'pointer' }}
+          >
             <div className="hot-img-area" style={{ backgroundColor: item.bg }}>
                <div className="hot-badge" style={{ backgroundColor: item.badgeColor }}>
                  {item.badge === 'LIVE' && <span className="live-dot inline-white"></span>}

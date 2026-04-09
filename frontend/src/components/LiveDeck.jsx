@@ -1,9 +1,12 @@
 import React from 'react';
 import { Play, ChevronRight } from 'lucide-react';
 import { LIVE_DECK } from '../data/mockData';
+import { useStream } from '../context/StreamContext';
 import './LiveDeck.css';
 
 export default function LiveDeck() {
+  const { openStream } = useStream();
+
   return (
     <section className="live-deck animate-fade-in-up" style={{ animationDelay: '400ms' }}>
       <div className="live-deck-header">
@@ -24,6 +27,14 @@ export default function LiveDeck() {
             <div 
               key={card.id} 
               className={`live-card brutal-border ${card.variantClass}`}
+              onClick={() => openStream({
+                title: card.title,
+                seller: card.seller,
+                sellerName: card.seller.replace('@', ''),
+                viewers: card.viewers,
+                category: 'Discover'
+              })}
+              style={{ cursor: 'pointer' }}
             >
               <div className="live-card-bg" style={{ backgroundImage: `url(https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=400&q=80)` }}></div>
               <div className="live-card-overlay"></div>

@@ -26,6 +26,14 @@
   position: relative;
   overflow: hidden;
   flex: 1;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+  border: 2px solid transparent; /* Prepare for hover border */
+}
+
+.stream-grid-card:hover {
+  transform: translateY(-5px);
+  border-color: #FF5B22;
+  box-shadow: 0 10px 30px rgba(255, 91, 34, 0.3), 0 0 0 1px #FF5B22;
 }
 
 .bg-pattern-0 { background: #2A2522; } /* Dark brownish */
@@ -76,7 +84,7 @@
   font-weight: 500;
 }
 
-.card-bottom {
+.lsg-card-bottom {
   border-top: 1px solid rgba(255,255,255,0.1);
   padding-top: 1rem;
 }
