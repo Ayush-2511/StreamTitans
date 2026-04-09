@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, ArrowLeft } from 'lucide-react';
 import './LandingAuthForm.css';
 
-export default function LandingAuthForm({ isHidden, onComplete, initialMode = 'signup' }) {
+export default function LandingAuthForm({ isHidden, onComplete, initialMode = 'signup', onBack }) {
   const [mode, setMode] = useState(initialMode); // 'signup' or 'login'
 
   const handleSubmit = (e) => {
@@ -76,6 +76,12 @@ export default function LandingAuthForm({ isHidden, onComplete, initialMode = 's
             </>
           )}
         </p>
+
+        {onBack && (
+          <button onClick={onBack} className="auth-back-btn">
+            <ArrowLeft size={15} /> Back to Home
+          </button>
+        )}
 
         <button onClick={handleSkip} className="auth-skip-btn">
           SKIP FOR NOW <ArrowRight className="auth-skip-icon" />

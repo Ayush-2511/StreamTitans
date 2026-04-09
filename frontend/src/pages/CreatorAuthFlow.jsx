@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { ArrowRight, Upload, ArrowLeft, Check } from 'lucide-react';
 import './CreatorAuthFlow.css';
 
-export default function CreatorAuthFlow({ onComplete }) {
+export default function CreatorAuthFlow({ onComplete, onBack }) {
   const [authStep, setAuthStep] = useState('login'); // 'login' | 'signup-1' | 'signup-2'
 
   return (
@@ -12,6 +12,7 @@ export default function CreatorAuthFlow({ onComplete }) {
           onLogin={onComplete} 
           onSignup={() => setAuthStep('signup-1')} 
           onSkip={onComplete}
+          onBack={onBack}
         />
       )}
       {authStep === 'signup-1' && (
@@ -30,9 +31,22 @@ export default function CreatorAuthFlow({ onComplete }) {
   );
 }
 
-function CreatorLogin({ onLogin, onSignup, onSkip }) {
+function CreatorLogin({ onLogin, onSignup, onSkip, onBack }) {
   return (
     <div className="ca-login-card">
+      {onBack && (
+        <button
+          onClick={onBack}
+          style={{
+            background: 'none', border: 'none', cursor: 'pointer',
+            display: 'flex', alignItems: 'center', gap: '6px',
+            color: '#888', fontSize: '0.8rem', fontWeight: 600,
+            marginBottom: '1.5rem', padding: 0,
+          }}
+        >
+          <ArrowLeft size={15} /> Back to Home
+        </button>
+      )}
       <h1 className="ca-login-title">Welcome back.</h1>
       <p className="ca-login-subtitle">SIGN IN TO CONTINUE TO LUMINA.</p>
       

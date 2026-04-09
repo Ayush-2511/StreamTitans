@@ -128,6 +128,25 @@
   text-decoration: underline;
 }
 
+.auth-back-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0 auto;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--color-gray-dark);
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: color 0.2s;
+  padding: 0.25rem 0.5rem;
+}
+
+.auth-back-btn:hover {
+  color: var(--color-ink);
+}
+
 .auth-skip-btn {
   display: flex;
   align-items: center;

@@ -3,7 +3,7 @@ import LandingHero from '../components/landing/LandingHero';
 import AuthSection from '../components/landing/AuthSection';
 import './LandingFlow.css';
 
-export default function LandingFlow({ onBuyerSelect, onCreatorSelect, onComplete, startAtAuth, authMode }) {
+export default function LandingFlow({ onBuyerSelect, onCreatorSelect, onComplete, startAtAuth, authMode, onBack }) {
   const scrollRef = useRef(null);
 
   useEffect(() => {
@@ -35,6 +35,7 @@ export default function LandingFlow({ onBuyerSelect, onCreatorSelect, onComplete
           onComplete={onComplete}
           startAtAuth={startAtAuth}
           authMode={authMode}
+          onBack={onBack}
         />
       </div>
     </div>

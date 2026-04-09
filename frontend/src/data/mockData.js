@@ -8,14 +8,14 @@ export const HERO_MOSAIC = [
 ];
 
 export const LIVE_DECK = [
-  { id: 1, variantClass: 'live-card-v1', title: "Early 2000s Finds", seller: "@y2k_babe", viewers: "1.2k" },
-  { id: 2, variantClass: 'live-card-v2', title: "Sneaker Grails", seller: "@sole_collector", viewers: "845" },
-  { id: 3, variantClass: 'live-card-v3', title: "Outerwear Grails", seller: "@winter_wardrobe", viewers: "3.4k" },
-  { id: 4, variantClass: 'live-card-v4', title: "Gorpcore Basics", seller: "@trail_mix", viewers: "420" },
-  { id: 5, variantClass: 'live-card-v5', title: "Upcycled Denim", seller: "@patch_work", viewers: "115" },
-  { id: 6, variantClass: 'live-card-v1', title: "Designer Handbags", seller: "@luxe_collector", viewers: "920" },
-  { id: 7, variantClass: 'live-card-v2', title: "Retro Gaming Consoles", seller: "@pixel_perfect", viewers: "5.1k" },
-  { id: 8, variantClass: 'live-card-v4', title: "Vintage Band Tees", seller: "@rock_n_roll", viewers: "389" },
+  { id: 1, variantClass: 'live-card-v1', title: "Early 2000s Finds", seller: "@y2k_babe", viewers: "1.2k", category: "STREETWEAR", image: "https://images.unsplash.com/photo-1529139574466-a303027c028b?w=400&q=80" },
+  { id: 2, variantClass: 'live-card-v2', title: "Sneaker Grails", seller: "@sole_collector", viewers: "845", category: "ACCESSORIES", image: "https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?w=400&q=80" },
+  { id: 3, variantClass: 'live-card-v3', title: "Outerwear Grails", seller: "@winter_wardrobe", viewers: "3.4k", category: "CASUAL", image: "https://images.unsplash.com/photo-1601333144130-8c1f12356227?w=400&q=80" },
+  { id: 4, variantClass: 'live-card-v4', title: "Gorpcore Basics", seller: "@trail_mix", viewers: "420", category: "CASUAL", image: "https://images.unsplash.com/photo-1551028719-00167b16eac5?w=400&q=80" },
+  { id: 5, variantClass: 'live-card-v5', title: "Upcycled Denim", seller: "@patch_work", viewers: "115", category: "STREETWEAR", image: "https://images.unsplash.com/photo-1542272454315-4c01d7abdf4a?w=400&q=80" },
+  { id: 6, variantClass: 'live-card-v1', title: "Designer Handbags", seller: "@luxe_collector", viewers: "920", category: "ACCESSORIES", image: "https://images.unsplash.com/photo-1584916201218-f4242ceb4809?w=400&q=80" },
+  { id: 7, variantClass: 'live-card-v2', title: "Retro Gaming Consoles", seller: "@pixel_perfect", viewers: "5.1k", category: "ACCESSORIES", image: "https://images.unsplash.com/photo-1576566588028-4147f3842f27?w=400&q=80" },
+  { id: 8, variantClass: 'live-card-v4', title: "Vintage Band Tees", seller: "@rock_n_roll", viewers: "389", category: "STREETWEAR", image: "https://images.unsplash.com/photo-1620799140188-3b2a02fd9a77?w=400&q=80" },
 ];
 
 export const THRIFT_POLAROIDS = [

@@ -1,17 +1,20 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Filter } from 'lucide-react';
 import { CATEGORIES } from '../data/mockData';
 import './FilterBar.css';
 
-export default function FilterBar() {
-  const [isLiveOnly, setIsLiveOnly] = useState(false);
+export default function FilterBar({ activeCategory, onCategoryChange, isLiveOnly, onLiveOnlyChange }) {
   return (
     <div className="filter-bar animate-fade-in-up" style={{ animationDelay: '300ms' }}>
       <div className="filter-group">
         <span className="filter-label">Vibe</span>
         <div className="filter-categories">
-          {CATEGORIES.map((cat, i) => (
-            <button key={cat} className={`filter-btn brutal-border ${i === 0 ? 'filter-btn-active' : 'filter-btn-inactive'}`}>
+          {CATEGORIES.map((cat) => (
+            <button
+              key={cat}
+              className={`filter-btn brutal-border ${activeCategory === cat ? 'filter-btn-active' : 'filter-btn-inactive'}`}
+              onClick={() => onCategoryChange(cat)}
+            >
               {cat}
             </button>
           ))}
@@ -19,14 +22,14 @@ export default function FilterBar() {
       </div>
       <div className="filter-spacer"></div>
       <div className="filter-actions">
-        <button 
-          className={`action-btn brutal-border ${isLiveOnly ? 'action-live-active' : ''}`}
-          onClick={() => setIsLiveOnly(!isLiveOnly)}
+        <button
+          className={`action-btn brutal-border live-only-btn ${isLiveOnly ? 'action-live-active' : ''}`}
+          onClick={() => onLiveOnlyChange(!isLiveOnly)}
         >
-          <div className={`toggle-track ${isLiveOnly ? 'toggle-on' : 'toggle-off'}`}>
-            <span className="toggle-thumb"></span>
-          </div>
-          <span style={{color: isLiveOnly ? 'var(--color-orange)' : 'inherit'}}>LIVE ONLY</span>
+          <span className={`live-only-dot ${isLiveOnly ? 'live-only-dot-on' : 'live-only-dot-off'}`}>
+            {isLiveOnly && <span className="live-only-dot-ping"></span>}
+          </span>
+          <span>LIVE ONLY</span>
         </button>
         <button className="action-btn brutal-border">
           <Filter className="action-icon" /> Filters

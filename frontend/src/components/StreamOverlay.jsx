@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { ShoppingCart, Heart, MessageCircle, Share2, X, Flame } from 'lucide-react';
+import React, { useState, useRef, useEffect, useMemo } from 'react';
+import { ShoppingCart, Heart, MessageCircle, Share2, X, Flame, Send } from 'lucide-react';
 import { useStream } from '../context/StreamContext';
 import { useProduct } from '../context/ProductContext';
 import './StreamOverlay.css';
@@ -8,6 +8,42 @@ export default function StreamOverlay() {
   const { streamData, isStreamLoading, closeStream } = useStream();
   const { openProduct } = useProduct();
   const [comment, setComment] = useState('');
+  const [liked, setLiked] = useState(false);
+  const [likeCount, setLikeCount] = useState(48300);
+  const [showComments, setShowComments] = useState(true);
+  const [comments, setComments] = useState([
+    { id: 1, avatar: 'M', color: '#7a604a', handle: '@mia_shop', text: 'This looks so good! 😍' },
+    { id: 2, avatar: 'R', color: '#4a607a', handle: '@riya_buys', text: 'Is this available in XS?' },
+    { id: 3, avatar: 'K', color: '#507a4a', handle: '@kai_trends', text: 'Just claimed mine ✅' },
+  ]);
+  const commentsEndRef = useRef(null);
+
+  const handleLike = () => {
+    setLiked(prev => !prev);
+    setLikeCount(prev => prev + (liked ? -1 : 1));
+  };
+
+  const formatLikeCount = (n) => {
+    if (n >= 1000) return (n / 1000).toFixed(1) + 'K';
+    return n.toString();
+  };
+
+  const handleCommentSubmit = () => {
+    if (!comment.trim()) return;
+    setComments(prev => [...prev, {
+      id: Date.now(),
+      avatar: 'Y',
+      color: '#FF5B22',
+      handle: '@you',
+      text: comment.trim(),
+    }]);
+    setComment('');
+    setShowComments(true);
+  };
+
+  useEffect(() => {
+    commentsEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [comments]);
 
   if (!streamData) return null;
 
@@ -24,7 +60,6 @@ export default function StreamOverlay() {
   }
 
   const handleBuyClick = () => {
-    // We intentionally DO NOT close stream here, so ProductOverlay acts as a layer over the live stream!
     openProduct({
       title: streamData.title || 'Product from Stream',
       seller: streamData.seller,
@@ -55,7 +90,7 @@ export default function StreamOverlay() {
                  <p className="stream-seller-handle">{streamData.seller || '@handle'} • {streamData.category || 'Category'}</p>
               </div>
            </div>
-           
+
            <div className="stream-badges">
               <div className="stream-badge live">
                  <span className="live-dot"></span> LIVE
@@ -64,7 +99,7 @@ export default function StreamOverlay() {
                  {streamData.viewers || '4,527'}
               </div>
            </div>
-           
+
            <button className="stream-close-btn" onClick={closeStream}>
              <X size={24} />
            </button>
@@ -77,28 +112,36 @@ export default function StreamOverlay() {
              </button>
              <span className="stream-action-label">Buy</span>
            </div>
-           
+
            <div className="stream-action-item">
-             <button className="stream-action-btn">
-               <Heart size={20} />
-             </button>
-             <span className="stream-action-label">48.3K</span>
+              <button
+                className="stream-action-btn"
+                onClick={handleLike}
+                style={liked ? { background: 'rgba(255, 91, 34, 0.25)', color: '#FF5B22', border: '1px solid rgba(255,91,34,0.5)' } : {}}
+              >
+                <Heart size={20} fill={liked ? '#FF5B22' : 'none'} color={liked ? '#FF5B22' : 'white'} />
+              </button>
+              <span className="stream-action-label" style={liked ? { color: '#FF5B22' } : {}}>{formatLikeCount(likeCount)}</span>
            </div>
-           
+
            <div className="stream-action-item">
-             <button className="stream-action-btn">
-               <MessageCircle size={20} />
-             </button>
-             <span className="stream-action-label">78</span>
+              <button
+                className="stream-action-btn"
+                onClick={() => setShowComments(prev => !prev)}
+                style={showComments ? { background: 'rgba(255,255,255,0.2)' } : {}}
+              >
+                <MessageCircle size={20} />
+              </button>
+              <span className="stream-action-label">{comments.length}</span>
            </div>
-           
+
            <div className="stream-action-item">
              <button className="stream-action-btn">
                <Flame size={20} />
              </button>
              <span className="stream-action-label">React</span>
            </div>
-           
+
            <div className="stream-action-item">
              <button className="stream-action-btn">
                <Share2 size={20} />
@@ -108,42 +151,37 @@ export default function StreamOverlay() {
         </div>
 
         <div className="stream-bottom-section">
+           {showComments && (
            <div className="stream-comments">
-              <div className="stream-comment-bubble">
-                 <div className="stream-comment-avatar">M</div>
-                 <div className="stream-comment-body">
-                   <span className="stream-comment-handle">@mia_shop</span>
-                   <span className="stream-comment-text">This looks so good! 😍</span>
+               {comments.map(c => (
+                 <div key={c.id} className="stream-comment-bubble">
+                   <div className="stream-comment-avatar" style={{ backgroundColor: c.color }}>{c.avatar}</div>
+                   <div className="stream-comment-body">
+                     <span className="stream-comment-handle">{c.handle}</span>
+                     <span className="stream-comment-text">{c.text}</span>
+                   </div>
                  </div>
-              </div>
-              <div className="stream-comment-bubble">
-                 <div className="stream-comment-avatar" style={{backgroundColor: '#4a607a'}}>R</div>
-                 <div className="stream-comment-body">
-                   <span className="stream-comment-handle">@riya_buys</span>
-                   <span className="stream-comment-text">Is this available in XS?</span>
-                 </div>
-              </div>
-              <div className="stream-comment-bubble">
-                 <div className="stream-comment-avatar" style={{backgroundColor: '#507a4a'}}>K</div>
-                 <div className="stream-comment-body">
-                   <span className="stream-comment-handle">@kai_trends</span>
-                   <span className="stream-comment-text">Just claimed mine ✅</span>
-                 </div>
-              </div>
-           </div>
+               ))}
+               <div ref={commentsEndRef} />
+            </div>
+           )}
 
            <div className="stream-product-drop">
               <h4 className="stream-drop-seller">{streamData.seller || '@seller_handle'}</h4>
               <p className="stream-drop-desc" style={{cursor: 'pointer'}} onClick={handleBuyClick}>Featured drop • Limited stock • Tap Buy →</p>
            </div>
-           
+
            <div className="stream-input-bar">
-             <input 
-               type="text" 
+             <input
+               type="text"
                placeholder="Add a comment..."
                value={comment}
                onChange={(e) => setComment(e.target.value)}
+               onKeyDown={(e) => e.key === 'Enter' && handleCommentSubmit()}
              />
+             <button className="stream-send-btn" onClick={handleCommentSubmit}>
+               <Send size={14} />
+             </button>
            </div>
         </div>
       </div>

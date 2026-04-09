@@ -33,7 +33,10 @@ export default function Hero({ isAuthenticated }) {
           </p>
           
           <div className="hero-buttons">
-            <button className="btn-primary-large">
+            <button
+              className="btn-primary-large"
+              onClick={() => document.getElementById('live-deck-section')?.scrollIntoView({ behavior: 'smooth' })}
+            >
               Explore Live
             </button>
           </div>
