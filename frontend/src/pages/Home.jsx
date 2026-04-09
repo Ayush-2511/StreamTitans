@@ -22,7 +22,7 @@ import { THRIFT_POLAROIDS } from '../data/mockData';
 import { ArrowLeft } from 'lucide-react';
 import './Home.css';
 
-export default function Home({ isDark, toggleDark, isAuthenticated, onOpenAuth }) {
+export default function Home({ isDark, toggleDark, isAuthenticated, onOpenAuth, onBackParent }) {
   const [activeTab, setActiveTab] = useState('Discover');
   const [tabHistory, setTabHistory] = useState(['Discover']);
 
@@ -39,6 +39,8 @@ export default function Home({ isDark, toggleDark, isAuthenticated, onOpenAuth }
       newHistory.pop();
       setTabHistory(newHistory);
       setActiveTab(newHistory[newHistory.length - 1]);
+    } else if (onBackParent) {
+      onBackParent();
     }
   };
 

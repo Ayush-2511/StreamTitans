@@ -1,8 +1,9 @@
-import React from 'react';
-import { Bell, Moon, Sun } from 'lucide-react';
+import React, { useState } from 'react';
+import { User, Moon, Sun } from 'lucide-react';
 import './CreatorNavbar.css';
 
 export default function CreatorNavbar({ isDark, toggleDark, activeTab, setActiveTab }) {
+  const [showProfileMenu, setShowProfileMenu] = useState(false);
   const navItems = ['Dashboard', 'My Streams', 'Listings', 'Orders', 'Analytics'];
 
   return (
@@ -30,10 +31,36 @@ export default function CreatorNavbar({ isDark, toggleDark, activeTab, setActive
         <button onClick={toggleDark} className="icon-btn brutal-border" aria-label="Toggle Dark Mode">
           {isDark ? <Sun size={20} /> : <Moon size={20} />}
         </button>
-        <button className="icon-btn brutal-border relative" aria-label="Notifications">
-          <Bell size={20} />
-          <span className="notification-dot bg-orange brutal-border"></span>
-        </button>
+        <div style={{ position: 'relative' }}>
+          <button 
+            className="icon-btn brutal-border relative" 
+            aria-label="Profile menu"
+            onClick={() => setShowProfileMenu(!showProfileMenu)}
+          >
+            <User size={20} />
+          </button>
+          {showProfileMenu && (
+            <div 
+              className="brutal-border" 
+              style={{
+                position: 'absolute',
+                top: '120%',
+                right: 0,
+                background: 'var(--cream, #F8F5F2)',
+                padding: '10px 0',
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '5px',
+                minWidth: '120px',
+                zIndex: 100,
+                boxShadow: '4px 4px 0px 0px #1A1A1A'
+              }}
+            >
+              <a href="#" className="nav-link" onClick={(e) => { e.preventDefault(); setActiveTab('Profile'); setShowProfileMenu(false); }} style={{ padding: '5px 15px', color: '#1A1A1A', textDecoration: 'none' }}>Profile</a>
+              <a href="#" className="nav-link" onClick={(e) => { e.preventDefault(); setShowProfileMenu(false); }} style={{ padding: '5px 15px', color: '#1A1A1A', textDecoration: 'none' }}>Settings</a>
+            </div>
+          )}
+        </div>
         <button className="go-live-btn brutal-border">
           <span className="live-dot bg-orange"></span>
           Go Live Now
