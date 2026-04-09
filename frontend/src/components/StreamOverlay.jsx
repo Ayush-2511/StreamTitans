@@ -1,13 +1,27 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ShoppingCart, Heart, MessageCircle, Share2, X, Flame } from 'lucide-react';
 import { useStream } from '../context/StreamContext';
 import { useProduct } from '../context/ProductContext';
+import { useAuth } from '../context/AuthContext';
+import { subscribeToChat, sendMessage } from '../firebase/firestore';
+import toast from 'react-hot-toast';
 import './StreamOverlay.css';
 
 export default function StreamOverlay() {
   const { streamData, isStreamLoading, closeStream } = useStream();
   const { openProduct } = useProduct();
+  const { currentUser } = useAuth();
   const [comment, setComment] = useState('');
+  const [messages, setMessages] = useState([]);
+
+  useEffect(() => {
+    if (!streamData) return;
+    const streamId = streamData.id || streamData.title; // Fallback to title if no ID
+    const unsub = subscribeToChat(streamId, (data) => {
+      setMessages(data);
+    });
+    return () => unsub();
+  }, [streamData]);
 
   if (!streamData) return null;
 
@@ -109,27 +123,20 @@ export default function StreamOverlay() {
 
         <div className="stream-bottom-section">
            <div className="stream-comments">
-              <div className="stream-comment-bubble">
-                 <div className="stream-comment-avatar">M</div>
-                 <div className="stream-comment-body">
-                   <span className="stream-comment-handle">@mia_shop</span>
-                   <span className="stream-comment-text">This looks so good! 😍</span>
-                 </div>
-              </div>
-              <div className="stream-comment-bubble">
-                 <div className="stream-comment-avatar" style={{backgroundColor: '#4a607a'}}>R</div>
-                 <div className="stream-comment-body">
-                   <span className="stream-comment-handle">@riya_buys</span>
-                   <span className="stream-comment-text">Is this available in XS?</span>
-                 </div>
-              </div>
-              <div className="stream-comment-bubble">
-                 <div className="stream-comment-avatar" style={{backgroundColor: '#507a4a'}}>K</div>
-                 <div className="stream-comment-body">
-                   <span className="stream-comment-handle">@kai_trends</span>
-                   <span className="stream-comment-text">Just claimed mine ✅</span>
-                 </div>
-              </div>
+              {messages.length === 0 && (
+                <div style={{color: 'rgba(255,255,255,0.5)', padding: '1rem', fontSize: '13px'}}>Be the first to comment...</div>
+              )}
+              {messages.map((msg) => (
+                <div key={msg.id} className="stream-comment-bubble">
+                   <div className="stream-comment-avatar" style={{backgroundColor: `hsl(${(msg.author?.length || 0) * 30}, 50%, 50%)`}}>
+                     {msg.author ? msg.author.charAt(0).toUpperCase() : '?'}
+                   </div>
+                   <div className="stream-comment-body">
+                     <span className="stream-comment-handle">@{msg.author || 'Guest'}</span>
+                     <span className="stream-comment-text">{msg.text}</span>
+                   </div>
+                </div>
+              ))}
            </div>
 
            <div className="stream-product-drop">
@@ -143,6 +150,18 @@ export default function StreamOverlay() {
                placeholder="Add a comment..."
                value={comment}
                onChange={(e) => setComment(e.target.value)}
+               onKeyDown={async (e) => {
+                 if (e.key === 'Enter') {
+                   if (!comment.trim()) return;
+                   if (!currentUser) return toast.error("Log in to chat");
+                   try {
+                     await sendMessage(streamData.id || streamData.title, currentUser.name || 'User', comment.trim());
+                     setComment('');
+                   } catch(err) {
+                     toast.error("Failed to post comment");
+                   }
+                 }
+               }}
              />
            </div>
         </div>

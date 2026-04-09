@@ -1,17 +1,25 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Search, Filter, ArrowDownUp, Plus, MoreHorizontal, Sparkles, X, Loader2 } from 'lucide-react';
+import { useAuth } from '../../../context/AuthContext';
+import { subscribeToProducts, addProduct } from '../../../firebase/firestore';
+import { uploadMediaToCloudinary } from '../../../firebase/cloudinary';
 import { GoogleGenerativeAI } from '@google/generative-ai';
+import toast from 'react-hot-toast';
 import './CreatorListingsTab.css';
 
 export default function CreatorListingsTab() {
   const [storeMode, setStoreMode] = useState('Thrifting');
+  const { currentUser } = useAuth();
+  const [products, setProducts] = useState([]);
   const [showAddModal, setShowAddModal] = useState(false);
-  const [newProduct, setNewProduct] = useState({ title: '', category: '', condition: 'Gently Used', price: '' });
+  const [newProduct, setNewProduct] = useState({ title: '', price: '', stock: '1', category: '', condition: 'Gently Used' });
+  const [file, setFile] = useState(null);
+  const [uploading, setUploading] = useState(false);
   const [isEstimating, setIsEstimating] = useState(false);
   const [estimatedPrice, setEstimatedPrice] = useState('');
 
   const handleEstimatePrice = async () => {
-    if (!newProduct.title || !newProduct.category) return;
+    if (!newProduct.title || !newProduct.category) return toast.error("Enter Title & Category to estimate");
     setIsEstimating(true);
     setEstimatedPrice('');
     try {
@@ -34,21 +42,44 @@ export default function CreatorListingsTab() {
     }
   };
 
-  const thriftProducts = [
-    { title: 'Floral Midi Dress', type: "Women's fashion", price: '₹299', stock: '14 in stock', stockClass: 'ok', views: '42', sold: '8', rating: '4.8', img: 'https://images.unsplash.com/photo-1515347619362-67bd86fa2e72?w=500&q=80' },
-    { title: 'Linen Shirt (M)', type: "Men's casual", price: '₹449', stock: '3 left', stockClass: 'low', views: '29', sold: '5', rating: '4.5', img: 'https://images.unsplash.com/photo-1596755094514-f87e32f85ce9?w=500&q=80' },
-    { title: 'Sneakers (Maroon)', type: "Footwear", price: '₹899', stock: '2 left', stockClass: 'low', views: '61', sold: '3', rating: '4.9', img: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=500&q=80' },
-    { title: 'Silk Scarf (Blue)', type: "Accessories", price: '₹199', stock: '22 in stock', stockClass: 'ok', views: '18', sold: '2', rating: '4.6', img: 'https://images.unsplash.com/photo-1584916201218-f4242ceb4809?w=500&q=80' }
-  ];
+  useEffect(() => {
+    if (!currentUser) return;
+    const unsubscribe = subscribeToProducts((data) => setProducts(data), 'seller', currentUser.userId);
+    return () => unsubscribe();
+  }, [currentUser]);
 
-  const retailProducts = [
-    { title: 'Oversized Cotton Tee', type: "Brand New Apparels", price: '₹599', stock: '150 in stock', stockClass: 'ok', views: '12', sold: '2', rating: '5.0', img: 'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=500&q=80' },
-    { title: 'Premium Denim Jeans', type: "Retail Clothing", price: '₹1,499', stock: '85 in stock', stockClass: 'ok', views: '8', sold: '0', rating: 'N/A', img: 'https://images.unsplash.com/photo-1542272604-787c3835535d?w=500&q=80' },
-    { title: 'Classic Leather Watch', type: "Accessories", price: '₹2,999', stock: '12 left', stockClass: 'low', views: '45', sold: '1', rating: '4.9', img: 'https://images.unsplash.com/photo-1524805444758-089113d48a6d?w=500&q=80' },
-    { title: 'Summer Sunglasses', type: "Eyewear", price: '₹899', stock: '200 in stock', stockClass: 'ok', views: '33', sold: '15', rating: '4.7', img: 'https://images.unsplash.com/photo-1511499767150-a48a237f0083?w=500&q=80' }
-  ];
+  const currentProducts = products.filter(p => storeMode === 'Thrifting' ? p.type === 'thrift' : p.type === 'regular');
 
-  const currentProducts = storeMode === 'Thrifting' ? thriftProducts : retailProducts;
+  const handleAddProduct = async (e) => {
+    e.preventDefault();
+    if (!file) return toast.error("Please upload an image!");
+    if (!newProduct.title || !newProduct.price || !newProduct.stock) return toast.error("Fill in all details!");
+
+    try {
+      setUploading(true);
+      const imageUrl = await uploadMediaToCloudinary(file);
+      if (!imageUrl) throw new Error("Upload failed");
+
+      await addProduct({
+        ...newProduct,
+        type: storeMode === 'Thrifting' ? 'thrift' : 'regular',
+        sellerId: currentUser.userId,
+        img: imageUrl,
+        views: 0,
+        sold: 0,
+        rating: 'N/A'
+      });
+      
+      toast.success("Product added!");
+      setShowAddModal(false);
+      setNewProduct({ title: '', price: '', stock: '1', category: '', condition: 'Gently Used' });
+      setFile(null);
+    } catch(err) {
+      toast.error(err.message);
+    } finally {
+      setUploading(false);
+    }
+  };
 
   return (
     <div className="listings-tab animate-slide-up">
@@ -139,8 +170,18 @@ export default function CreatorListingsTab() {
                 <input type="text" className="add-modal-input" placeholder="e.g. ₹999" value={newProduct.price} onChange={e => setNewProduct({...newProduct, price: e.target.value})} />
               </div>
 
-              <button className="add-modal-save-btn" onClick={() => setShowAddModal(false)}>
-                Save Listing
+              <div className="add-modal-form-group">
+                <label className="add-modal-label">Stock</label>
+                <input type="number" className="add-modal-input" placeholder="1" value={newProduct.stock} onChange={e => setNewProduct({...newProduct, stock: e.target.value})} />
+              </div>
+
+              <div className="add-modal-form-group">
+                <label className="add-modal-label">Product Image</label>
+                <input type="file" onChange={e => setFile(e.target.files[0])} accept="image/*" className="add-modal-input" />
+              </div>
+
+              <button className="add-modal-save-btn" onClick={handleAddProduct} disabled={uploading}>
+                {uploading ? 'Publishing...' : 'Save & Publish Listing'}
               </button>
             </div>
           </div>
@@ -221,6 +262,7 @@ export default function CreatorListingsTab() {
       </div>
 
       <div className="products-grid mt-4">
+
         {currentProducts.map((item, i) => (
           <div key={i} className="product-card brutal-shadow">
             <div className="product-cover" style={{ backgroundImage: `url(${item.img})`, backgroundSize: 'cover', backgroundPosition: 'center' }}>
@@ -231,10 +273,10 @@ export default function CreatorListingsTab() {
             </div>
             <div className="product-details">
               <h4 className="prod-title">{item.title}</h4>
-              <p className="prod-cat">{item.type}</p>
+              <p className="prod-cat">{item.category}</p>
               <div className="prod-price-row">
                 <span className="prod-price">{item.price}</span>
-                <span className={`stock-badge ${item.stockClass}`}>{item.stock}</span>
+                <span className="stock-badge ok">{item.stock} left</span>
               </div>
               <div className="prod-stats">
                 <div className="stat-col">

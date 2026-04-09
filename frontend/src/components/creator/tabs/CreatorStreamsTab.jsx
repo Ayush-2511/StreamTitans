@@ -1,13 +1,33 @@
 import React, { useState } from 'react';
 import { Calendar, Video, Users, PlayCircle, Settings } from 'lucide-react';
+import { useAuth } from '../../../context/AuthContext';
+import { createStream } from '../../../firebase/firestore';
+import toast from 'react-hot-toast';
 import './CreatorStreamsTab.css';
 
 export default function CreatorStreamsTab() {
   const [storeMode, setStoreMode] = useState('Thrifting');
+  const { currentUser } = useAuth();
 
   const streamData = storeMode === 'Thrifting' 
     ? { title: "Festive Ethnic Collection Drop", date: "Today · 7:00 PM · 3 products scheduled", views: "14.2k", watchTime: "8,450h", msg: "32.1k", rev: "₹48.2k" }
     : { title: "Retail Clearance Bulk Drop", date: "Today · 5:00 PM · 150 items scheduled", views: "8.1k", watchTime: "4,120h", msg: "12.5k", rev: "₹18.5k" };
+
+  const handleGoLive = async () => {
+    if (!currentUser) return toast.error("Not authenticated");
+    try {
+      await createStream({
+        title: streamData.title,
+        category: storeMode,
+        sellerId: currentUser.userId,
+        sellerName: currentUser.name || "Creator",
+        isLive: true,
+      });
+      toast.success("You are now LIVE! 🔴");
+    } catch (err) {
+      toast.error("Error going live: " + err.message);
+    }
+  };
 
   return (
     <div className="streams-tab animate-slide-up">
@@ -70,7 +90,7 @@ export default function CreatorStreamsTab() {
           <p className="s-card-desc">Rewatch, clip, and reshare your previous broadcasts to any platform. &rarr;</p>
         </div>
         
-        <div className="s-card orange">
+        <div className="s-card orange" onClick={handleGoLive} style={{ cursor: 'pointer' }}>
           <div className="s-card-icon bg-orange-light">
              <Settings size={24} />
           </div>
@@ -90,7 +110,7 @@ export default function CreatorStreamsTab() {
          <div className="ub-actions">
             <button className="ub-btn">Edit</button>
             <button className="ub-btn">Preview</button>
-            <button className="ub-btn primary">Go Live &rarr;</button>
+            <button className="ub-btn primary" onClick={handleGoLive}>Go Live &rarr;</button>
          </div>
       </div>
 
