@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { ArrowRight, Upload, ArrowLeft, Check } from 'lucide-react';
+import { logIn, logInWithGoogle } from '../firebase/auth';
+import toast from 'react-hot-toast';
 import './CreatorAuthFlow.css';
 
 export default function CreatorAuthFlow({ onComplete, onBack }) {
@@ -19,12 +21,13 @@ export default function CreatorAuthFlow({ onComplete, onBack }) {
         <CreatorSignupStep1 
           onNext={() => setAuthStep('signup-2')}
           onLogin={() => setAuthStep('login')}
+          onBack={onBack}
         />
       )}
       {authStep === 'signup-2' && (
         <CreatorSignupStep2 
           onSubmit={onComplete}
-          onBack={() => setAuthStep('signup-1')}
+          onBack={onBack}
         />
       )}
     </div>
@@ -32,6 +35,40 @@ export default function CreatorAuthFlow({ onComplete, onBack }) {
 }
 
 function CreatorLogin({ onLogin, onSignup, onSkip, onBack }) {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      await logIn(email, password, 'seller');
+      toast.success("Welcome back, Creator!");
+      onLogin(); 
+    } catch (err) {
+      if (err.code === 'auth/configuration-not-found' || err.code === 'auth/invalid-api-key') {
+        toast.error("Firebase keys are missing or invalid. Check your .env file!");
+      } else {
+        toast.error(err.message);
+      }
+    }
+  };
+
+  const handleGoogleAuth = async () => {
+    try {
+      await logInWithGoogle('seller');
+      toast.success("Authenticated with Google as a Creator!", { icon: '✨' });
+      onLogin();
+    } catch (err) {
+      if (err.code === 'auth/unauthorized-domain') {
+        toast.error("This domain/IP is not authorized in Firebase Console.", { duration: 6000 });
+      } else if (err.code === 'auth/operation-not-allowed') {
+        toast.error("Google login is not enabled in Firebase.", { duration: 6000 });
+      } else {
+        toast.error(err.message);
+      }
+    }
+  };
+
   return (
     <div className="ca-login-card">
       {onBack && (
@@ -50,14 +87,18 @@ function CreatorLogin({ onLogin, onSignup, onSkip, onBack }) {
       <h1 className="ca-login-title">Welcome back.</h1>
       <p className="ca-login-subtitle">SIGN IN TO CONTINUE TO LUMINA.</p>
       
-      <form className="ca-form" onSubmit={(e) => { e.preventDefault(); onLogin(); }}>
-        <input type="email" placeholder="Email address" className="ca-input-pill" required />
-        <input type="password" placeholder="Password" className="ca-input-pill" required />
+      <form className="ca-form" onSubmit={handleSubmit}>
+        <input type="email" placeholder="Email address" value={email} onChange={e => setEmail(e.target.value)} className="ca-input-pill" required />
+        <input type="password" placeholder="Password" value={password} onChange={e => setPassword(e.target.value)} className="ca-input-pill" required />
         
         <button type="submit" className="ca-btn-primary pill">
           Log In <ArrowRight size={18} />
         </button>
       </form>
+
+      <button onClick={handleGoogleAuth} className="ca-btn-primary pill" style={{ marginTop: '1rem', backgroundColor: '#f0f0f0', color: '#111', width: '100%', display: 'flex', justifyContent: 'center', border: '2px solid transparent' }}>
+        Continue with Google
+      </button>
       
       <p className="ca-bottom-link">
         New user? <button onClick={onSignup} className="ca-link-orange">Sign up</button>
@@ -70,9 +111,22 @@ function CreatorLogin({ onLogin, onSignup, onSkip, onBack }) {
   );
 }
 
-function CreatorSignupStep1({ onNext, onLogin }) {
+function CreatorSignupStep1({ onNext, onLogin, onBack }) {
   return (
     <div className="ca-signup-card">
+      {onBack && (
+        <button
+          onClick={onBack}
+          style={{
+            background: 'none', border: 'none', cursor: 'pointer',
+            display: 'flex', alignItems: 'center', gap: '6px',
+            color: '#888', fontSize: '0.8rem', fontWeight: 600,
+            marginBottom: '1rem', padding: 0,
+          }}
+        >
+          <ArrowLeft size={15} /> Back to Home
+        </button>
+      )}
       <div className="ca-stepper">
         <div className="ca-step active">
           <span className="ca-step-num">1</span> BASIC INFO
@@ -131,6 +185,19 @@ function CreatorSignupStep1({ onNext, onLogin }) {
 function CreatorSignupStep2({ onSubmit, onBack }) {
   return (
     <div className="ca-signup-card">
+      {onBack && (
+        <button
+          onClick={onBack}
+          style={{
+            background: 'none', border: 'none', cursor: 'pointer',
+            display: 'flex', alignItems: 'center', gap: '6px',
+            color: '#888', fontSize: '0.8rem', fontWeight: 600,
+            marginBottom: '1rem', padding: 0,
+          }}
+        >
+          <ArrowLeft size={15} /> Back to Home
+        </button>
+      )}
       <div className="ca-stepper">
         <div className="ca-step past">
           <span className="ca-step-num">1</span> BASIC INFO
@@ -236,9 +303,6 @@ function CreatorSignupStep2({ onSubmit, onBack }) {
         
         <button type="submit" className="ca-btn-continue success">
           Submit for review <Check size={16} />
-        </button>
-        <button type="button" onClick={onBack} className="ca-btn-back">
-          <ArrowLeft size={16} /> Back to basic info
         </button>
       </form>
     </div>

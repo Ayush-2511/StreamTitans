@@ -34,10 +34,25 @@ export const signUp = async (email, password, role, name) => {
   }
 };
 
-export const logIn = async (email, password) => {
+export const logIn = async (email, password, expectedRole = null) => {
   try {
     const userCredential = await signInWithEmailAndPassword(auth, email, password);
-    return userCredential.user;
+    const user = userCredential.user;
+    
+    // Upgrade role if necessary
+    if (expectedRole === 'seller') {
+      try {
+        const userDocRef = doc(db, 'users', user.uid);
+        const userDocSnap = await getDoc(userDocRef);
+        if (userDocSnap.exists() && userDocSnap.data().role !== 'seller') {
+          await setDoc(userDocRef, { role: 'seller' }, { merge: true });
+        }
+      } catch (dbError) {
+        console.error("Failed to check/upgrade role on login:", dbError);
+      }
+    }
+    
+    return user;
   } catch (error) {
     console.error('Sign in error:', error);
     throw error;
@@ -64,6 +79,10 @@ export const logInWithGoogle = async (role = 'buyer') => {
           verified: false,
           createdAt: new Date().toISOString()
         });
+      } else {
+        if (role === 'seller' && userDocSnap.data().role !== 'seller') {
+          await setDoc(userDocRef, { role: 'seller' }, { merge: true });
+        }
       }
     } catch (dbError) {
       console.error("Firestore user creation failed (check database rules):", dbError);

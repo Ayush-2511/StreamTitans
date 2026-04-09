@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { onAuthStateChanged } from 'firebase/auth';
-import { doc, getDoc } from 'firebase/firestore';
+import { doc, onSnapshot } from 'firebase/firestore';
 import { auth, db } from '../firebase/config';
 
 const AuthContext = createContext();
@@ -17,34 +17,50 @@ export function AuthProvider({ children }) {
       return;
     }
 
+    let userUnsub = null;
+
     try {
-      const unsubscribe = onAuthStateChanged(auth, async (user) => {
+      const authUnsub = onAuthStateChanged(auth, (user) => {
         if (user) {
           try {
             const userDocRef = doc(db, 'users', user.uid);
-            const userDocSnap = await getDoc(userDocRef);
             
-            if (userDocSnap.exists()) {
-              const userData = userDocSnap.data();
-              setUserRole(userData.role);
-              setCurrentUser({ ...user, ...userData });
-            } else {
+            // Listen to document changes so role upgrades (buyer -> seller) happen instantly
+            userUnsub = onSnapshot(userDocRef, (docSnap) => {
+              if (docSnap.exists()) {
+                const userData = docSnap.data();
+                setUserRole(userData.role);
+                setCurrentUser({ ...user, ...userData });
+              } else {
+                setCurrentUser(user);
+                setUserRole('buyer');
+              }
+              setLoading(false);
+            }, (error) => {
+              console.error("Error listening to user data:", error);
               setCurrentUser(user);
               setUserRole('buyer');
-            }
+              setLoading(false);
+            });
+            
           } catch (error) {
-            console.error("Error fetching user data:", error);
-            setCurrentUser(user);
-            setUserRole('buyer');
+             console.error("Error setting up user listener:", error);
+             setCurrentUser(user);
+             setUserRole('buyer');
+             setLoading(false);
           }
         } else {
+          if (userUnsub) userUnsub();
           setCurrentUser(null);
           setUserRole(null);
+          setLoading(false);
         }
-        setLoading(false);
       });
 
-      return () => unsubscribe();
+      return () => {
+        authUnsub();
+        if (userUnsub) userUnsub();
+      };
     } catch(err) {
       console.error("Auth initialization failed:", err);
       setLoading(false);
