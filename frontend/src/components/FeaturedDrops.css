@@ -1,0 +1,163 @@
+.featured-drops-section {
+  padding: 4rem 2rem;
+  background-color: #1a1a1a;
+  color: #fff;
+  margin: 0 auto;
+}
+
+html.dark .featured-drops-section {
+  background-color: var(--bg-surface);
+  color: var(--text-main);
+}
+
+.featured-header .section-title {
+  color: #fff;
+}
+
+html.dark .featured-header .section-title {
+  color: var(--text-main);
+}
+
+.drops-grid {
+  display: flex;
+  overflow-x: auto;
+  gap: 2rem;
+  padding-bottom: 3rem;
+  padding-top: 1.5rem;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  scroll-snap-type: x mandatory;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.drops-grid::-webkit-scrollbar {
+  display: none;
+}
+
+.drop-card {
+  flex: none;
+  width: 240px;
+  scroll-snap-align: start;
+  background-color: var(--bg-main);
+  color: var(--text-main);
+  border-radius: 12px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.3s;
+  box-shadow: 4px 4px 0px 0px rgba(255,255,255,0.1);
+  position: relative;
+}
+
+@media (min-width: 768px) {
+  .drop-card {
+    width: 280px;
+  }
+}
+
+.drop-card:nth-child(3n+1) {
+  transform: rotate(-1.5deg) translateY(0.5rem);
+}
+.drop-card:nth-child(3n+2) {
+  transform: rotate(2deg) translateY(-0.25rem);
+}
+.drop-card:nth-child(3n) {
+  transform: rotate(-1deg) translateY(0.2rem);
+}
+
+html.dark .drop-card {
+  box-shadow: 4px 4px 0px 0px rgba(0,0,0,0.5);
+}
+
+.drop-card:hover {
+  transform: translate(-3px, -3px);
+  box-shadow: 7px 7px 0px 0px rgba(255,255,255,0.2);
+}
+
+html.dark .drop-card:hover {
+  box-shadow: 7px 7px 0px 0px rgba(0,0,0,0.6);
+}
+
+.drop-img-area {
+  height: 300px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border-bottom: 3px solid var(--border-dark);
+}
+
+.drop-main-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  mix-blend-mode: multiply; /* Optional, gives a vintage feel to the photo integrating with the background color */
+  transition: transform 0.4s ease;
+}
+
+.drop-card:hover .drop-main-img {
+  transform: scale(1.05);
+}
+
+.drop-details {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.drop-brand {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--brand-primary);
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+}
+
+.drop-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin: 0 0 0.5rem 0;
+  font-family: 'Times New Roman', Times, serif;
+}
+
+.drop-specs {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  margin: 0 0 1.5rem 0;
+}
+
+.drop-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: auto;
+}
+
+.drop-price {
+  font-size: 1.25rem;
+  font-weight: 800;
+}
+
+.drop-claim-btn {
+  background-color: transparent;
+  border: 2px solid var(--border-dark);
+  padding: 0.5rem 1.5rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.drop-claim-btn:hover {
+  background-color: var(--brand-primary);
+  color: white;
+  border-color: var(--brand-primary);
+}
+
+html.dark .drop-claim-btn {
+  border-color: var(--border-dark);
+  color: var(--text-main);
+}

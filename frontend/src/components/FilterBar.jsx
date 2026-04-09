@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Filter } from 'lucide-react';
 import { CATEGORIES } from '../data/mockData';
 import './FilterBar.css';
 
 export default function FilterBar() {
+  const [isLiveOnly, setIsLiveOnly] = useState(false);
   return (
     <div className="filter-bar animate-fade-in-up" style={{ animationDelay: '300ms' }}>
       <div className="filter-group">
@@ -18,8 +19,14 @@ export default function FilterBar() {
       </div>
       <div className="filter-spacer"></div>
       <div className="filter-actions">
-        <button className="action-btn brutal-border">
-          <span className="action-live-dot"></span> Live Only
+        <button 
+          className={`action-btn brutal-border ${isLiveOnly ? 'action-live-active' : ''}`}
+          onClick={() => setIsLiveOnly(!isLiveOnly)}
+        >
+          <div className={`toggle-track ${isLiveOnly ? 'toggle-on' : 'toggle-off'}`}>
+            <span className="toggle-thumb"></span>
+          </div>
+          <span style={{color: isLiveOnly ? 'var(--color-orange)' : 'inherit'}}>LIVE ONLY</span>
         </button>
         <button className="action-btn brutal-border">
           <Filter className="action-icon" /> Filters
