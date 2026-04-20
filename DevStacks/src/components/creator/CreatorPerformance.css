@@ -1,0 +1,337 @@
+.performance-section {
+  display: grid;
+  grid-template-columns: 2fr 1.2fr;
+  grid-template-rows: auto auto;
+  gap: 2rem;
+}
+
+.perf-left {
+  grid-column: 1 / 2;
+}
+
+.perf-right {
+  grid-column: 2 / 3;
+}
+
+.perf-catalog {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+  margin-top: 1rem;
+}
+
+.weekly-perf-card {
+  padding: 2rem;
+  border-radius: 16px;
+  box-shadow: 6px 6px 0px var(--color-ink);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.perf-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.perf-header h2 {
+  font-size: 1.5rem;
+  font-weight: 800;
+}
+
+.perf-date {
+  font-weight: 600;
+  opacity: 0.8;
+}
+
+.perf-stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  margin-bottom: 3rem;
+}
+
+.perf-stat-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.perf-h3 {
+  font-size: 2.2rem;
+  font-weight: 800;
+}
+
+.perf-stat-item p {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  opacity: 0.7;
+}
+
+.perf-stat-item .trend {
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.chart-title {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  opacity: 0.7;
+  margin-bottom: 1rem;
+}
+
+.chart-bars {
+  display: flex;
+  align-items: flex-end;
+  gap: 1rem;
+  height: 100px;
+  width: 100%;
+}
+
+.bar {
+  flex: 1;
+  border-radius: 6px;
+  min-height: 10px;
+  transition: height 0.5s ease-out;
+}
+
+.bar.bg-surface-light {
+  background-color: #333; /* Darker grey for chart bars in dark bg */
+  border-color: #555;
+}
+
+/* Recent Orders */
+.recent-orders-card {
+  padding: 1.5rem;
+  border-radius: 16px;
+  box-shadow: 6px 6px 0px var(--color-ink);
+  height: 100%;
+}
+
+.orders-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.orders-header h3 {
+  font-size: 1.25rem;
+  font-weight: 800;
+}
+
+.see-all {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+
+.orders-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.order-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.order-img {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.order-info {
+  flex: 1;
+}
+
+.order-info h4 {
+  font-weight: 700;
+  font-size: 0.95rem;
+}
+
+.order-info p {
+  font-size: 0.8rem;
+}
+
+.order-status-price {
+  text-align: right;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.3rem;
+}
+
+.order-price {
+  font-size: 1.1rem;
+}
+
+.status-badge {
+  font-size: 0.65rem;
+  font-weight: 800;
+  padding: 0.2rem 0.6rem;
+  border-radius: 12px;
+}
+
+/* Catalog Cards */
+.top-seller-card {
+  position: relative;
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 6px 6px 0px var(--color-ink);
+  overflow: hidden;
+}
+
+.top-seller-badge {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.4rem 0.8rem;
+  border-radius: 20px;
+  font-weight: 700;
+  font-size: 0.8rem;
+  z-index: 10;
+}
+
+.top-seller-img {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+  border-bottom: 1.5px solid var(--color-ink);
+}
+
+.product-card {
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 4px 4px 0px var(--color-ink);
+  overflow: hidden;
+}
+
+.product-img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-bottom: 1.5px solid var(--color-ink);
+}
+
+.product-details {
+  padding: 1.25rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.top-seller-card .product-details {
+  border-radius: 0 0 16px 16px;
+  margin: -1px;
+}
+
+.product-details h4 {
+  font-size: 1.1rem;
+  font-weight: 800;
+  margin-bottom: 0.2rem;
+}
+
+.product-details p {
+  font-size: 0.85rem;
+  opacity: 0.7;
+}
+
+.product-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+.product-price {
+  font-size: 1.25rem;
+  font-weight: 800;
+}
+
+.product-cat {
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 0.2rem 0.6rem;
+  border-radius: 12px;
+}
+
+.product-actions {
+  display: flex;
+  gap: 0.8rem;
+  margin-top: auto;
+}
+
+/* Tailwind utility classes mapping */
+.mt-3 { margin-top: 0.75rem; }
+.flex-1 { flex: 1 1 0%; }
+.uppercase { text-transform: uppercase; }
+.text-xs { font-size: 0.75rem; line-height: 1rem; }
+.px-2 { padding-left: 0.5rem; padding-right: 0.5rem; }
+.py-1 { padding-top: 0.25rem; padding-bottom: 0.25rem; }
+.flex { display: flex; }
+.items-center { align-items: center; }
+.gap-1 { gap: 0.25rem; }
+.rounded-full { border-radius: 9999px; }
+.w-2 { width: 0.5rem; }
+.h-2 { height: 0.5rem; }
+.flex-col { flex-direction: column; }
+.justify-center { justify-content: center; }
+.min-h-\[300px\] { min-height: 300px; }
+.py-10 { padding-top: 2.5rem; padding-bottom: 2.5rem; }
+.px-4 { padding-left: 1rem; padding-right: 1rem; }
+.w-16 { width: 4rem; }
+.h-16 { height: 4rem; }
+.border-2 { border-width: 2px; }
+.border-dashed { border-style: dashed; }
+.border-ink { border-color: var(--color-ink); }
+.mb-4 { margin-bottom: 1rem; }
+.transition-transform { transition-property: transform; transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1); transition-duration: 150ms; }
+.hover\:scale-110:hover { transform: scale(1.1); }
+.cursor-pointer { cursor: pointer; }
+.text-3xl { font-size: 1.875rem; line-height: 2.25rem; }
+.font-bold { font-weight: 700; }
+.text-center { text-align: center; }
+.text-lg { font-size: 1.125rem; line-height: 1.75rem; }
+.opacity-70 { opacity: 0.7; }
+.mt-2 { margin-top: 0.5rem; }
+.text-sm { font-size: 0.875rem; line-height: 1.25rem; }
+
+@media (max-width: 1024px) {
+  .performance-section {
+    grid-template-columns: 1fr;
+  }
+  .perf-right {
+    grid-column: 1 / 2;
+  }
+  .perf-catalog {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .perf-stats {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+  .perf-catalog {
+    grid-template-columns: 1fr;
+  }
+}

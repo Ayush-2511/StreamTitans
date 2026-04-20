@@ -1,0 +1,141 @@
+:root {
+  --bg-color: #f5f4f0;
+  --fg-color: #1a1a1a;
+  --surface-light: #e8e4de;
+  --surface: #f0efe9;
+  --bg-dot: rgba(26,26,26,0.15);
+  
+  --color-cream: var(--bg-color);
+  --color-ink: var(--fg-color);
+  --color-orange: #e8572a;
+  --color-surface-light: var(--surface-light);
+  --color-surface: var(--surface);
+  --color-gray-dark: #888888;
+  --font-sans: 'Inter', system-ui, sans-serif;
+}
+
+.dark {
+  --bg-color: #121212;
+  --fg-color: #f5f4f0;
+  --surface-light: #282828;
+  --surface: #1e1e1e;
+  --bg-dot: rgba(245,244,240,0.15);
+}
+
+/* Base CSS Reset / Preflight */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+h1, h2, h3, h4, h5, h6, p, figure, blockquote, dl, dd {
+  margin: 0;
+}
+
+ul, ol {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+input, button, textarea, select {
+  font: inherit;
+  color: inherit;
+  background: transparent;
+  border: none;
+  padding: 0;
+  margin: 0;
+  outline: none;
+}
+
+button {
+  cursor: pointer;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+body {
+  background-color: var(--color-cream);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+  transition: background-color 0.3s, color 0.3s;
+  
+  /* Subtle Brutalist Dot Pattern */
+  background-image: radial-gradient(var(--bg-dot) 1px, transparent 1px);
+  background-size: 20px 20px;
+  background-position: 0 0;
+}
+
+/* Utilities */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+.brutal-border {
+  border: 1.5px solid var(--color-ink);
+}
+.brutal-border:hover {
+  border: 1.5px solid var(--color-cream);
+}
+
+.bg-cream {
+  background-color: var(--color-cream);
+}
+
+.bg-ink {
+  background-color: var(--color-ink);
+}
+
+.text-ink {
+  color: var(--color-ink);
+}
+
+.text-cream {
+  color: var(--color-cream);
+}
+
+.text-orange {
+  color: var(--color-orange);
+}
+
+@keyframes marquee-up {
+  0% { transform: translateY(0%); }
+  100% { transform: translateY(-50%); }
+}
+@keyframes marquee-down {
+  0% { transform: translateY(-50%); }
+  100% { transform: translateY(0%); }
+}
+.animate-marquee-up {
+  animation: marquee-up 40s linear infinite;
+}
+.animate-marquee-down {
+  animation: marquee-down 40s linear infinite;
+}
+@keyframes fade-in-up {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.animate-fade-in-up {
+  opacity: 0;
+  animation: fade-in-up 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}

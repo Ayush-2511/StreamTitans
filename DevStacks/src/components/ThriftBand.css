@@ -1,0 +1,151 @@
+.thrift-section {
+  background-color: #1a1a1a;
+  color: #f5f4f0;
+  padding: 1.5rem 1rem; /* pt-6 p-4 */
+}
+@media (min-width: 768px) {
+  .thrift-section {
+    padding-left: 2rem; /* md:p-8 */
+    padding-right: 2rem;
+    padding-bottom: 2rem;
+  }
+}
+
+.thrift-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 1.5rem; /* mb-6 */
+}
+
+.thrift-subtitle {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.1em; /* tracking-widest */
+  color: rgba(245, 244, 240, 0.5); /* text-[#f5f4f0]/50 */
+  text-transform: uppercase;
+  margin-bottom: 0.25rem; /* mb-1 */
+}
+
+.thrift-title {
+  font-size: 1.5rem; /* text-2xl */
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: -0.05em; /* tracking-tighter */
+}
+
+.thrift-see-all {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em; /* tracking-wider */
+  color: rgba(245, 244, 240, 0.7);
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  pointer-events: auto;
+  transition: color 0.15s;
+  cursor: pointer;
+  background: transparent;
+  border: none;
+}
+.thrift-see-all:hover {
+  color: #f5f4f0;
+}
+.thrift-see-all:hover .see-all-icon {
+  transform: translateX(0.25rem); /* group-hover:translate-x-1 */
+}
+
+.thrift-carousel {
+  display: flex;
+  gap: 1rem; /* gap-4 */
+  overflow-x: auto;
+  padding-bottom: 1rem; /* pb-4 */
+  scroll-snap-type: x mandatory;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.thrift-carousel::-webkit-scrollbar {
+  display: none;
+}
+@media (min-width: 768px) {
+  .thrift-carousel {
+    gap: 1.5rem; /* md:gap-6 */
+  }
+}
+
+.thrift-polaroid {
+  scroll-snap-align: start;
+  flex: none;
+  width: 180px;
+  background-color: #222;
+  border: 1.5px solid #333;
+  border-radius: 0.5rem; /* rounded-lg */
+  overflow: hidden;
+  padding: 0.75rem 0.75rem 1.25rem 0.75rem; /* p-3 pb-5 */
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04); /* shadow-xl */
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+}
+@media (min-width: 768px) {
+  .thrift-polaroid {
+    width: 220px;
+  }
+}
+.thrift-polaroid:hover {
+  transform: translateY(-0.5rem); /* hover:-translate-y-2 */
+}
+
+.thrift-img {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  background-color: #1a1a1a;
+  border: 1px solid #333;
+  margin-bottom: 0.75rem; /* mb-3 */
+  filter: grayscale(40%);
+  background-size: cover;
+  background-position: center;
+}
+
+.thrift-content {
+  padding-left: 0.25rem; /* px-1 */
+  padding-right: 0.25rem;
+  color: #f5f4f0;
+}
+
+.thrift-item-title {
+  font-weight: 600; /* font-semibold */
+  font-size: 0.75rem; /* text-xs */
+  line-height: 1.25; /* leading-tight */
+  margin-bottom: 0.125rem; /* mb-0.5 */
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.thrift-item-price {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--color-orange);
+  margin-top: 0.375rem; /* mt-1.5 */
+}
+
+.thrift-more-btn {
+  flex: none;
+  width: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(245, 244, 240, 0.3);
+  cursor: pointer;
+  transition: color 0.15s;
+}
+.thrift-more-btn:hover {
+  color: #f5f4f0;
+}
+
+.icon-large {
+  width: 2rem; /* w-8 */
+  height: 2rem; /* h-8 */
+}
